@@ -22,7 +22,7 @@ production:
   yearly_scraping:
     class: YearlyScrapingJob
     queue: scraping
-    schedule: at 3am on January 1
+    schedule: "0 3 1 1 *"  # Every January 1st at 3:00 AM (cron format)
 
 development:
   # Pour tester le scraping en dev (tous les jours à 9h)

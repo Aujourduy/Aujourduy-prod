@@ -6,25 +6,24 @@
 - **PostgreSQL PROD** : UP et healthy
 - **PgBouncer PROD** : UP et healthy (port 6432)
 - **Rails PROD** : UP et fonctionnel (http://localhost:3002)
+- **Solid Queue PROD** : UP et fonctionnel ✅ FIXÉ
+- **n8n-prod** : UP et fonctionnel (http://localhost:5679) ✅ FIXÉ
 - **Playwright PROD** : UP
 
-### ⚠️ À fixer
-- **n8n-prod** : En boucle de redémarrage (probablement fichiers de test dans lib/)
-- **solid-queue-prod** : En boucle de redémarrage (même cause probable)
-- **pgadmin-prod** : UP mais unhealthy (à investiguer si besoin)
+### ⚠️ Non-critique
+- **pgadmin-prod** : UP mais unhealthy (interface admin, non-bloquant)
 
 ## 📋 Tâches en cours
 
-### Priorité 1 - Déploiement
-- [ ] Fixer n8n-prod (nettoyer fichiers de test)
-- [ ] Fixer solid-queue-prod (nettoyer fichiers de test)
-- [ ] Vérifier accès https://3graces.community via Cloudflare Tunnel
-- [ ] Tester OAuth Google en production
+### Priorité 1 - Vérification
+- [ ] Tester accès https://3graces.community via Cloudflare Tunnel
+- [ ] Vérifier OAuth Google en production via https
+- [ ] Tester Rails API depuis le domaine public
 
 ### Priorité 2 - Configuration
-- [ ] Investiguer pgadmin-prod unhealthy (si nécessaire)
 - [ ] Configurer n8n-prod avec workflows production
 - [ ] Vérifier backups automatiques PostgreSQL
+- [ ] Investiguer pgadmin-prod unhealthy (si nécessaire, non-bloquant)
 
 ### Priorité 3 - Tests
 - [ ] Tests end-to-end en production
@@ -40,6 +39,10 @@
 4. ✅ Permissions : Droits CREATE pour app_prod
 5. ✅ Fichiers de test : Déplacés de lib/ vers scripts/ (18 fichiers)
 6. ✅ Rails démarre et répond aux requêtes
+7. ✅ OAuth redirect URI : omniauth.rb dynamique avec ENV variables
+8. ✅ Git repository : Créé et pushé sur GitHub
+9. ✅ Solid Queue : Fix schedule recurring "yearly_scraping" (cron format)
+10. ✅ n8n-prod : Fix encryption key mismatch + port configuration (5678)
 
 ### Fichiers déplacés
 - `/home/dang/Aujourduy-prod/rails/lib/` → `scripts/`
@@ -63,10 +66,17 @@
 ## 🔄 Prochaine session
 
 **Commencer par :**
-1. Vérifier état de n8n-prod et solid-queue-prod
-2. Nettoyer fichiers de test si nécessaire
-3. Tester accès https://3graces.community
+1. ✅ ~~Vérifier état de n8n-prod et solid-queue-prod~~ → FIXÉ
+2. Tester accès https://3graces.community via Cloudflare Tunnel
+3. Vérifier OAuth Google fonctionne en HTTPS
+4. Tests end-to-end de l'application en production
 
-**Ne pas oublier :**
-- Les scripts de test sont dans `/home/dang/Aujourduy-prod/rails/scripts/`
-- Le dossier lib/ doit rester vide de fichiers de test en PROD
+**Fichiers modifiés (non commités) :**
+- `.env` : N8N_ENCRYPTION_KEY + N8N_PORT
+- `rails/config/recurring.yml` : Schedule format yearly_scraping
+- `SUIVI_ENCOURS.md` : Mise à jour statut
+
+**Configuration réseau :**
+- Rails PROD : http://localhost:3002
+- n8n PROD : http://localhost:5679
+- Cloudflare Tunnel : 3graces.community → localhost:3002
