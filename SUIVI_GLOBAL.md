@@ -1,5 +1,37 @@
 # SUIVI GLOBAL - Aujourduy Production
 
+## Session 27 - 2025-12-02 - Planification Migration Déploiement
+
+### Ce qui a été fait
+
+1. **Analyse Architecture Actuelle**
+   - Identification de l'approche actuelle : 2 repos Git séparés + rsync + copie DB
+   - Documentation des risques : perte de données prod, pas de rollback, pas de traçabilité
+
+2. **Documentation Best Practice**
+   - Recherche et documentation de la best practice Rails 8 : Git-based deployment avec Kamal
+   - Comparaison des approches : actuelle vs recommandée
+   - Documentation ajoutée dans ~/Aujourduy/SUIVI_ENCOURS.md et SUIVI_APPRIS.md
+
+3. **Planification Migration (4 phases)**
+   - Phase 1 : Fusionner repos (main = prod, develop = dev)
+   - Phase 2 : Configurer Kamal
+   - Phase 3 : Dernière migration DB complète
+   - Phase 4 : CI/CD GitHub Actions (optionnel)
+
+### Décision
+
+Migration vers Git-based deployment planifiée mais non démarrée dans cette session. Sera implémentée lors d'une session dédiée.
+
+### État
+
+- ✅ Architecture actuelle documentée
+- ✅ Best practice identifiée et documentée
+- ✅ Plan de migration créé
+- 🟡 Migration à démarrer (prochaine session dédiée)
+
+---
+
 ## Session 26 - 2025-12-02 - Tests et Configuration Production
 
 ### Ce qui a été fait

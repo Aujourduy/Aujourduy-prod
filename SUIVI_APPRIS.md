@@ -2,6 +2,48 @@
 
 ## Base de connaissances - Leçons et solutions
 
+### 🚀 Best Practice : Git-based Deployment avec Kamal (Session 27)
+
+**Architecture actuelle (à migrer) :**
+- 2 repos Git séparés : `Aujourduy` (dev) et `Aujourduy-prod` (prod)
+- Déploiement : rsync manuel + copie DB complète
+- Risques : Perte données prod, pas de rollback, pas de traçabilité
+
+**Architecture recommandée (Rails 8 best practice) :**
+```
+Un seul repo Git avec branches :
+- main → Production (3graces.community)
+- develop → Dev (dev.aujourduy.fr)
+- feature/* → Features en cours
+
+Déploiement : git push main → Kamal → Zero-downtime deployment
+Données : Migrations incrémentales (pas de copie DB)
+```
+
+**Workflow Kamal :**
+1. Développer en `develop`, commit, push
+2. Merger vers `main` (ou cherry-pick commits)
+3. Push → Kamal détecte et déploie automatiquement
+4. Kamal : build → push image → lance containers → migrate DB → switch trafic → zero downtime
+5. Si problème : `kamal rollback` (retour version précédente en 1 commande)
+
+**Bénéfices vs approche actuelle :**
+| Critère | Actuel (rsync) | Kamal |
+|---------|----------------|-------|
+| Perte données prod | ⚠️ Risque élevé (copie DB) | ✅ Aucune (migrations) |
+| Rollback | ❌ Manuel et complexe | ✅ 1 commande |
+| Downtime | ⚠️ Redémarrage requis | ✅ Zero downtime |
+| Traçabilité | ⚠️ Manuelle (SUIVI*.md) | ✅ Git historique |
+| CI/CD | ❌ Aucun | ✅ Intégrable facilement |
+
+**Documentation complète :**
+- Plan détaillé : ~/Aujourduy/SUIVI_ENCOURS.md (4 phases de migration)
+- Justification : ~/Aujourduy/SUIVI_APPRIS.md (comparaison détaillée)
+
+**Statut :** Planifié, à implémenter lors d'une session dédiée
+
+---
+
 ### 🔄 Copie Base de Données DEV → PROD (Session 26)
 
 **Outil créé :**

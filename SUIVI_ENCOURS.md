@@ -25,10 +25,36 @@
 - [x] Créer outil automatisé `db-dev-prod` pour copie BDD
 - [x] Configurer www.3graces.community (Cloudflare Tunnel)
 
+### 🔥 Priorité 0 - Migration Architecture (Session 27)
+
+**Migration vers Git-based Deployment avec Kamal**
+
+**Contexte :**
+- Architecture actuelle : 2 repos Git séparés (dev et prod) + rsync + copie DB complète
+- Risques : Perte de données prod, pas de rollback, pas de traçabilité
+- Best practice Rails 8 : Un seul repo avec branches + Kamal + Migrations
+
+**Plan de migration (4 phases) :**
+- [ ] Phase 1 : Fusionner repos (main = prod, develop = dev) - ~30 min
+- [ ] Phase 2 : Configurer Kamal - ~1h
+- [ ] Phase 3 : Dernière migration DB complète (après : migrations uniquement)
+- [ ] Phase 4 : CI/CD GitHub Actions (optionnel)
+
+**Bénéfices :**
+- ✅ Zero-downtime deployment
+- ✅ Rollback en 1 commande
+- ✅ Migrations sans perte de données
+- ✅ Traçabilité complète
+
+**Documentation :**
+- Plan détaillé : ~/Aujourduy/SUIVI_ENCOURS.md
+- Best practice : ~/Aujourduy/SUIVI_APPRIS.md
+
+---
+
 ### Priorité 1 - À faire
 - [ ] Tester Rails API depuis le domaine public
 - [ ] Configurer n8n-prod avec workflows production
-- [ ] Implémenter CI/CD (GitHub Actions recommandé)
 
 ### Priorité 2 - Configuration
 - [ ] Vérifier backups automatiques PostgreSQL
