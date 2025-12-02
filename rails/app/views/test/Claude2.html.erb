@@ -1,0 +1,238 @@
+<div style="font-family: Arial, sans-serif; max-width: 1400px; margin: 0 auto; padding: 20px; background: #fafafa;">
+
+  <!-- Palette 1 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f28c28; padding-left: 15px;">Palette 1 — Énergie Douce</h2>
+    
+    <!-- Light Theme -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#d4a574"}, {name: "secondary", color: "#e8c49f"}, {name: "accent", color: "#f28c28"},
+            {name: "neutral", color: "#5e5c54"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7fb3d5"},
+            {name: "success", color: "#8db88d"}, {name: "warning", color: "#e6b35d"}, {name: "error", color: "#d47562"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#fdf8f3', '#e8c49f', '#e6b35d'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Dark Theme -->
+    <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+      <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#e8b889"}, {name: "secondary", color: "#d4a574"}, {name: "accent", color: "#f29c48"},
+            {name: "neutral", color: "#ede7df"}, {name: "base-100", color: "#1f1d1a"}, {name: "info", color: "#95c4e8"},
+            {name: "success", color: "#a5d09d"}, {name: "warning", color: "#f2c46d"}, {name: "error", color: "#e88872"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#ede7df', '#e8b889', '#f2c46d', '#95c4e8', '#a5d09d'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Palette 2 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f28c28; padding-left: 15px;">Palette 2 — Harmonie Terre</h2>
+    
+    <!-- Light Theme -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#a88f6f"}, {name: "secondary", color: "#c9b89f"}, {name: "accent", color: "#f28c28"},
+            {name: "neutral", color: "#4a4843"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#6fa8b8"},
+            {name: "success", color: "#7fa87f"}, {name: "warning", color: "#d4a55e"}, {name: "error", color: "#c46a53"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#fdf8f3', '#c9b89f', '#d4a55e'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Dark Theme -->
+    <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+      <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#c9b89f"}, {name: "secondary", color: "#a88f6f"}, {name: "accent", color: "#f29c48"},
+            {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#252320"}, {name: "info", color: "#8dc4d4"},
+            {name: "success", color: "#95bf95"}, {name: "warning", color: "#e6b86d"}, {name: "error", color: "#d9836a"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#f2ebe3', '#c9b89f', '#e6b86d', '#8dc4d4', '#95bf95'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Palette 3 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f28c28; padding-left: 15px;">Palette 3 — Mouvement Libre</h2>
+    
+    <!-- Light Theme -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#b8956a"}, {name: "secondary", color: "#d4c3a8"}, {name: "accent", color: "#f28c28"},
+            {name: "neutral", color: "#3d3b37"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#8fa8c4"},
+            {name: "success", color: "#98b898"}, {name: "warning", color: "#d4b375"}, {name: "error", color: "#b86a5e"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#fdf8f3', '#d4c3a8', '#d4b375'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Dark Theme -->
+    <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+      <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#d4c3a8"}, {name: "secondary", color: "#b8956a"}, {name: "accent", color: "#f29c48"},
+            {name: "neutral", color: "#f2ede5"}, {name: "base-100", color: "#1f1d1a"}, {name: "info", color: "#a5c4e0"},
+            {name: "success", color: "#acd4ac"}, {name: "warning", color: "#e6c485"}, {name: "error", color: "#d9836e"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#f2ede5', '#d4c3a8', '#e6c485', '#a5c4e0', '#acd4ac'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Palette 4 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f28c28; padding-left: 15px;">Palette 4 — Connexion Authentique</h2>
+    
+    <!-- Light Theme -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+            {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+            {name: "success", color: "#8ca88c"}, {name: "warning", color: "#c4a56e"}, {name: "error", color: "#a85e53"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#fdf8f3', '#b8a895', '#c4a56e'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Dark Theme -->
+    <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+      <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+            {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+            {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#d9b87d"}, {name: "error", color: "#c97d6a"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#f2ebe3', '#b8a895', '#d9b87d', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Palette 5 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f28c28; padding-left: 15px;">Palette 5 — Rythme Apaisant</h2>
+    
+    <!-- Light Theme -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#a89c8a"}, {name: "secondary", color: "#c4b8a5"}, {name: "accent", color: "#f28c28"},
+            {name: "neutral", color: "#45433e"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#8fa8c4"},
+            {name: "success", color: "#98b898"}, {name: "warning", color: "#d4b375"}, {name: "error", color: "#b8756a"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#fdf8f3', '#c4b8a5', '#d4b375'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Dark Theme -->
+    <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+      <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+        <% [{name: "primary", color: "#c4b8a5"}, {name: "secondary", color: "#a89c8a"}, {name: "accent", color: "#f29c48"},
+            {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#221f1c"}, {name: "info", color: "#a5c4e0"},
+            {name: "success", color: "#acd4ac"}, {name: "warning", color: "#e6c485"}, {name: "error", color: "#d9887a"}].
+            each do |c| %>
+          <div style="width: 140px; height: 100px; background-color:<%= c[:color] %>; border-radius: 10px;
+                      box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+                      color: <%= ['#f2ebe3', '#c4b8a5', '#e6c485', '#a5c4e0', '#acd4ac'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>; transition: transform 0.2s;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="text-align: center;">
+              <div style="font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= c[:name] %></div>
+              <div style="font-size: 0.85rem; font-family: 'Courier New', monospace; margin-top: 5px;"><%= c[:color] %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+</div>

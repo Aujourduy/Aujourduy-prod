@@ -1,0 +1,157 @@
+const express = require('express');
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+const createLocalFile = process.env.CREATE_LOCAL_FILE === 'false';
+
+app.use(express.json());
+
+app.post('/render', async (req, res) => {
+  const { url } = req.body;
+  console.log('📥 Requête reçue avec body brut :', req.body);
+  console.log('🌐 URL extraite :', url);
+
+  if (!url) return res.status(400).send('Missing URL');
+
+  console.log('▶️ Requête reçue pour URL :', url);
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+  });
+
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', {
+      get: () => false,
+    });
+  });
+
+  const page = await context.newPage();
+
+  try {
+    await page.goto(url, { waitUntil: 'networkidle' });
+    console.log('✅ Page principale chargée');
+
+    // 🍪 Acceptation des cookies si le bouton est présent
+    try {
+      const acceptButton = await page.waitForSelector('button[name="agree"]', { timeout: 3000 });
+      if (acceptButton) {
+        await acceptButton.click();
+        console.log('🍪 Bouton "Accepter tous" cliqué');
+        await page.waitForTimeout(1000); // attendre que le layout se mette à jour
+      }
+    } catch (e) {
+      console.log('ℹ️ Aucun bouton de cookies trouvé ou timeout dépassé');
+    }
+
+    // Fix layout + animations
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
+    // Scroll complet de la page principale
+    await page.evaluate(async () => {
+      await new Promise((resolve) => {
+        let totalHeight = 0;
+        const distance = 100;
+        const timer = setInterval(() => {
+          window.scrollBy(0, distance);
+          totalHeight += distance;
+          if (totalHeight >= document.body.scrollHeight) {
+            clearInterval(timer);
+            resolve();
+          }
+        }, 100);
+      });
+    });
+
+    await page.waitForTimeout(500); // stabilisation du layout
+
+    // Screenshot complet
+    const screenshotPath = path.join(__dirname, 'outputs', 'last_screenshot.png');
+    if (!fs.existsSync(path.dirname(screenshotPath))) {
+      fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
+    }
+
+    try {
+      await page.screenshot({
+        path: screenshotPath,
+        fullPage: true,
+        timeout: 60000,
+      });
+      console.log('📸 Screenshot capturé :', screenshotPath);
+    } catch (e) {
+      console.error('❌ Échec de la capture d’écran :', e);
+    }
+
+    // Traitement iframe
+    const frames = page.frames();
+    console.log('🔍 Frames détectés :');
+    frames.forEach(f => console.log(' - ', f.url()));
+
+    const frame = frames.find(f => f.url().includes('multi_event.php') && f.url().includes('multi='));
+
+    let htmlContent;
+    if (frame) {
+      console.log('🔗 Iframe ciblée trouvée :', frame.url());
+
+      await frame.evaluate(async () => {
+        await new Promise((resolve) => {
+          let totalHeight = 0;
+          const distance = 100;
+          const timer = setInterval(() => {
+            window.scrollBy(0, distance);
+            totalHeight += distance;
+            if (totalHeight >= document.body.scrollHeight) {
+              clearInterval(timer);
+              resolve();
+            }
+          }, 200);
+        });
+      });
+
+      await page.waitForTimeout(3000);
+      htmlContent = await frame.content();
+    } else {
+      console.log('⚠️ Aucune iframe spécifique trouvée, fallback sur le contenu principal');
+      await page.waitForTimeout(2000);
+      htmlContent = await page.content();
+    }
+
+    console.log('📦 HTML récupéré, taille :', htmlContent.length);
+
+    if (createLocalFile) {
+      const fileName = url.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      const filePath = path.join(__dirname, `${fileName}.html`);
+      fs.writeFileSync(filePath, htmlContent);
+      console.log(`💾 Fichier HTML sauvegardé : ${filePath}`);
+
+      const now = new Date();
+      const timestamp = now.toISOString().replace(/T/, '-').replace(/:/g, '-').split('.')[0];
+      const datedFileName = `playwright-result_${timestamp}.html`;
+      const datedFilePath = path.join(__dirname, 'outputs', datedFileName);
+      if (!fs.existsSync(path.dirname(datedFilePath))) {
+        fs.mkdirSync(path.dirname(datedFilePath), { recursive: true });
+      }
+      fs.writeFileSync(datedFilePath, htmlContent);
+      console.log(`💾 Fichier HTML horodaté sauvegardé : ${datedFilePath}`);
+    } else {
+      console.log('🚫 CREATE_LOCAL_FILE désactivé, aucun fichier sauvegardé');
+    }
+
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('❌ Erreur :', error);
+    res.status(500).send('Erreur lors du rendu');
+  } finally {
+    await browser.close();
+    console.log('🧹 Navigateur fermé');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`✅ API Playwright en écoute sur http://localhost:${port}`);
+});

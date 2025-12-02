@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event: one
+  venue: one
+  start_date: 2025-09-25
+  end_date: 2025-09-25
+  start_time: 2000-01-01 08:13:57
+  end_time: 2000-01-01 10:13:57
+
+two:
+  event: two
+  venue: two
+  start_date: 2025-10-01
+  end_date: 2025-10-01
+  start_time: 2000-01-01 14:00:00
+  end_time: 2000-01-01 16:00:00

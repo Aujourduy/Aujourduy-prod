@@ -1,0 +1,24 @@
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  connect() {
+    // Auto-fermeture après 5 secondes
+    this.timeout = setTimeout(() => {
+      this.close()
+    }, 5000)
+  }
+  
+  disconnect() {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+  }
+  
+  close() {
+    this.element.style.transition = 'opacity 0.3s ease-out'
+    this.element.style.opacity = '0'
+    setTimeout(() => {
+      this.element.remove()
+    }, 300)
+  }
+}

@@ -1,0 +1,66 @@
+source "https://rubygems.org"
+
+# Rails
+gem "rails", "~> 8.0.2", ">= 8.0.2.1"
+gem "propshaft"
+gem "pg", "~> 1.1"
+gem "puma", ">= 5.0"
+gem "importmap-rails"
+gem "turbo-rails"
+gem "stimulus-rails"
+gem "jbuilder"
+
+# Authentification et gestion utilisateurs
+gem "devise"
+gem "omniauth-google-oauth2"
+
+# Téléversement images
+gem "carrierwave"
+gem "cloudinary"
+
+# OTP par SMS / Appel
+gem "twilio-ruby"      # client Twilio officiel
+gem "phonelib"         # validation/normalisation de numéros de téléphone
+
+# Cache / Jobs / Câble Action
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
+
+# Performance
+gem "bootsnap", require: false
+
+# Déploiement
+gem "kamal", require: false
+gem "thruster", require: false
+
+# Mail de recup
+gem "postmark-rails"
+
+# Web Scraping
+gem "ferrum"
+
+# Sécurité & Style
+group :development, :test do
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "brakeman", require: false
+  gem "rubocop-rails-omakase", require: false
+  gem 'seed_dump'
+end
+
+# Outils dev
+group :development do
+  gem "web-console"
+end
+
+# Tests système
+group :test do
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webmock"
+  gem "mocha"
+end
+
+# Windows
+gem "tzinfo-data", platforms: %i[windows jruby]
+gem "avo"

@@ -1,0 +1,87 @@
+<div style="font-family: Arial, sans-serif; max-width: 1400px; margin: 0 auto; padding: 40px 20px; background: #fafafa;">
+  
+  <h1 style="text-align: center; color: #2f2f2f; font-size: 2.5rem; margin-bottom: 20px; font-weight: 700;">👟 Palette Chaussures — Tons Naturels (Affinée)</h1>
+  <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 50px;">Version améliorée avec plus d'ancrage et de contraste</p>
+
+  <section style="background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #8a6e52; padding-left: 15px;">Palette — Tons Naturels Affinée</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#8a6e52", desc: "Marron terre"},
+              {name: "secondary", color: "#7a8870", desc: "Olive"},
+              {name: "accent", color: "#a85850", desc: "Brique"},
+              {name: "neutral", color: "#5c4838", desc: "Brun"},
+              {name: "base-100", color: "#f8f5f0", desc: "Crème"},
+              {name: "info", color: "#8b7a9d", desc: "Violet riche"},
+              {name: "success", color: "#8a9d7a", desc: "Sauge"},
+              {name: "warning", color: "#f2dd68", desc: "Jaune clair"},
+              {name: "error", color: "#b85848", desc: "Terracotta"}].
+              each do |c| %>
+            <div style="min-height: 100px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px;
+                        color: <%= ['#f8f5f0', '#f2dd68'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-bottom: 3px;"><%= c[:color] %></div>
+              <div style="font-size: 0.65rem; opacity: 0.8; font-style: italic;"><%= c[:desc] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#a88d72", desc: "Marron clair"},
+              {name: "secondary", color: "#95a888", desc: "Olive clair"},
+              {name: "accent", color: "#d97060", desc: "Brique lumineux"},
+              {name: "neutral", color: "#f0ebe3", desc: "Beige clair"},
+              {name: "base-100", color: "#2a2420", desc: "Brun noir"},
+              {name: "info", color: "#a895bf", desc: "Violet saturé"},
+              {name: "success", color: "#a5bf95", desc: "Sauge vif"},
+              {name: "warning", color: "#f2e685", desc: "Jaune vif"},
+              {name: "error", color: "#d97868", desc: "Terracotta vif"}].
+              each do |c| %>
+            <div style="min-height: 100px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px;
+                        color: <%= ['#f0ebe3', '#a88d72', '#a895bf', '#a5bf95', '#f2e685'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-bottom: 3px;"><%= c[:color] %></div>
+              <div style="font-size: 0.65rem; opacity: 0.8; font-style: italic;"><%= c[:desc] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparaison Avant/Après -->
+  <div style="margin-top: 30px; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <h3 style="text-align: center; color: #333; margin-bottom: 15px; font-size: 1.2rem;">🔄 Améliorations apportées</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; font-size: 0.9rem; color: #666;">
+      <div style="padding: 10px; background: #f9f9f9; border-radius: 8px;">
+        <strong>✅ Primary :</strong><br>
+        <span style="text-decoration: line-through; opacity: 0.6;">#c4956e (Camel clair)</span><br>
+        <span style="color: #8a6e52; font-weight: 600;">→ #8a6e52 (Marron terre)</span><br>
+        <small>Plus d'ancrage et stabilité</small>
+      </div>
+      <div style="padding: 10px; background: #f9f9f9; border-radius: 8px;">
+        <strong>✅ Info :</strong><br>
+        <span style="text-decoration: line-through; opacity: 0.6;">#9d9589 (Taupe gris)</span><br>
+        <span style="color: #8b7a9d; font-weight: 600;">→ #8b7a9d (Violet riche)</span><br>
+        <small>Distinctif avec même intensité</small>
+      </div>
+      <div style="padding: 10px; background: #f9f9f9; border-radius: 8px;">
+        <strong>✅ Warning :</strong><br>
+        <span style="text-decoration: line-through; opacity: 0.6;">#d9a845 (Moutarde)</span><br>
+        <span style="color: #f2dd68; font-weight: 600;">→ #f2dd68 (Jaune clair)</span><br>
+        <small>Plus lumineux sans être agressif</small>
+      </div>
+    </div>
+  </div>
+
+</div>

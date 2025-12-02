@@ -1,0 +1,117 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+pending_event:
+  source_url: "https://example.com/events/yoga-retreat"
+  scraped_at: <%= 1.day.ago %>
+  scraping_duration_ms: 1500
+  html_content: "<html><body>Yoga Retreat Event</body></html>"
+  json_data: {
+    "teacher": {
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane@example.com"
+    },
+    "event": {
+      "title": "Yoga Retreat 2025",
+      "description": "A wonderful yoga retreat in the mountains",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-20",
+      "price": 500
+    },
+    "venue": {
+      "name": "Mountain Retreat Center",
+      "city": "Chamonix",
+      "country": "France"
+    }
+  }
+  status: "pending"
+  quality_flags: {}
+
+validated_event:
+  source_url: "https://example.com/events/dance-workshop"
+  scraped_at: <%= 2.days.ago %>
+  scraping_duration_ms: 2000
+  html_content: "<html><body>Dance Workshop</body></html>"
+  json_data: {
+    "teacher": {
+      "first_name": "John",
+      "last_name": "Smith",
+      "email": "john@example.com"
+    },
+    "event": {
+      "title": "Contemporary Dance Workshop",
+      "description": "Learn contemporary dance techniques",
+      "start_date": "2025-07-01",
+      "price": 150
+    }
+  }
+  status: "validated"
+  validated_at: <%= 1.day.ago %>
+  validation_notes: "Looks good, teacher confirmed"
+  quality_flags: {}
+
+rejected_event:
+  source_url: "https://example.com/events/spam-event"
+  scraped_at: <%= 3.days.ago %>
+  scraping_duration_ms: 1000
+  html_content: "<html><body>Spam</body></html>"
+  json_data: {
+    "teacher": {
+      "first_name": "Spam",
+      "last_name": "Bot"
+    },
+    "event": {
+      "title": "Fake Event",
+      "start_date": "2020-01-01"
+    }
+  }
+  status: "rejected"
+  validated_at: <%= 1.day.ago %>
+  validation_notes: "Invalid event - date in the past"
+  quality_flags: {
+    "date_in_past": true,
+    "teacher_not_found": true
+  }
+
+imported_event:
+  source_url: "https://example.com/events/meditation-course"
+  scraped_at: <%= 4.days.ago %>
+  scraping_duration_ms: 1800
+  html_content: "<html><body>Meditation Course</body></html>"
+  json_data: {
+    "teacher": {
+      "first_name": "Alice",
+      "last_name": "Johnson",
+      "email": "alice@example.com"
+    },
+    "event": {
+      "title": "Mindfulness Meditation Course",
+      "description": "8-week meditation program",
+      "start_date": "2025-05-01",
+      "price": 300
+    }
+  }
+  status: "imported"
+  validated_at: <%= 2.days.ago %>
+  imported_at: <%= 1.day.ago %>
+  quality_flags: {}
+
+event_with_quality_issues:
+  source_url: "https://example.com/events/problematic"
+  scraped_at: <%= 5.days.ago %>
+  scraping_duration_ms: 1200
+  html_content: "<html><body>Problematic Event</body></html>"
+  json_data: {
+    "teacher": {
+      "first_name": "Unknown"
+    },
+    "event": {
+      "title": "Incomplete Event"
+    }
+  }
+  status: "pending"
+  quality_flags: {
+    "missing_start_date": true,
+    "teacher_incomplete": true,
+    "missing_description": true
+  }

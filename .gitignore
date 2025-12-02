@@ -1,0 +1,37 @@
+# Fichiers sensibles - NE JAMAIS COMMITER
+.env
+.env.production
+.env.local
+*.key
+*.pem
+
+# Mots de passe générés
+postgres/init/generated/
+n8n/config/
+
+# Données PostgreSQL
+/srv/
+
+# Logs
+*.log
+logs/
+
+# Volumes Docker
+prod_gem_cache/
+prod_pgadmin_data/
+
+# Fichiers temporaires
+tmp/
+*.tmp
+*.swp
+*~
+
+# Scripts de test déplacés
+rails/scripts/
+
+# Node modules (si présents)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

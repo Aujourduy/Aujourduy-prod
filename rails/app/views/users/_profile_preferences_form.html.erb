@@ -1,0 +1,98 @@
+<%= form_with model: current_user, url: profile_path, method: :patch, local: true, class: "space-y-6" do |f| %>
+
+  <!-- Villes favorites -->
+  <%= render 'shared/searchable_checkboxes',
+    form: f,
+    title: "📍 Villes favorites",
+    description: "Sélectionnez les villes où vous souhaitez voir les événements",
+    field_name: :favorite_cities,
+    items: @available_cities,
+    search_key: "city",
+    search_placeholder: "🔍 Rechercher une ville...",
+    badge_class: "badge-primary",
+    selected_label: "Villes sélectionnées :",
+    checked: ->(city) { current_user.favorite_cities.include?(city) },
+    selected_items: -> { current_user.favorite_cities },
+    with_hidden_field: true
+  %>
+
+  <!-- Pays favoris -->
+  <%= render 'shared/searchable_checkboxes',
+    form: f,
+    title: "🌍 Pays favoris",
+    description: "Sélectionnez les pays où vous souhaitez voir les événements",
+    field_name: :favorite_countries,
+    items: @available_countries,
+    search_key: "country",
+    search_placeholder: "🔍 Rechercher un pays...",
+    badge_class: "badge-secondary",
+    selected_label: "Pays sélectionnés :",
+    checked: ->(country) { current_user.favorite_countries.include?(country) },
+    selected_items: -> { current_user.favorite_countries },
+    with_hidden_field: true
+  %>
+
+  <!-- Professeurs favoris -->
+  <%= render 'shared/searchable_checkboxes',
+    form: f,
+    title: "👨‍🏫 Professeurs favoris",
+    description: "Sélectionnez les professeurs que vous souhaitez suivre",
+    field_name: :favorite_teacher_ids,
+    items: @available_teachers,
+    search_key: "teacher",
+    search_placeholder: "🔍 Rechercher un professeur...",
+    badge_class: "badge-accent",
+    selected_label: "Professeurs sélectionnés :",
+    item_display: ->(teacher) { "#{teacher.first_name} #{teacher.last_name}" },
+    item_value: ->(teacher) { teacher.id },
+    item_search_value: ->(teacher) { "#{teacher.first_name} #{teacher.last_name}".downcase },
+    checked: ->(teacher) { current_user.favorite_teacher_ids.include?(teacher.id) },
+    selected_items: -> { Teacher.where(id: current_user.favorite_teacher_ids) },
+    with_hidden_field: true
+  %>
+
+  <!-- Pratiques favorites -->
+  <%= render 'shared/searchable_checkboxes',
+    form: f,
+    title: "🎨 Pratiques favorites",
+    description: "Sélectionnez les pratiques de danse qui vous intéressent",
+    field_name: :favorite_practice_ids,
+    items: @available_practices,
+    search_key: "practice",
+    search_placeholder: "🔍 Rechercher une pratique...",
+    badge_class: "badge-info",
+    selected_label: "Pratiques sélectionnées :",
+    item_display: ->(practice) { practice.name },
+    item_value: ->(practice) { practice.id },
+    item_search_value: ->(practice) { practice.name.downcase },
+    checked: ->(practice) { current_user.favorite_practice_ids.include?(practice.id) },
+    selected_items: -> { Practice.where(id: current_user.favorite_practice_ids) },
+    with_hidden_field: true
+  %>
+  
+  <!-- Mots-clés de recherche -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">🔍 Mots-clés</h2>
+      <p class="text-sm text-base-content/70 mb-4">
+        Ajoutez des mots-clés pour filtrer les événements (ex: "salsa contact débutant")
+      </p>
+      
+      <%= f.text_field :search_keywords, 
+          class: "input input-bordered w-full placeholder:text-base-content/40", 
+          placeholder: "salsa contact débutant..." %>
+      
+      <p class="text-xs text-base-content/60 mt-2">
+        ℹ️ Tous les mots seront recherchés dans les titres et descriptions (ordre libre)
+      </p>
+    </div>
+  </div>
+  
+  <!-- Bouton sauvegarder -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <%= f.submit "💾 Enregistrer mes préférences", class: "btn btn-primary btn-lg w-full" %>
+    </div>
+  </div>
+  
+<% end %>

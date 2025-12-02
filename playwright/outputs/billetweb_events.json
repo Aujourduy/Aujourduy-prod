@@ -1,0 +1,22 @@
+[
+  {
+    "title": "iframe",
+    "url": "https://www.billetweb.fr/multi_event.php?&multi=u237930&margin=no_margin",
+    "type": "iframe"
+  },
+  {
+    "title": "Create an event",
+    "url": "https://www.billetweb.fr/",
+    "type": "link"
+  },
+  {
+    "title": "Legal Notice",
+    "url": "https://www.billetweb.fr/xx/legal",
+    "type": "link"
+  },
+  {
+    "title": "Report this page",
+    "url": "https://www.billetweb.fr/xx/contact",
+    "type": "link"
+  }
+]

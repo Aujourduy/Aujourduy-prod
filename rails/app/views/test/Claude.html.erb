@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palettes Stop&Dance</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fafafa;
+      padding: 40px 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2f2f2f;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      font-weight: 700;
+    }
+    .palette-set {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .palette-title {
+      font-size: 1.8rem;
+      color: #2f2f2f;
+      margin-bottom: 25px;
+      font-weight: 600;
+      border-left: 5px solid #f28c28;
+      padding-left: 15px;
+    }
+    .themes-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    @media (max-width: 900px) {
+      .themes-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .theme-section {
+      border-radius: 12px;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    .theme-header {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      text-align: center;
+    }
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .color-box {
+      border-radius: 10px;
+      padding: 20px 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .color-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .color-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .color-hex {
+      font-size: 0.85rem;
+      font-family: "Courier New", monospace;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Palettes Stop&Dance — Identité Visuelle</h1>
+
+    <!-- Ensemble 1 -->
+    <div class="palette-set">
+      <div class="palette-title">Ensemble 1 — Énergie Douce</div>
+      <div class="themes-container">
+        <!-- Light -->
+        <div class="theme-section">
+          <div class="theme-header">☀️ Light Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f28c28;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f28c28</div>
+            </div>
+            <div class="color-box" style="background-color:#d97328;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#d97328</div>
+            </div>
+            <div class="color-box" style="background-color:#e8a869;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e8a869</div>
+            </div>
+            <div class="color-box" style="background-color:#2f2f2f;">
+              <div class="color-name" style="color:#fff;">Neutral</div>
+              <div class="color-hex" style="color:#fff;">#2f2f2f</div>
+            </div>
+            <div class="color-box" style="background-color:#fdf8f3; border:1px solid #e0e0e0;">
+              <div class="color-name" style="color:#2f2f2f;">Base-100</div>
+              <div class="color-hex" style="color:#2f2f2f;">#fdf8f3</div>
+            </div>
+            <div class="color-box" style="background-color:#7fadcc;">
+              <div class="color-name" style="color:#fff;">Info</div>
+              <div class="color-hex" style="color:#fff;">#7fadcc</div>
+            </div>
+            <div class="color-box" style="background-color:#8fbd6e;">
+              <div class="color-name" style="color:#fff;">Success</div>
+              <div class="color-hex" style="color:#fff;">#8fbd6e</div>
+            </div>
+            <div class="color-box" style="background-color:#f2a84b;">
+              <div class="color-name" style="color:#fff;">Warning</div>
+              <div class="color-hex" style="color:#fff;">#f2a84b</div>
+            </div>
+            <div class="color-box" style="background-color:#d9635b;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#d9635b</div>
+            </div>
+          </div>
+        </div>
+        <!-- Dark -->
+        <div class="theme-section" style="background:#2a2a2a;">
+          <div class="theme-header" style="color:#fff;">🌙 Dark Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f29c48;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f29c48</div>
+            </div>
+            <div class="color-box" style="background-color:#c97520;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#c97520</div>
+            </div>
+            <div class="color-box" style="background-color:#e8b889;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e8b889</div>
+            </div>
+            <div class="color-box" style="background-color:#e8e3dc;">
+              <div class="color-name" style="color:#2f2f2f;">Neutral</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e8e3dc</div>
+            </div>
+            <div class="color-box" style="background-color:#1f1f1f;">
+              <div class="color-name" style="color:#fff;">Base-100</div>
+              <div class="color-hex" style="color:#fff;">#1f1f1f</div>
+            </div>
+            <div class="color-box" style="background-color:#90c4e8;">
+              <div class="color-name" style="color:#2f2f2f;">Info</div>
+              <div class="color-hex" style="color:#2f2f2f;">#90c4e8</div>
+            </div>
+            <div class="color-box" style="background-color:#a5d07e;">
+              <div class="color-name" style="color:#2f2f2f;">Success</div>
+              <div class="color-hex" style="color:#2f2f2f;">#a5d07e</div>
+            </div>
+            <div class="color-box" style="background-color:#f2b85c;">
+              <div class="color-name" style="color:#2f2f2f;">Warning</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2b85c</div>
+            </div>
+            <div class="color-box" style="background-color:#e8735b;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#e8735b</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ensemble 2 -->
+    <div class="palette-set">
+      <div class="palette-title">Ensemble 2 — Terre & Feu</div>
+      <div class="themes-container">
+        <!-- Light -->
+        <div class="theme-section">
+          <div class="theme-header">☀️ Light Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#d97328;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#d97328</div>
+            </div>
+            <div class="color-box" style="background-color:#a65829;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#a65829</div>
+            </div>
+            <div class="color-box" style="background-color:#e8b869;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e8b869</div>
+            </div>
+            <div class="color-box" style="background-color:#3a3331;">
+              <div class="color-name" style="color:#fff;">Neutral</div>
+              <div class="color-hex" style="color:#fff;">#3a3331</div>
+            </div>
+            <div class="color-box" style="background-color:#f9f4ef; border:1px solid #e0e0e0;">
+              <div class="color-name" style="color:#2f2f2f;">Base-100</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f9f4ef</div>
+            </div>
+            <div class="color-box" style="background-color:#6d9fb5;">
+              <div class="color-name" style="color:#fff;">Info</div>
+              <div class="color-hex" style="color:#fff;">#6d9fb5</div>
+            </div>
+            <div class="color-box" style="background-color:#7fa866;">
+              <div class="color-name" style="color:#fff;">Success</div>
+              <div class="color-hex" style="color:#fff;">#7fa866</div>
+            </div>
+            <div class="color-box" style="background-color:#e89a3c;">
+              <div class="color-name" style="color:#fff;">Warning</div>
+              <div class="color-hex" style="color:#fff;">#e89a3c</div>
+            </div>
+            <div class="color-box" style="background-color:#c95d50;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#c95d50</div>
+            </div>
+          </div>
+        </div>
+        <!-- Dark -->
+        <div class="theme-section" style="background:#2a2a2a;">
+          <div class="theme-header" style="color:#fff;">🌙 Dark Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f28c28;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f28c28</div>
+            </div>
+            <div class="color-box" style="background-color:#bf6420;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#bf6420</div>
+            </div>
+            <div class="color-box" style="background-color:#f2c48a;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2c48a</div>
+            </div>
+            <div class="color-box" style="background-color:#efe8e0;">
+              <div class="color-name" style="color:#2f2f2f;">Neutral</div>
+              <div class="color-hex" style="color:#2f2f2f;">#efe8e0</div>
+            </div>
+            <div class="color-box" style="background-color:#2a2220;">
+              <div class="color-name" style="color:#fff;">Base-100</div>
+              <div class="color-hex" style="color:#fff;">#2a2220</div>
+            </div>
+            <div class="color-box" style="background-color:#85b5cc;">
+              <div class="color-name" style="color:#2f2f2f;">Info</div>
+              <div class="color-hex" style="color:#2f2f2f;">#85b5cc</div>
+            </div>
+            <div class="color-box" style="background-color:#92bf72;">
+              <div class="color-name" style="color:#2f2f2f;">Success</div>
+              <div class="color-hex" style="color:#2f2f2f;">#92bf72</div>
+            </div>
+            <div class="color-box" style="background-color:#f2aa4c;">
+              <div class="color-name" style="color:#2f2f2f;">Warning</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2aa4c</div>
+            </div>
+            <div class="color-box" style="background-color:#d96d5f;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#d96d5f</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ensemble 3 -->
+    <div class="palette-set">
+      <div class="palette-title">Ensemble 3 — Sunset Flow</div>
+      <div class="themes-container">
+        <!-- Light -->
+        <div class="theme-section">
+          <div class="theme-header">☀️ Light Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#e88542;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#e88542</div>
+            </div>
+            <div class="color-box" style="background-color:#d96b48;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#d96b48</div>
+            </div>
+            <div class="color-box" style="background-color:#f2b680;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2b680</div>
+            </div>
+            <div class="color-box" style="background-color:#363636;">
+              <div class="color-name" style="color:#fff;">Neutral</div>
+              <div class="color-hex" style="color:#fff;">#363636</div>
+            </div>
+            <div class="color-box" style="background-color:#fefbf8; border:1px solid #e0e0e0;">
+              <div class="color-name" style="color:#2f2f2f;">Base-100</div>
+              <div class="color-hex" style="color:#2f2f2f;">#fefbf8</div>
+            </div>
+            <div class="color-box" style="background-color:#7da3bf;">
+              <div class="color-name" style="color:#fff;">Info</div>
+              <div class="color-hex" style="color:#fff;">#7da3bf</div>
+            </div>
+            <div class="color-box" style="background-color:#88b36d;">
+              <div class="color-name" style="color:#fff;">Success</div>
+              <div class="color-hex" style="color:#fff;">#88b36d</div>
+            </div>
+            <div class="color-box" style="background-color:#f29952;">
+              <div class="color-name" style="color:#fff;">Warning</div>
+              <div class="color-hex" style="color:#fff;">#f29952</div>
+            </div>
+            <div class="color-box" style="background-color:#d95d60;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#d95d60</div>
+            </div>
+          </div>
+        </div>
+        <!-- Dark -->
+        <div class="theme-section" style="background:#2a2a2a;">
+          <div class="theme-header" style="color:#fff;">🌙 Dark Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f29952;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f29952</div>
+            </div>
+            <div class="color-box" style="background-color:#e87550;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#e87550</div>
+            </div>
+            <div class="color-box" style="background-color:#f2c690;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2c690</div>
+            </div>
+            <div class="color-box" style="background-color:#f2ede8;">
+              <div class="color-name" style="color:#2f2f2f;">Neutral</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2ede8</div>
+            </div>
+            <div class="color-box" style="background-color:#262020;">
+              <div class="color-name" style="color:#fff;">Base-100</div>
+              <div class="color-hex" style="color:#fff;">#262020</div>
+            </div>
+            <div class="color-box" style="background-color:#95b8d4;">
+              <div class="color-name" style="color:#2f2f2f;">Info</div>
+              <div class="color-hex" style="color:#2f2f2f;">#95b8d4</div>
+            </div>
+            <div class="color-box" style="background-color:#9fc67d;">
+              <div class="color-name" style="color:#2f2f2f;">Success</div>
+              <div class="color-hex" style="color:#2f2f2f;">#9fc67d</div>
+            </div>
+            <div class="color-box" style="background-color:#f2a95c;">
+              <div class="color-name" style="color:#2f2f2f;">Warning</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2a95c</div>
+            </div>
+            <div class="color-box" style="background-color:#e86d70;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#e86d70</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ensemble 4 -->
+    <div class="palette-set">
+      <div class="palette-title">Ensemble 4 — Warmth & Movement</div>
+      <div class="themes-container">
+        <!-- Light -->
+        <div class="theme-section">
+          <div class="theme-header">☀️ Light Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f28c28;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f28c28</div>
+            </div>
+            <div class="color-box" style="background-color:#bf7030;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#bf7030</div>
+            </div>
+            <div class="color-box" style="background-color:#f2b869;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2b869</div>
+            </div>
+            <div class="color-box" style="background-color:#2d2d2d;">
+              <div class="color-name" style="color:#fff;">Neutral</div>
+              <div class="color-hex" style="color:#fff;">#2d2d2d</div>
+            </div>
+            <div class="color-box" style="background-color:#faf6f1; border:1px solid #e0e0e0;">
+              <div class="color-name" style="color:#2f2f2f;">Base-100</div>
+              <div class="color-hex" style="color:#2f2f2f;">#faf6f1</div>
+            </div>
+            <div class="color-box" style="background-color:#6fa8c4;">
+              <div class="color-name" style="color:#fff;">Info</div>
+              <div class="color-hex" style="color:#fff;">#6fa8c4</div>
+            </div>
+            <div class="color-box" style="background-color:#7eb868;">
+              <div class="color-name" style="color:#fff;">Success</div>
+              <div class="color-hex" style="color:#fff;">#7eb868</div>
+            </div>
+            <div class="color-box" style="background-color:#e89e3d;">
+              <div class="color-name" style="color:#fff;">Warning</div>
+              <div class="color-hex" style="color:#fff;">#e89e3d</div>
+            </div>
+            <div class="color-box" style="background-color:#d6645a;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#d6645a</div>
+            </div>
+          </div>
+        </div>
+        <!-- Dark -->
+        <div class="theme-section" style="background:#2a2a2a;">
+          <div class="theme-header" style="color:#fff;">🌙 Dark Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f29c38;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f29c38</div>
+            </div>
+            <div class="color-box" style="background-color:#d9782a;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#d9782a</div>
+            </div>
+            <div class="color-box" style="background-color:#f2c889;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2c889</div>
+            </div>
+            <div class="color-box" style="background-color:#ede7df;">
+              <div class="color-name" style="color:#2f2f2f;">Neutral</div>
+              <div class="color-hex" style="color:#2f2f2f;">#ede7df</div>
+            </div>
+            <div class="color-box" style="background-color:#1d1b19;">
+              <div class="color-name" style="color:#fff;">Base-100</div>
+              <div class="color-hex" style="color:#fff;">#1d1b19</div>
+            </div>
+            <div class="color-box" style="background-color:#88bad4;">
+              <div class="color-name" style="color:#2f2f2f;">Info</div>
+              <div class="color-hex" style="color:#2f2f2f;">#88bad4</div>
+            </div>
+            <div class="color-box" style="background-color:#8fc978;">
+              <div class="color-name" style="color:#2f2f2f;">Success</div>
+              <div class="color-hex" style="color:#2f2f2f;">#8fc978</div>
+            </div>
+            <div class="color-box" style="background-color:#f2ae4d;">
+              <div class="color-name" style="color:#2f2f2f;">Warning</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2ae4d</div>
+            </div>
+            <div class="color-box" style="background-color:#e6746a;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#e6746a</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ensemble 5 -->
+    <div class="palette-set">
+      <div class="palette-title">Ensemble 5 — Natural Rhythm</div>
+      <div class="themes-container">
+        <!-- Light -->
+        <div class="theme-section">
+          <div class="theme-header">☀️ Light Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#d97d32;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#d97d32</div>
+            </div>
+            <div class="color-box" style="background-color:#a66842;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#a66842</div>
+            </div>
+            <div class="color-box" style="background-color:#e8a560;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e8a560</div>
+            </div>
+            <div class="color-box" style="background-color:#333333;">
+              <div class="color-name" style="color:#fff;">Neutral</div>
+              <div class="color-hex" style="color:#fff;">#333333</div>
+            </div>
+            <div class="color-box" style="background-color:#f8f3ed; border:1px solid #e0e0e0;">
+              <div class="color-name" style="color:#2f2f2f;">Base-100</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f8f3ed</div>
+            </div>
+            <div class="color-box" style="background-color:#6d9bb0;">
+              <div class="color-name" style="color:#fff;">Info</div>
+              <div class="color-hex" style="color:#fff;">#6d9bb0</div>
+            </div>
+            <div class="color-box" style="background-color:#7aa65e;">
+              <div class="color-name" style="color:#fff;">Success</div>
+              <div class="color-hex" style="color:#fff;">#7aa65e</div>
+            </div>
+            <div class="color-box" style="background-color:#d98d3a;">
+              <div class="color-name" style="color:#fff;">Warning</div>
+              <div class="color-hex" style="color:#fff;">#d98d3a</div>
+            </div>
+            <div class="color-box" style="background-color:#c96356;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#c96356</div>
+            </div>
+          </div>
+        </div>
+        <!-- Dark -->
+        <div class="theme-section" style="background:#2a2a2a;">
+          <div class="theme-header" style="color:#fff;">🌙 Dark Theme</div>
+          <div class="colors-grid">
+            <div class="color-box" style="background-color:#f28c38;">
+              <div class="color-name" style="color:#fff;">Primary</div>
+              <div class="color-hex" style="color:#fff;">#f28c38</div>
+            </div>
+            <div class="color-box" style="background-color:#bf7035;">
+              <div class="color-name" style="color:#fff;">Secondary</div>
+              <div class="color-hex" style="color:#fff;">#bf7035</div>
+            </div>
+            <div class="color-box" style="background-color:#f2b570;">
+              <div class="color-name" style="color:#2f2f2f;">Accent</div>
+              <div class="color-hex" style="color:#2f2f2f;">#f2b570</div>
+            </div>
+            <div class="color-box" style="background-color:#ebe5dc;">
+              <div class="color-name" style="color:#2f2f2f;">Neutral</div>
+              <div class="color-hex" style="color:#2f2f2f;">#ebe5dc</div>
+            </div>
+            <div class="color-box" style="background-color:#242220;">
+              <div class="color-name" style="color:#fff;">Base-100</div>
+              <div class="color-hex" style="color:#fff;">#242220</div>
+            </div>
+            <div class="color-box" style="background-color:#82afc7;">
+              <div class="color-name" style="color:#2f2f2f;">Info</div>
+              <div class="color-hex" style="color:#2f2f2f;">#82afc7</div>
+            </div>
+            <div class="color-box" style="background-color:#8fb96e;">
+              <div class="color-name" style="color:#2f2f2f;">Success</div>
+              <div class="color-hex" style="color:#2f2f2f;">#8fb96e</div>
+            </div>
+            <div class="color-box" style="background-color:#e89d42;">
+              <div class="color-name" style="color:#2f2f2f;">Warning</div>
+              <div class="color-hex" style="color:#2f2f2f;">#e89d42</div>
+            </div>
+            <div class="color-box" style="background-color:#d97366;">
+              <div class="color-name" style="color:#fff;">Error</div>
+              <div class="color-hex" style="color:#fff;">#d97366</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

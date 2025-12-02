@@ -1,0 +1,12 @@
+/* Masquer les warnings de licence Avo */
+.alert.alert-warning {
+  display: none !important;
+}
+
+.avo-alert--warning {
+  display: none !important;
+}
+
+[data-testid="alert-wrapper"] .bg-orange-100 {
+  display: none !important;
+}

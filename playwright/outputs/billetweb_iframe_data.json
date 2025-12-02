@@ -1,0 +1,487 @@
+{
+  "events": [
+    {
+      "index": 0,
+      "text": "LE CORPS DE LA DANSE\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tTue 11/25Tue 12/02Tue 12/16\n\t    \t \n\t    \t \n\t    \t \tStudio Variations sur le Corps, Square Dunois, 75013 Paris\n\t    \t \n\t    \t M",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1286683.jpg?v=1751390085"
+      ],
+      "html": "<div id=\"multi_event_container_1286683\" class=\"gap_check multi_event_container filterable multi_event_list     location   inline_date\">\n   <div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1286683.jpg?v=1751390085\">\n \t\t </div>\n \t\t <div class=\"multi_"
+    },
+    {
+      "index": 1,
+      "text": "LE CORPS DE LA DANSE\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tTue 11/25Tue 12/02Tue 12/16\n\t    \t \n\t    \t \n\t    \t \tStudio Variations sur le Corps, Square Dunois, 75013 Paris\n\t    \t \n\t    \t M",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1286683.jpg?v=1751390085"
+      ],
+      "html": "<div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1286683.jpg?v=1751390085\">\n \t\t </div>\n \t\t <div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LE CORPS DE L"
+    },
+    {
+      "index": 3,
+      "text": "LE CORPS DE LA DANSE\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tTue 11/25Tue 12/02Tue 12/16\n\t    \t \n\t    \t \n\t    \t \tStudio Variations sur le Corps, Square Dunois, 75013 Paris\n\t    \t \n\t    \t M",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LE CORPS DE LA DANSE</span>\n\t\t    \t \t<span data-event=\"1286683\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span"
+    },
+    {
+      "index": 4,
+      "text": "LE CORPS DE LA DANSE\n\t\t    \t \tMore info",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LE CORPS DE LA DANSE</span>\n\t\t    \t \t<span data-event=\"1286683\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span><span>More info</span></a></span>\n\t\t    \t </div>"
+    },
+    {
+      "index": 5,
+      "text": "Tue 11/25Tue 12/02Tue 12/16",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_date\" style=\"\">\n\t    \t \t<span class=\"text\"><span class=\"multi_event_time\">Tue 11/25</span><span class=\"multi_event_time\">Tue 12/02</span><span class=\"multi_event_time\">Tue 12/16</span></span>\n\t    \t </div>"
+    },
+    {
+      "index": 6,
+      "text": "Studio Variations sur le Corps, Square Dunois, 75013 Paris",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_place\" style=\"\">\n\t    \t \t<span class=\"text searchable\">Studio Variations sur le Corps, Square Dunois, 75013 Paris</span>\n\t    \t </div>"
+    },
+    {
+      "index": 7,
+      "text": "More information",
+      "links": [
+        {
+          "text": "More information",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div data-event=\"1286683\" class=\"multi_event_desc_show multi_event_desc_control\" style=\"\"><a>More information</a></div>"
+    },
+    {
+      "index": 8,
+      "text": "Hide description",
+      "links": [
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_desc_hide multi_event_desc_control\" style=\"display:none;\"><a>Hide description</a></div>"
+    },
+    {
+      "index": 10,
+      "text": "5Rythmes,Danselibre,méditation",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_tags searchable\" style=\"display:none;\">5Rythmes,Danselibre,méditation</div>"
+    },
+    {
+      "index": 12,
+      "text": "WEDNESDAY WAVES\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tWed Nov 26, 2025 to Wed Jun 24, 2026\n\t    \t \n\t    \t \n\t    \t \tStudio Bleu Danse 12ème, Rue Erard, Paris, France\n\t    \t \n\t    \t More i",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1291670.jpg?v=1753983752"
+      ],
+      "html": "<div id=\"multi_event_container_1291670\" class=\"gap_check multi_event_container filterable multi_event_list  border   location   \">\n   <div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1291670.jpg?v=1753983752\">\n \t\t </div>\n \t\t <div class=\"multi_event"
+    },
+    {
+      "index": 13,
+      "text": "WEDNESDAY WAVES\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tWed Nov 26, 2025 to Wed Jun 24, 2026\n\t    \t \n\t    \t \n\t    \t \tStudio Bleu Danse 12ème, Rue Erard, Paris, France\n\t    \t \n\t    \t More i",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1291670.jpg?v=1753983752"
+      ],
+      "html": "<div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1291670.jpg?v=1753983752\">\n \t\t </div>\n \t\t <div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">WEDNESDAY WAV"
+    },
+    {
+      "index": 15,
+      "text": "WEDNESDAY WAVES\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tWed Nov 26, 2025 to Wed Jun 24, 2026\n\t    \t \n\t    \t \n\t    \t \tStudio Bleu Danse 12ème, Rue Erard, Paris, France\n\t    \t \n\t    \t More i",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">WEDNESDAY WAVES</span>\n\t\t    \t \t<span data-event=\"1291670\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span><spa"
+    },
+    {
+      "index": 16,
+      "text": "WEDNESDAY WAVES\n\t\t    \t \tMore info",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">WEDNESDAY WAVES</span>\n\t\t    \t \t<span data-event=\"1291670\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span><span>More info</span></a></span>\n\t\t    \t </div>"
+    },
+    {
+      "index": 17,
+      "text": "Wed Nov 26, 2025 to Wed Jun 24, 2026",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_date\" style=\"\">\n\t    \t \t<span class=\"text\">Wed Nov 26, 2025 to Wed Jun 24, 2026</span>\n\t    \t </div>"
+    },
+    {
+      "index": 18,
+      "text": "Studio Bleu Danse 12ème, Rue Erard, Paris, France",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_place\" style=\"\">\n\t    \t \t<span class=\"text searchable\">Studio Bleu Danse 12ème, Rue Erard, Paris, France</span>\n\t    \t </div>"
+    },
+    {
+      "index": 19,
+      "text": "More information",
+      "links": [
+        {
+          "text": "More information",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div data-event=\"1291670\" class=\"multi_event_desc_show multi_event_desc_control\" style=\"\"><a>More information</a></div>"
+    },
+    {
+      "index": 20,
+      "text": "Hide description",
+      "links": [
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_desc_hide multi_event_desc_control\" style=\"display:none;\"><a>Hide description</a></div>"
+    },
+    {
+      "index": 24,
+      "text": "LA DANSE DES 5RYTHMES®\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tSat Dec 13, 2025 to Sat Jun 13, 2026\n\t    \t \n\t    \t \n\t    \t \tAlter Activ, Chemin des Prés, Thomery, France\n\t    \t \n\t    \t Mor",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1284832.jpg?v=1753983844"
+      ],
+      "html": "<div id=\"multi_event_container_1284832\" class=\"gap_check multi_event_container filterable multi_event_list  border   location   \">\n   <div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1284832.jpg?v=1753983844\">\n \t\t </div>\n \t\t <div class=\"multi_event"
+    },
+    {
+      "index": 25,
+      "text": "LA DANSE DES 5RYTHMES®\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tSat Dec 13, 2025 to Sat Jun 13, 2026\n\t    \t \n\t    \t \n\t    \t \tAlter Activ, Chemin des Prés, Thomery, France\n\t    \t \n\t    \t Mor",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1284832.jpg?v=1753983844"
+      ],
+      "html": "<div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1284832.jpg?v=1753983844\">\n \t\t </div>\n \t\t <div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LA DANSE DES "
+    },
+    {
+      "index": 27,
+      "text": "LA DANSE DES 5RYTHMES®\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tSat Dec 13, 2025 to Sat Jun 13, 2026\n\t    \t \n\t    \t \n\t    \t \tAlter Activ, Chemin des Prés, Thomery, France\n\t    \t \n\t    \t Mor",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LA DANSE DES 5RYTHMES®</span>\n\t\t    \t \t<span data-event=\"1284832\" class=\"multi_event_desc_control_compact\" style=\"display:none;\"><a><span class=\"far fa-info"
+    },
+    {
+      "index": 28,
+      "text": "LA DANSE DES 5RYTHMES®\n\t\t    \t \tMore info",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">LA DANSE DES 5RYTHMES®</span>\n\t\t    \t \t<span data-event=\"1284832\" class=\"multi_event_desc_control_compact\" style=\"display:none;\"><a><span class=\"far fa-info-circle\"></span><span>More info</span></a></span>\n\t\t    \t"
+    },
+    {
+      "index": 29,
+      "text": "Sat Dec 13, 2025 to Sat Jun 13, 2026",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_date\" style=\"\">\n\t    \t \t<span class=\"text\">Sat Dec 13, 2025 to Sat Jun 13, 2026</span>\n\t    \t </div>"
+    },
+    {
+      "index": 30,
+      "text": "Alter Activ, Chemin des Prés, Thomery, France",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_place\" style=\"\">\n\t    \t \t<span class=\"text searchable\">Alter Activ, Chemin des Prés, Thomery, France</span>\n\t    \t </div>"
+    },
+    {
+      "index": 31,
+      "text": "More information",
+      "links": [
+        {
+          "text": "More information",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div data-event=\"1284832\" class=\"multi_event_desc_show multi_event_desc_control\" style=\"display:none;\"><a>More information</a></div>"
+    },
+    {
+      "index": 32,
+      "text": "Hide description",
+      "links": [
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_desc_hide multi_event_desc_control\" style=\"display:none;\"><a>Hide description</a></div>"
+    },
+    {
+      "index": 36,
+      "text": "ENSEMBLE...\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tFri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM\n\t    \t \n\t    \t \n\t    \t \tEcole de Théâtre et Cinéma Aberratio, Rue des Ortea",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1286720.jpg?v=1754313689"
+      ],
+      "html": "<div id=\"multi_event_container_1286720\" class=\"gap_check multi_event_container filterable multi_event_list  border   location   \">\n   <div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1286720.jpg?v=1754313689\">\n \t\t </div>\n \t\t <div class=\"multi_event"
+    },
+    {
+      "index": 37,
+      "text": "ENSEMBLE...\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tFri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM\n\t    \t \n\t    \t \n\t    \t \tEcole de Théâtre et Cinéma Aberratio, Rue des Ortea",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [
+        "https://www.billetweb.fr/files/event/150/1286720.jpg?v=1754313689"
+      ],
+      "html": "<div class=\"multi_event_info\">\n \t\t <div class=\"multi_event_picture\">\n \t\t \t<img src=\"/files/event/150/1286720.jpg?v=1754313689\">\n \t\t </div>\n \t\t <div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">ENSEMBLE...</"
+    },
+    {
+      "index": 39,
+      "text": "ENSEMBLE...\n\t\t    \t \tMore info\n\t\t    \t \n\t    \t \n\t    \t \n\t    \t \tFri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM\n\t    \t \n\t    \t \n\t    \t \tEcole de Théâtre et Cinéma Aberratio, Rue des Ortea",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        },
+        {
+          "text": "More information",
+          "href": ""
+        },
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_info_text \">\n \t\t \t <div>\n\t\t    \t <div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">ENSEMBLE...</span>\n\t\t    \t \t<span data-event=\"1286720\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span><span>Mo"
+    },
+    {
+      "index": 40,
+      "text": "ENSEMBLE...\n\t\t    \t \tMore info",
+      "links": [
+        {
+          "text": "More info",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_name searchable\">\n\t\t    \t \t<span class=\"multi_event_name_span\">ENSEMBLE...</span>\n\t\t    \t \t<span data-event=\"1286720\" class=\"multi_event_desc_control_compact\" style=\"\"><a><span class=\"far fa-info-circle\"></span><span>More info</span></a></span>\n\t\t    \t </div>"
+    },
+    {
+      "index": 41,
+      "text": "Fri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_date\" style=\"\">\n\t    \t \t<span class=\"text\">Fri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM</span>\n\t    \t </div>"
+    },
+    {
+      "index": 42,
+      "text": "Ecole de Théâtre et Cinéma Aberratio, Rue des Orteaux, Paris, France",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_place\" style=\"\">\n\t    \t \t<span class=\"text searchable\">Ecole de Théâtre et Cinéma Aberratio, Rue des Orteaux, Paris, France</span>\n\t    \t </div>"
+    },
+    {
+      "index": 43,
+      "text": "More information",
+      "links": [
+        {
+          "text": "More information",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div data-event=\"1286720\" class=\"multi_event_desc_show multi_event_desc_control\" style=\"\"><a>More information</a></div>"
+    },
+    {
+      "index": 44,
+      "text": "Hide description",
+      "links": [
+        {
+          "text": "Hide description",
+          "href": ""
+        }
+      ],
+      "images": [],
+      "html": "<div class=\"multi_event_desc_hide multi_event_desc_control\" style=\"display:none;\"><a>Hide description</a></div>"
+    },
+    {
+      "index": 46,
+      "text": "5Rythmes,Feldenkrais,chant,méditation",
+      "links": [],
+      "images": [],
+      "html": "<div class=\"multi_event_tags searchable\" style=\"display:none;\">5Rythmes,Feldenkrais,chant,méditation</div>"
+    }
+  ],
+  "structure": {
+    "h1": [],
+    "h2": [],
+    "h3": []
+  },
+  "shopLinks": [
+    {
+      "text": "Book",
+      "href": "https://www.billetweb.fr/shop.php?event=la-danse-des-5rythmes&multi=u237930&margin=no_margin&color=635BFF&margin=no_margin&color=635BFF&from_multi=1",
+      "title": ""
+    }
+  ],
+  "dateElements": []
+}

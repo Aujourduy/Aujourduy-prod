@@ -1,0 +1,85 @@
+<div class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+  <div class="card-body">
+    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+      <!-- Informations principales -->
+      <div class="flex-1">
+        <h2 class="card-title text-xl mb-2">
+          <%= link_to occurrence.effective_title, occurrence.event, class: "link link-primary hover:link-secondary" %>
+        </h2>
+
+        <div class="flex flex-wrap gap-4 text-sm text-base-content/70 mb-3">
+          <!-- Date et heure -->
+          <div class="flex items-center gap-1">
+            <span class="font-medium">📅</span>
+            <%= occurrence.formatted_date %>
+          </div>
+          <% if occurrence.start_time %>
+            <div class="flex items-center gap-1">
+              <span class="font-medium">🕐</span>
+              <%= occurrence.start_time.strftime("%H:%M") %> - <%= occurrence.end_time.strftime("%H:%M") %>
+            </div>
+          <% end %>
+
+          <!-- Lieu -->
+          <% if occurrence.venue.present? %>
+            <div class="flex items-center gap-1">
+              <span class="font-medium">📍</span>
+              <%= occurrence.venue.name %>, <%= occurrence.venue.city %>
+            </div>
+          <% elsif occurrence.event.is_online %>
+            <div class="flex items-center gap-1">
+              <span class="font-medium">🌐</span>
+              En ligne
+            </div>
+          <% end %>
+
+          <!-- Professeur -->
+          <% if occurrence.event.principal_teacher %>
+            <div class="flex items-center gap-1">
+              <span class="font-medium">👩‍🏫</span>
+              <%= occurrence.event.principal_teacher_name %>
+            </div>
+          <% end %>
+
+          <!-- Badge multi-jours si applicable -->
+          <% if occurrence.multi_day? %>
+            <div class="badge badge-info badge-sm">
+              <%= occurrence.duration_days %> jours
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Description si présente -->
+        <% if occurrence.event.description.present? %>
+          <p class="text-base-content/80 line-clamp-2">
+            <%= truncate(occurrence.event.description, length: 120) %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Prix et actions -->
+      <div class="flex flex-col items-end gap-3">
+        <div class="text-right">
+          <div class="text-xl font-bold text-success">
+            <%= occurrence.effective_price_normal %> <%= occurrence.effective_currency %>
+          </div>
+          <% if occurrence.effective_price_reduced != occurrence.effective_price_normal %>
+            <div class="text-sm text-base-content/60">
+              Réduit: <%= occurrence.effective_price_reduced %> <%= occurrence.effective_currency %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="flex gap-2">
+          <!-- Badge type -->
+          <div class="badge <%= occurrence.event.is_recurring? ? 'badge-secondary' : 'badge-accent' %>">
+            <%= occurrence.event.is_recurring? ? "Série" : "Unique" %>
+          </div>
+
+          <!-- Bouton voir détails -->
+          <%= link_to "Détails", occurrence.event, class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

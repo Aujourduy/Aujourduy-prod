@@ -1,0 +1,35 @@
+const CACHE_VERSION = 'v<%= Rails.configuration.x.build_version %>';
+const CACHE_NAME = `aujourduy-cache-${CACHE_VERSION}`;
+
+self.addEventListener('install', (event) => {
+  console.log('[SW] Installation, version:', CACHE_VERSION);
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => {
+        console.log('[SW] Suppression ancien cache:', k);
+        return caches.delete(k);
+      }))
+    )
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('[SW] Activation, version:', CACHE_VERSION);
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    console.log('[SW] Message SKIP_WAITING reçu, activation forcée');
+    self.skipWaiting();
+  }
+});

@@ -1,0 +1,405 @@
+<%= form_with(model: teacher, 
+    html: { class: "space-y-4", id: "teacher-form" },
+    data: teacher.new_record? ? { 
+      controller: "event-form-persist",
+      event_form_persist_target: "form",
+      action: "submit->event-form-persist#onSubmit"
+    } : {}) do |f| %>
+  <% if teacher.errors.any? %>
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+      <h2 class="font-semibold mb-2">
+        <%= pluralize(teacher.errors.count, "erreur") %> ont empêché l'enregistrement :
+      </h2>
+      <ul class="list-disc list-inside">
+        <% teacher.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Champ caché pour return_to -->
+  <%= hidden_field_tag :return_to, local_assigns[:return_to] %>
+
+  <!-- Upload Photo avec Cloudinary -->
+  <div>
+    <%= f.label :photo_cloudinary_id, "Photo", class: "block text-sm font-medium text-gray-700" %>
+
+    <!-- Bouton d'upload -->
+    <button id="upload_widget" type="button" class="btn btn-primary w-full mt-1">
+      Uploader et Recadrer
+    </button>
+    <div class="text-sm text-gray-500 mt-2">
+      ⚠️ IMPORTANT : Après avoir sélectionné votre image, ajustez le cadrage puis cliquez OBLIGATOIREMENT sur "Done" pour confirmer le crop.
+      <br>
+      ⏳ N'oubliez pas de cliquer sur « Modifier le professeur » pour enregistrer.
+    </div>
+
+    <!-- Preview si déjà une photo -->
+    <% if teacher.photo_cloudinary_id.present? %>
+      <div class="mt-3 flex justify-center">
+        <%= image_tag teacher.photo_url(:medium), class: "rounded-full w-24 h-24 object-cover" %>
+      </div>
+    <% end %>
+
+    <!-- Champ caché pour stocker l'ID Cloudinary -->
+    <%= f.hidden_field :photo_cloudinary_id, id: "teacher_photo_cloudinary_id" %>
+  </div>
+
+  <div>
+    <%= f.label :first_name, "Prénom", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :first_name, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, "Nom", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :last_name, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :bio, "Biographie", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :bio, rows: 4, class: "textarea textarea-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :contact_email, "Email de contact", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :contact_email, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :phone, "Téléphone", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :phone, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <!-- URL de référence -->
+  <div>
+    <%= f.label :reference_url, "Site web principal", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :reference_url, 
+        placeholder: "exemple.com ou https://exemple.com",
+        class: "input input-bordered w-full mt-1 url-field",
+        data: { url_field: true } %>
+    <p class="text-xs text-base-content/60 mt-1">
+      💡 URL principale du professeur (site perso, profil billeterie, etc.)
+      <br>
+      ℹ️ Vous pouvez saisir avec ou sans https://, il sera ajouté automatiquement
+    </p>
+  </div>
+
+  <!-- URLs de scraping -->
+  <div class="border-t border-base-300 pt-4">
+    <div class="flex items-center justify-between mb-3">
+      <label class="block text-sm font-medium text-gray-700">
+        URLs de scraping
+      </label>
+    </div>
+    
+    <p class="text-xs text-base-content/60 mb-3">
+      📡 URLs à scraper automatiquement pour récupérer les événements
+    </p>
+
+    <div id="teacher-urls-container" class="space-y-3">
+      <%= f.fields_for :teacher_urls do |url_form| %>
+        <div class="teacher-url-fields bg-base-200 p-3 rounded-lg">
+          <div class="space-y-2">
+            <!-- Nom de l'URL -->
+            <div>
+              <%= url_form.label :name, "Nom de la source", class: "text-xs font-medium" %>
+              <%= url_form.text_field :name, 
+                  placeholder: "Ex: Agenda principal, Page Facebook...",
+                  class: "input input-sm input-bordered w-full" %>
+            </div>
+            
+            <!-- URL -->
+            <div>
+              <%= url_form.label :url, "URL", class: "text-xs font-medium" %>
+              <%= url_form.text_field :url, 
+                  placeholder: "exemple.com/agenda ou https://exemple.com/agenda",
+                  class: "input input-sm input-bordered w-full url-field",
+                  data: { url_field: true },
+                  required: true %>
+            </div>
+            
+            <!-- Actif/Inactif -->
+            <div class="flex items-center justify-between">
+              <label class="label cursor-pointer gap-2">
+                <%= url_form.check_box :is_active, class: "checkbox checkbox-sm checkbox-primary" %>
+                <span class="label-text text-xs">Actif</span>
+              </label>
+              
+              <!-- Bouton supprimer -->
+              <% unless url_form.object.new_record? %>
+                <label class="label cursor-pointer gap-2">
+                  <%= url_form.check_box :_destroy, class: "checkbox checkbox-sm checkbox-error" %>
+                  <span class="label-text text-xs text-error">Supprimer</span>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Bouton ajouter URL -->
+    <button type="button" 
+            id="add-teacher-url" 
+            class="btn btn-outline btn-sm w-full mt-3">
+      ➕ Ajouter une URL de scraping
+    </button>
+  </div>
+
+  <!-- Pratiques -->
+  <div>
+    <%= f.label :practice_ids, "Pratiques enseignées (au moins 1 requis)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+    <div class="border border-base-300 rounded-lg p-4">
+      <%= render 'shared/searchable_checkboxes',
+        form: f,
+        title: "Sélection des pratiques",
+        description: "Choisissez au moins une pratique enseignée par ce professeur",
+        field_name: :practice_ids,
+        items: Practice.order(:name),
+        search_key: "practice",
+        search_placeholder: "🔍 Rechercher une pratique...",
+        badge_class: "badge-info",
+        selected_label: "Pratiques sélectionnées :",
+        item_display: ->(practice) { practice.name },
+        item_value: ->(practice) { practice.id },
+        item_search_value: ->(practice) { practice.name.downcase },
+        checked: ->(practice) { teacher.practice_ids.include?(practice.id) },
+        selected_items: -> { teacher.practice_ids.any? ? Practice.where(id: teacher.practice_ids) : [] },
+        update_badges_on_change: true
+      %>
+
+      <!-- Bouton créer nouvelle pratique -->
+      <div class="mt-3">
+        <% if teacher.new_record? %>
+          <%= link_to "➕ Créer une nouvelle pratique",
+              new_practice_path(return_to: 'teachers_new'),
+              class: "btn btn-outline btn-sm w-full",
+              data: { action: "click->event-form-persist#saveAndRedirect" } %>
+          <p class="text-xs text-base-content/60 text-center mt-2">
+            💡 Revenez ici après création
+          </p>
+        <% else %>
+          <%= link_to "➕ Créer une nouvelle pratique",
+              new_practice_path,
+              class: "btn btn-outline btn-sm w-full",
+              target: "_blank" %>
+          <p class="text-xs text-base-content/60 text-center mt-2">
+            💡 S'ouvre dans un nouvel onglet
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.submit (teacher.persisted? ? "Modifier le professeur" : "Créer le professeur"),
+             class: "btn btn-success w-full" %>
+<% end %>
+
+<!-- Script Cloudinary Upload Widget -->
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script>
+(function() {
+  // Fonction pour normaliser les URLs (ajoute https:// si besoin)
+  function normalizeUrl(url) {
+    if (!url || url.trim() === '') return '';
+    
+    url = url.trim();
+    
+    // Si l'URL commence déjà par http:// ou https://, on ne touche à rien
+    if (url.match(/^https?:\/\//i)) {
+      return url;
+    }
+    
+    // Sinon, on ajoute https://
+    return 'https://' + url;
+  }
+  
+  // Normaliser toutes les URLs avant la soumission du formulaire
+  function setupUrlNormalization() {
+    const form = document.getElementById('teacher-form');
+    if (!form) return;
+    if (form.dataset.urlNormalizeInit === "1") return;
+    
+    form.addEventListener('submit', function(e) {
+      // Normaliser tous les champs URL
+      const urlFields = form.querySelectorAll('.url-field, [data-url-field]');
+      urlFields.forEach(field => {
+        if (field.value) {
+          field.value = normalizeUrl(field.value);
+        }
+      });
+    });
+    
+    form.dataset.urlNormalizeInit = "1";
+  }
+
+  function loadCloudinary(cb) {
+    if (window.cloudinary) return cb();
+
+    let s = document.getElementById("cld-widget");
+    if (!s) {
+      s = document.createElement("script");
+      s.id = "cld-widget";
+      s.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+      s.async = true;
+      s.onload = cb;
+      document.head.appendChild(s);
+    } else {
+      s.addEventListener("load", cb, { once: true });
+    }
+  }
+
+  function initCloudinaryWidget() {
+    const btn = document.getElementById("upload_widget");
+    if (!btn) return;
+    if (btn.dataset.cldInit === "1") return;
+
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: "<%= ENV["CLOUDINARY_CLOUD_NAME"] %>",
+      uploadPreset: "teachers_crop",
+      
+      // Configuration crop STRICTE
+      cropping: true,
+      croppingAspectRatio: 1,
+      croppingValidate: true,
+      croppingCoordinatesMode: 'custom',
+      croppingShowBackButton: true,
+      croppingShowDimensions: true,
+      showSkipCropButton: false,  // Empêche de skip le crop
+      multiple: false,
+      sources: ['local', 'url'],
+      
+      // Interface
+      language: "fr",
+      text: {
+        fr: {
+          crop: {
+            title: "Recadrer votre image",
+            crop_btn: "Done - Valider le recadrage",
+            skip_btn: "Ignorer le recadrage",
+            reset_btn: "Réinitialiser",
+            close_btn: "Fermer"
+          }
+        }
+      },
+      
+      folder: "teachers"
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Résultat complet:", result);
+        
+        // Utilise d'abord l'URL eager (transformation automatique du preset)
+        let imageUrl = result.info.secure_url; // URL par défaut
+        
+        if (result.info.eager && result.info.eager.length > 0) {
+          // Utilise la première transformation eager (définie dans ton preset)
+          imageUrl = result.info.eager[0].secure_url;
+          console.log("Utilisation de l'URL eager:", imageUrl);
+        } else {
+          console.log("Pas d'URL eager, utilisation de l'URL standard");
+        }
+        
+        document.querySelector("#teacher_photo_cloudinary_id").value = result.info.public_id;
+
+        // Preview immédiat avec l'image croppée
+        const preview = document.createElement("img");
+        preview.src = imageUrl;
+        preview.className = "rounded-full w-24 h-24 object-cover";
+        
+        const container = document.querySelector("#teacher_photo_cloudinary_id").closest("div");
+        const oldPreview = container.querySelector("img");
+        if (oldPreview) oldPreview.remove();
+        
+        // Ajouter le preview dans le bon conteneur
+        const previewContainer = document.createElement("div");
+        previewContainer.className = "mt-3 flex justify-center";
+        previewContainer.appendChild(preview);
+        container.appendChild(previewContainer);
+        
+        alert("Image recadrée avec succès ! Cliquez sur 'Modifier le professeur' pour sauvegarder.");
+      }
+    });
+
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      myWidget.open();
+    });
+
+    btn.dataset.cldInit = "1";
+  }
+
+  // Script pour ajouter dynamiquement des URLs de scraping
+  function initAddUrlButton() {
+    const addBtn = document.getElementById("add-teacher-url");
+    if (!addBtn) return;
+    if (addBtn.dataset.initDone === "1") return;
+    
+    const container = document.getElementById("teacher-urls-container");
+    let urlIndex = container.querySelectorAll('.teacher-url-fields').length;
+    
+    addBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      
+      const newField = document.createElement("div");
+      newField.className = "teacher-url-fields bg-base-200 p-3 rounded-lg";
+      newField.innerHTML = `
+        <div class="space-y-2">
+          <div>
+            <label class="text-xs font-medium">Nom de la source</label>
+            <input type="text" 
+                   name="teacher[teacher_urls_attributes][${urlIndex}][name]" 
+                   placeholder="Ex: Agenda principal, Page Facebook..."
+                   class="input input-sm input-bordered w-full">
+          </div>
+          
+          <div>
+            <label class="text-xs font-medium">URL</label>
+            <input type="text" 
+                   name="teacher[teacher_urls_attributes][${urlIndex}][url]" 
+                   placeholder="exemple.com/agenda ou https://exemple.com/agenda"
+                   class="input input-sm input-bordered w-full url-field"
+                   data-url-field="true"
+                   required>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <label class="label cursor-pointer gap-2">
+              <input type="checkbox" 
+                     name="teacher[teacher_urls_attributes][${urlIndex}][is_active]" 
+                     value="1"
+                     checked
+                     class="checkbox checkbox-sm checkbox-primary">
+              <span class="label-text text-xs">Actif</span>
+            </label>
+            
+            <button type="button" class="btn btn-error btn-xs remove-url-field">
+              ✕ Retirer
+            </button>
+          </div>
+        </div>
+      `;
+      
+      container.appendChild(newField);
+      urlIndex++;
+      
+      // Ajouter listener pour retirer le champ
+      newField.querySelector('.remove-url-field').addEventListener('click', function() {
+        newField.remove();
+      });
+    });
+    
+    addBtn.dataset.initDone = "1";
+  }
+
+  function bootstrap() {
+    setupUrlNormalization();
+    loadCloudinary(initCloudinaryWidget);
+    initAddUrlButton();
+  }
+
+  document.addEventListener("turbo:load", bootstrap);
+  document.addEventListener("DOMContentLoaded", bootstrap);
+})();
+</script>

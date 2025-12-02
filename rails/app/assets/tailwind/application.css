@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+/* Masquer les warnings de licence Avo */
+.alert.alert-warning[data-controller="alert"] {
+  display: none !important;
+}
+
+/* Ou plus spécifique pour Avo */
+.avo-alert--warning {
+  display: none !important;
+}

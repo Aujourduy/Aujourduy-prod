@@ -1,0 +1,151 @@
+{
+  "maxDate": "2026-06-24",
+  "monthsExplored": 8,
+  "totalSessions": 18,
+  "sessions": [
+    {
+      "day": "26",
+      "month": 11,
+      "year": "2025",
+      "date": "2025-11-26",
+      "className": " ui-datepicker-days-cell-over 2025-11-26  ui-datepicker-current-day",
+      "monthText": "Nov 2025"
+    },
+    {
+      "day": "3",
+      "month": 12,
+      "year": "2025",
+      "date": "2025-12-03",
+      "className": " 2025-12-03 ",
+      "monthText": "Dec 2025"
+    },
+    {
+      "day": "17",
+      "month": 12,
+      "year": "2025",
+      "date": "2025-12-17",
+      "className": " 2025-12-17 ",
+      "monthText": "Dec 2025"
+    },
+    {
+      "day": "14",
+      "month": 1,
+      "year": "2026",
+      "date": "2026-01-14",
+      "className": " 2026-01-14 ",
+      "monthText": "Jan 2026"
+    },
+    {
+      "day": "28",
+      "month": 1,
+      "year": "2026",
+      "date": "2026-01-28",
+      "className": " 2026-01-28 ",
+      "monthText": "Jan 2026"
+    },
+    {
+      "day": "28",
+      "month": 1,
+      "year": "2026",
+      "date": "2026-01-28",
+      "className": " ui-datepicker-other-month 2026-01-28 ",
+      "monthText": "Feb 2026"
+    },
+    {
+      "day": "11",
+      "month": 2,
+      "year": "2026",
+      "date": "2026-02-11",
+      "className": " 2026-02-11 ",
+      "monthText": "Feb 2026"
+    },
+    {
+      "day": "25",
+      "month": 2,
+      "year": "2026",
+      "date": "2026-02-25",
+      "className": " 2026-02-25 ",
+      "monthText": "Feb 2026"
+    },
+    {
+      "day": "25",
+      "month": 2,
+      "year": "2026",
+      "date": "2026-02-25",
+      "className": " ui-datepicker-other-month 2026-02-25 ",
+      "monthText": "Mar 2026"
+    },
+    {
+      "day": "11",
+      "month": 3,
+      "year": "2026",
+      "date": "2026-03-11",
+      "className": " 2026-03-11 ",
+      "monthText": "Mar 2026"
+    },
+    {
+      "day": "25",
+      "month": 3,
+      "year": "2026",
+      "date": "2026-03-25",
+      "className": " 2026-03-25 ",
+      "monthText": "Mar 2026"
+    },
+    {
+      "day": "1",
+      "month": 4,
+      "year": "2026",
+      "date": "2026-04-01",
+      "className": " ui-datepicker-other-month 2026-04-01 ",
+      "monthText": "Mar 2026"
+    },
+    {
+      "day": "1",
+      "month": 4,
+      "year": "2026",
+      "date": "2026-04-01",
+      "className": " 2026-04-01 ",
+      "monthText": "Apr 2026"
+    },
+    {
+      "day": "6",
+      "month": 5,
+      "year": "2026",
+      "date": "2026-05-06",
+      "className": " 2026-05-06 ",
+      "monthText": "May 2026"
+    },
+    {
+      "day": "20",
+      "month": 5,
+      "year": "2026",
+      "date": "2026-05-20",
+      "className": " 2026-05-20 ",
+      "monthText": "May 2026"
+    },
+    {
+      "day": "27",
+      "month": 5,
+      "year": "2026",
+      "date": "2026-05-27",
+      "className": " 2026-05-27 ",
+      "monthText": "May 2026"
+    },
+    {
+      "day": "17",
+      "month": 6,
+      "year": "2026",
+      "date": "2026-06-17",
+      "className": " 2026-06-17 ",
+      "monthText": "Jun 2026"
+    },
+    {
+      "day": "24",
+      "month": 6,
+      "year": "2026",
+      "date": "2026-06-24",
+      "className": " 2026-06-24 ",
+      "monthText": "Jun 2026"
+    }
+  ]
+}

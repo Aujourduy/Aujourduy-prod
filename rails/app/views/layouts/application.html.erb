@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Stop & Dance" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%= favicon_link_tag 'icon.png', type: 'image/png' %>
+    <%= favicon_link_tag 'icon.svg', type: 'image/svg+xml' %>
+    <%= favicon_link_tag 'icon.png', rel: 'apple-touch-icon' %>
+    <!-- Tailwind CSS + DaisyUI (compilé localement) -->
+    <%= stylesheet_link_tag "tailwind_output", "data-turbo-track": "reload" %>
+    <%# Commenté temporairement %>
+    <%# stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "navbar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tabs", "data-turbo-track": "reload" %>
+    <!-- Font Awesome -->
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css", integrity: "sha512-y...", crossorigin: "anonymous", referrerpolicy: "no-referrer" %>
+    <%= javascript_importmap_tags %>
+    <meta name="turbo-cache-control" content="no-cache">
+    
+    <!-- Script pour gérer le thème -->
+    <script>
+      // Fonction pour appliquer le thème
+      function applyTheme(theme) {
+        const html = document.documentElement;
+        html.setAttribute('data-theme', theme);
+        
+        // Ajouter/retirer la classe .dark pour Tailwind
+        if (theme === 'dark') {
+          html.classList.add('dark');
+        } else {
+          html.classList.remove('dark');
+        }
+      }
+      
+      // Fonction pour mettre à jour TOUS les boutons de thème
+      function updateThemeButton() {
+        const themeButtons = document.querySelectorAll('#theme-button, .theme-button');
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
+        themeButtons.forEach(button => {
+          if (currentTheme === 'dark') {
+            button.textContent = 'Mode ☀️';
+          } else {
+            button.textContent = 'Mode 🌙';
+          }
+        });
+      }
+      
+      // Détection et application du thème au chargement
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(theme);
+      })();
+      
+      // Fonction pour basculer le thème
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeButton();
+      }
+      
+      // Initialiser le bouton au chargement du DOM
+      document.addEventListener('DOMContentLoaded', function() {
+        updateThemeButton();
+      });
+      
+      // Mettre à jour après Turbo navigation
+      document.addEventListener('turbo:load', function() {
+        updateThemeButton();
+      });
+    </script>
+    
+    <style>
+      /* Flash messages toujours visibles en haut */
+      .flash-messages-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1100;
+        padding: 1rem;
+        pointer-events: none;
+      }
+      
+      .flash-messages-container > * {
+        pointer-events: auto;
+      }
+      
+      /* Sur desktop, décaler sous la navbar */
+      @media (min-width: 1024px) {
+        .flash-messages-container {
+          top: 72px;
+        }
+      }
+      
+      /* Bouton scroll to top */
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 80px;
+        right: 1rem;
+        z-index: 1001;
+        transition: opacity 0.3s ease;
+      }
+      
+      #scrollTopBtn.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      @media (min-width: 1024px) {
+        #scrollTopBtn {
+          bottom: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%= render 'shared/navbar' %>
+    
+    <!-- Flash Messages -->
+    <% if notice.present? || alert.present? %>
+      <div class="flash-messages-container">
+        <div class="container mx-auto max-w-4xl">
+          <% if notice %>
+            <div class="alert alert-success shadow-lg mb-4" data-controller="flash-message">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span><%= notice %></span>
+              </div>
+              <button class="btn btn-sm btn-ghost" data-action="click->flash-message#close">✕</button>
+            </div>
+          <% end %>
+          
+          <% if alert %>
+            <div class="alert alert-error shadow-lg mb-4" data-controller="flash-message">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span><%= alert %></span>
+              </div>
+              <button class="btn btn-sm btn-ghost" data-action="click->flash-message#close">✕</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <!-- Bouton retour en haut -->
+    <button id="scrollTopBtn" class="btn btn-circle btn-primary shadow-lg hidden" title="Retour en haut">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+    
+    <main class="app-container">
+      <div class="container mx-auto px-4 py-8">
+        <%= yield %>
+      </div>
+    </main>
+    
+    <!-- Service Worker Registration - Mise à jour automatique discrète -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+              console.log('[PWA] Service Worker enregistré:', registration.scope);
+              
+              // Vérifier les mises à jour toutes les 2 minutes
+              setInterval(() => {
+                registration.update();
+              }, 2 * 60 * 1000);
+              
+              // Vérifier aussi quand l'utilisateur revient sur l'onglet
+              document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                  registration.update();
+                }
+              });
+              
+              // Détecter une nouvelle version et recharger automatiquement
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('[PWA] Nouvelle version détectée, rechargement automatique...');
+                    // Attendre un peu pour que le nouveau SW soit prêt
+                    setTimeout(() => {
+                      newWorker.postMessage({ type: 'SKIP_WAITING' });
+                    }, 1000);
+                  }
+                });
+              });
+            })
+            .catch((error) => {
+              console.error('[PWA] Erreur Service Worker:', error);
+            });
+          
+          // Recharger automatiquement quand le nouveau SW prend le contrôle
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('[PWA] Rechargement automatique pour nouvelle version');
+            window.location.reload();
+          });
+        });
+      }
+      
+      // Script Scroll to Top
+      (function() {
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        function handleScroll() {
+          if (window.scrollY > 400) {
+            scrollTopBtn.classList.remove('hidden');
+          } else {
+            scrollTopBtn.classList.add('hidden');
+          }
+        }
+        
+        function scrollToTop() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+        scrollTopBtn.addEventListener('click', scrollToTop);
+        
+        // Support pour Turbo
+        document.addEventListener('turbo:load', handleScroll);
+      })();
+    </script>
+  </body>
+</html>

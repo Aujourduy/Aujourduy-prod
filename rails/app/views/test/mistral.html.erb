@@ -1,0 +1,104 @@
+MISTRAL
+
+<div style="font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px;">
+
+  <!-- Palette 1 -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #333;">Palette 1 — Énergie Douce</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <% [{name: "primary", color: "#d4a574"}, {name: "secondary", color: "#e8c49f"}, {name: "accent", color: "#f28c28"},
+          {name: "neutral", color: "#5e5c54"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7fb3d5"},
+          {name: "success", color: "#8db88d"}, {name: "warning", color: "#e6b35d"}, {name: "error", color: "#d47562"}].
+          each do |c| %>
+        <div style="width: 180px; height: 120px; background-color:<%= c[:color] %>; border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                    color: <%= ['#fdf8f3', '#e8c49f', '#e6b35d'].include?(c[:color]) ? '#333' : '#fff' %>;">
+          <div style="text-align: center;">
+            <div style="font-weight: bold;"><%= c[:name] %></div>
+            <div><%= c[:color] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Palette 2 -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #333;">Palette 2 — Harmonie Terre</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <% [{name: "primary", color: "#a88f6f"}, {name: "secondary", color: "#c9b89f"}, {name: "accent", color: "#f28c28"},
+          {name: "neutral", color: "#4a4843"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#6fa8b8"},
+          {name: "success", color: "#7fa87f"}, {name: "warning", color: "#d4a55e"}, {name: "error", color: "#c46a53"}].
+          each do |c| %>
+        <div style="width: 180px; height: 120px; background-color:<%= c[:color] %>; border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                    color: <%= ['#fdf8f3', '#c9b89f', '#d4a55e'].include?(c[:color]) ? '#333' : '#fff' %>;">
+          <div style="text-align: center;">
+            <div style="font-weight: bold;"><%= c[:name] %></div>
+            <div><%= c[:color] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Palette 3 -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #333;">Palette 3 — Mouvement Libre</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <% [{name: "primary", color: "#b8956a"}, {name: "secondary", color: "#d4c3a8"}, {name: "accent", color: "#f28c28"},
+          {name: "neutral", color: "#3d3b37"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#8fa8c4"},
+          {name: "success", color: "#98b898"}, {name: "warning", color: "#d4b375"}, {name: "error", color: "#b86a5e"}].
+          each do |c| %>
+        <div style="width: 180px; height: 120px; background-color:<%= c[:color] %>; border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                    color: <%= ['#fdf8f3', '#d4c3a8', '#d4b375'].include?(c[:color]) ? '#333' : '#fff' %>;">
+          <div style="text-align: center;">
+            <div style="font-weight: bold;"><%= c[:name] %></div>
+            <div><%= c[:color] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Palette 4 -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #333;">Palette 4 — Connexion Authentique</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+          {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+          {name: "success", color: "#8ca88c"}, {name: "warning", color: "#c4a56e"}, {name: "error", color: "#a85e53"}].
+          each do |c| %>
+        <div style="width: 180px; height: 120px; background-color:<%= c[:color] %>; border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                    color: <%= ['#fdf8f3', '#b8a895', '#c4a56e'].include?(c[:color]) ? '#333' : '#fff' %>;">
+          <div style="text-align: center;">
+            <div style="font-weight: bold;"><%= c[:name] %></div>
+            <div><%= c[:color] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Palette 5 -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="text-align: center; color: #333;">Palette 5 — Rythme Apaisant</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+      <% [{name: "primary", color: "#a89c8a"}, {name: "secondary", color: "#c4b8a5"}, {name: "accent", color: "#f28c28"},
+          {name: "neutral", color: "#45433e"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#8fa8c4"},
+          {name: "success", color: "#98b898"}, {name: "warning", color: "#d4b375"}, {name: "error", color: "#b8756a"}].
+          each do |c| %>
+        <div style="width: 180px; height: 120px; background-color:<%= c[:color] %>; border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+                    color: <%= ['#fdf8f3', '#c4b8a5', '#d4b375'].include?(c[:color]) ? '#333' : '#fff' %>;">
+          <div style="text-align: center;">
+            <div style="font-weight: bold;"><%= c[:name] %></div>
+            <div><%= c[:color] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>

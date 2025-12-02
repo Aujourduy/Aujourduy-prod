@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacher: one
+  url: MyString
+  name: MyString
+  last_scraped_at: 2025-10-17 10:28:03
+  is_active: false
+  scraping_config: 
+
+two:
+  teacher: two
+  url: MyString
+  name: MyString
+  last_scraped_at: 2025-10-17 10:28:03
+  is_active: false
+  scraping_config: 

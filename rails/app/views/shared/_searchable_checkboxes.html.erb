@@ -1,0 +1,87 @@
+<%
+# Partial pour afficher une liste de checkboxes avec recherche
+#
+# Paramètres requis :
+#   form:              Form builder
+#   title:             Titre de la section (ex: "📍 Villes favorites")
+#   description:       Description (ex: "Sélectionnez les villes...")
+#   field_name:        Nom du champ (symbol, ex: :favorite_cities)
+#   items:             Collection d'items (Array ou ActiveRecord::Relation)
+#   search_key:        Data-attribute pour filtrage (string, ex: "city")
+#   search_placeholder: Placeholder de recherche (ex: "🔍 Rechercher une ville...")
+#
+# Paramètres optionnels :
+#   badge_class:       Classe CSS pour badges (default: "badge-primary")
+#   selected_label:    Texte pour items sélectionnés (default: "Sélection :")
+#   show_badges:       Afficher badges sélectionnés (default: true)
+#   item_display:      Proc pour afficher le texte (default: to_s)
+#   item_value:        Proc pour la valeur checkbox (default: identity)
+#   item_search_value: Proc pour valeur recherche (default: item_display lowercased)
+#   selected_items:    Proc pour récupérer items sélectionnés à afficher
+#   with_hidden_field: Ajouter champ caché pour gérer décochages (default: false)
+#   update_badges_on_change: Mettre à jour badges en temps réel (default: false)
+
+badge_class = local_assigns.fetch(:badge_class, "badge-primary")
+selected_label = local_assigns.fetch(:selected_label, "Sélection :")
+show_badges = local_assigns.fetch(:show_badges, true)
+item_display = local_assigns.fetch(:item_display, ->(item) { item.to_s })
+item_value = local_assigns.fetch(:item_value, ->(item) { item })
+item_search_value = local_assigns.fetch(:item_search_value, ->(item) { item_display.call(item).downcase })
+with_hidden_field = local_assigns.fetch(:with_hidden_field, false)
+update_badges_on_change = local_assigns.fetch(:update_badges_on_change, false)
+%>
+
+<div class="card bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title"><%= title %></h2>
+    <p class="text-sm text-base-content/70 mb-4">
+      <%= description %>
+    </p>
+
+    <% if with_hidden_field %>
+      <%= hidden_field_tag "#{form.object_name}[#{field_name}][]", "" %>
+    <% end %>
+
+    <div data-controller="search-filter" data-search-filter-key-value="<%= search_key %>">
+      <input
+        type="text"
+        placeholder="<%= search_placeholder %>"
+        class="input input-bordered w-full mb-4"
+        data-action="input->search-filter#filter"
+      >
+
+      <div class="max-h-60 overflow-y-auto border border-base-300 rounded-lg p-4 w-full box-border" data-search-filter-target="list">
+        <% items.each do |item| %>
+          <label class="label cursor-pointer justify-start gap-3" data-<%= search_key %>="<%= item_search_value.call(item) %>">
+            <%= form.check_box field_name,
+                {
+                  multiple: true,
+                  checked: local_assigns[:checked]&.call(item),
+                  class: "checkbox checkbox-primary",
+                  data: update_badges_on_change ? { action: "change->search-filter#updateBadges" } : {}
+                },
+                item_value.call(item),
+                nil %>
+            <span class="label-text"><%= item_display.call(item) %></span>
+          </label>
+        <% end %>
+      </div>
+
+      <% if show_badges %>
+        <div class="mt-4" data-search-filter-target="badges">
+          <% if local_assigns[:selected_items].present? %>
+            <% selected = selected_items.call %>
+            <% if selected.any? %>
+              <p class="text-sm font-medium mb-2"><%= selected_label %></p>
+              <div class="flex flex-wrap gap-2">
+                <% selected.each do |item| %>
+                  <span class="badge <%= badge_class %>"><%= item_display.call(item) %></span>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Liste des ateliers de danse libre</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/appli_icon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Inclusion de PapaParse pour le CSV -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.10.5/dist/algoliasearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@google-cloud/analytics-data@2.1.0/dist/analytics-data.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQM26E6VBJ"></script>
+
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5e6d3;
+      color: #5c4033;
+      padding-bottom: 80px;
+    }
+
+    .general-container {
+      margin: auto;
+      width: 60%;
+    }
+
+    @media (max-width: 1024px) and (orientation: portrait) {
+      .general-container {
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 1024px) and (orientation: landscape) {
+      .general-container {
+        width: 70%;
+      }
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      margin-top: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .page-header .logo {
+      width: 15vw;
+      max-width: 70px;
+      height: auto;
+    }
+
+    .page-header .slogan {
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding-left: 0px;
+      text-align: left;
+      display: flex;
+      justify-content: center;
+    }
+
+    h1.text-center {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    #screen-dimensions,
+    #screen-info {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    #searchbox {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+    }
+
+    #hits {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .ais-InfiniteHits-list {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .ais-InfiniteHits-loadMore {
+      display: none !important;
+    }
+
+    .ais-SearchBox-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+    }
+
+    .ais-SearchBox-form::after,
+    .ais-SearchBox-reset,
+    .ais-SearchBox-submit {
+      display: none !important;
+    }
+
+    .card {
+      border: none;
+      background-color: #fff;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-custom {
+      min-width: 300px;
+    }
+
+    .card .col-auto {
+      width: 30% !important;
+      max-width: 30% !important;
+      min-width: 30% !important;
+      flex: 0 0 30% !important;
+    }
+
+    .card .col {
+      width: 70% !important;
+      max-width: 70% !important;
+      flex: 0 0 70% !important;
+    }
+
+    .img-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+    }
+
+    .img-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 0 0 0 10px;
+    }
+
+    .bottom-buttons {
+      position: fixed !important;
+      bottom: 10px !important;
+      left: 50% !important;
+      transform: translateX(-50%) translateZ(0) !important;
+      z-index: 9999 !important;
+      will-change: transform;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 15px;
+      display: flex;
+      gap: 15px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-buttons button {
+      background: transparent;
+      color: #5c4033;
+      border: 1px solid #5c4033;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .bottom-buttons button:hover {
+      background: #5c4033;
+      color: white;
+    }
+
+    ::marker {
+      content: none !important;
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        height: auto !important;
+        min-height: 5vh !important;
+      }
+    }
+
+    .weekday-info,
+    .date-info,
+    .time-info,
+    .ville-info,
+    .tarif-info,
+    .animateur-info,
+    .titre-info {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 0.11rem;
+    }
+
+    .truncated {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .vignette-card {
+      padding-bottom: 0 !important;
+      background-color: rgba(255, 255, 255, 0.5)!important;
+    }
+
+    .vignette-row {
+      height: auto !important;
+      min-height: 100% !important;
+    }
+
+    .vignette-img-container {
+      height: 100% !important;
+    }
+
+    /* Style pour la section Citation du jour */
+    #citation-container {
+      max-width: 600px;
+      margin: 0px auto;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 5px 10px 5px 10px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgb(192, 57, 4);
+      text-align: center;
+      color: rgba(0, 0, 0, 0.7);;
+    }
+
+    .ligne {
+      width: 20vw;
+      border: none;
+      border-top: 2px solid #000; /* ou une autre couleur/épaisseur */
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+  
+</head>
+
+<body>
+
+  <header id="page-header" class="page-header">
+    <img id="logo" src="./logo192.png" alt="Logo" class="logo">
+    <div id="slogan" class="slogan" style="width: 100%; padding-left: 5px; padding-right: 5px; text-align: left;">
+      <!-- Section Titre -->
+      <h2>Des belles danses libres pour révéler notre vérité</h2>
+    </div>
+  </header>
+  
+
+
+    <h5 id="title-line1" class="text-center">Site proposé par Duy Dang </h5>
+    <h6 id="title-line2" class="text-center">Version beta : v77</h6>
+    <h6 id="title-line3" class="text-center">Publiez vos activités en allant dans Contact</h6>
+
+    <!-- Section Citation du jour -->
+<!-- Section Citation du jour -->
+
+
+<!-- Section Citation du jour -->
+
+
+<!-- Section Citation du jour -->
+<div id="citation-container">
+  <p>Chargement de la citation du jour...</p>
+</div>
+
+<hr class="ligne">
+
+<div id="screen-dimensions"></div>
+<div id="screen-info"></div>
+<div id="searchbox" class="mb-3"></div>
+<div id="hits" class="mt-3"></div>
+</div>
+<div id="bottom-buttons" class="bottom-buttons">
+  <button onclick="window.location.href='https://tally.so/r/mZD1by';">Contact</button>
+  <button onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+  <button id="installButton" style="display: none;">Installer</button>
+</div>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<!-- Script pour la citation du jour via Algolia -->
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.js"></script>
+
+<!--***************************  DEB CITATION *********************************-->
+  <script>
+
+  (function () {
+      // Fonction de formatage de la date au format "jj/mm/aaaa"
+      function formatDate(date) {
+          let dd = String(date.getDate()).padStart(2, '0');
+          let mm = String(date.getMonth() + 1).padStart(2, '0');
+          let yyyy = date.getFullYear();
+          return dd + '/' + mm + '/' + yyyy;
+      }
+      
+      const today = new Date();
+      const todayFormatted = formatDate(today);
+      console.log("Date du jour:", todayFormatted);
+      
+      // Clés Algolia
+      const applicationID = "Y4MR1NZHUG";
+      const apiKey = "e2c5211b0c5fd5bd468831b566fe0711";
+      const indexName = "Perspectives";
+      
+      // Effectuer la requête Algolia
+      fetch(`https://${applicationID}-dsn.algolia.net/1/indexes/${indexName}?query=${todayFormatted}`, {
+          method: "GET",
+          headers: {
+              "X-Algolia-Application-Id": applicationID,
+              "X-Algolia-API-Key": apiKey
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log("Données Algolia:", data);
+          
+          if (data.hits && data.hits.length > 0) {
+              let citation = data.hits[0];
+              const citationHTML = `
+                  <span style="font-size: 0.9rem;">
+                      Perspective d'aujourduy (${citation.Date}) : <br>
+                  </span>
+                  <q><strong>${citation.Perspective}</strong></q>
+                  <em>${citation.Auteur}</em>
+              `;
+              document.getElementById('citation-container').innerHTML = citationHTML;
+          } else {
+              document.getElementById('citation-container').innerHTML = "<p>Aucune citation n'est prévue pour aujourd'hui.</p>";
+          }
+      })
+      .catch(error => {
+          console.error('Erreur lors du chargement de la citation depuis Algolia:', error);
+          document.getElementById('citation-container').innerHTML = "<p>Erreur de chargement de la citation.</p>";
+      });
+  })();
+  </script>
+
+<!--***************************  FIN CITATION *********************************-->
+
+<!--***************************  DEBUT PROPOSITIONS ALGOLIA *********************************-->
+  <!-- Script pour InstantSearch (Algolia) -->
+  <script>
+    // Ici, on peut utiliser une autre variable ou simplement utiliser "todayAlgolia" si nécessaire
+    function getMinutesSince2000(date) {
+      const referenceDate = new Date("2000-01-01T00:00:00Z");
+      return Math.floor((date - referenceDate) / (1000 * 60));
+    }
+    const todayAlgolia = new Date();
+    const todayMinutes = getMinutesSince2000(todayAlgolia);
+    const search = instantsearch({
+      indexName: 'Aujourduy',
+      searchClient: algoliasearch('Y4MR1NZHUG', 'e2c5211b0c5fd5bd468831b566fe0711')
+    });
+    search.addWidgets([
+      instantsearch.widgets.configure({
+        hitsPerPage: 1000,
+        filters: `DateTimeMinutes >= ${todayMinutes}`
+      }),
+      instantsearch.widgets.searchBox({
+        container: '#searchbox',
+        placeholder: 'Rechercher: Ville, Prof...'
+      }),
+      instantsearch.widgets.infiniteHits({
+        container: '#hits',
+        templates: {
+          item(hit) {
+            return `
+              <div class="card mb-3 card-custom vignette-card" onclick="window.location.href='${hit['Proposition URL']}'">
+                <div class="row g-0 flex-nowrap vignette-row" style="height: 100%; width: 100%;">
+                  <div class="col-auto vignette-image-col">
+                    <div class="img-container vignette-img-container">
+                      <img src="${hit['Image URL']}" class="img-fluid rounded-start" alt="${hit['Titre proposition']}">
+                    </div>
+                  </div>
+                  <div class="col d-flex align-items-center vignette-content-col">
+                    <div class="card-body vignette-body">
+                      <div class="vignette-first-line">
+                        <img src="pictogramme_date_2.png" alt="Date Icon" class="pictogramme pictogramme-date" style="height: 1em; margin-right: 0.2em;">
+                        <span class="weekday-info">
+                          ${(() => {
+                            const date = new Date(hit['Date de début']);
+                            const weekday = date.toLocaleDateString('fr-FR', { weekday: 'short' });
+                            const formattedWeekday = weekday.charAt(0).toUpperCase() + weekday.slice(1);
+                            return formattedWeekday;
+                          })()}
+                        </span>
+                        <span class="date-info truncated">
+                          ${(() => {
+                            const date = new Date(hit['Date de début']);
+                            const day = ("0" + date.getDate()).slice(-2);
+                            const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            const year = date.getFullYear().toString().slice(-2);
+                            return `${day}/${month}/${year}`;
+                          })()}
+                        </span>
+                        <span class="time-info truncated">
+                          ${hit['Heure de début'].slice(0, 5)}
+                        </span>
+                      </div>
+                      <div class="vignette-animateur animateur-info truncated">
+                        <img src="pictogramme_animateur_2.png" alt="Animateur Icon" class="pictogramme pictogramme-animateur" style="height: 1em; margin-right: 0.2em;">
+                        ${hit['Animateur Pseudo']}
+                      </div>
+                      <div class="vignette-animateur animateur-info truncated">
+                        <img src="pictogramme_info.png" alt="Animateur pratique" class="pictogramme pictogramme-animateur" style="height: 1em; margin-right: 0.2em;">
+                        ${hit['Animateur pratique']}
+                      </div>
+                      <div class="vignette-titre titre-info truncated">
+                        <img src="pictogramme_titre_2.png" alt="Titre Icon" class="pictogramme pictogramme-titre" style="height: 1em; margin-right: 0.2em;">
+                        ${hit['Titre proposition'].toLowerCase().charAt(0).toUpperCase()}${hit['Titre proposition'].slice(1).toLowerCase()}
+                      </div>
+                      <div class="vignette-fourth-line">
+                        <span class="ville-info truncated">
+                          <img src="pictogramme_ville_2.png" alt="Ville Icon" class="pictogramme pictogramme-ville" style="height: 1em; margin-right: 0.2em;">
+                          ${hit.Ville} (${hit['Pays Code']})
+                        </span>
+                        <span class="tarif-info truncated">
+                          <img src="pictogramme_tarif_2.png" alt="Tarif Icon" class="pictogramme pictogramme-tarif" style="height: 1em; margin-right: 0.2em;">
+                          ${(() => {
+                            const tarifNormal = hit['Tarif normal'];
+                            const tarifReduit = hit['Tarif réduit'];
+                            let output = "";
+                            if (tarifNormal && tarifNormal != 0) {
+                              output += tarifNormal + '€';
+                            }
+                            if (tarifReduit && tarifReduit != 0) {
+                              if (output !== "") { output += ' / '; }
+                              output += tarifReduit + '€';
+                            }
+                            return output;
+                          })()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          }
+        }
+      })
+    ]);
+    search.start();
+  </script>
+
+<!--***************************  FIN PROPOSITIONS ALGOLIA *********************************-->
+
+  <script>
+    // Code relatif au service worker et à l'installation PWA.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log("Service Worker enregistré :", reg))
+        .catch(err => console.log("Erreur d'enregistrement du Service Worker :", err));
+    }
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installButton').style.display = 'block';
+    });
+    document.getElementById('installButton').addEventListener('click', (e) => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('L\'utilisateur a accepté l\'installation');
+        } else {
+          console.log('L\'utilisateur a refusé l\'installation');
+        }
+        deferredPrompt = null;
+      });
+    });
+  </script>
+
+  <!-- Google Tag Manager & Cloudflare Web Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQM26E6VBJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-MQM26E6VBJ');
+  </script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "edd5eaf9ed6440e1a319b4aa93c5522e"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "6a369a4b9e7e4281816c4883a3373bf8"}'></script>
+</body>
+
+</html>duy@duy-ThinkPad-T14s-Gen-1:~/Codes$ ^C
+duy@duy-ThinkPad-T14s-Gen-1:~/Codes$ 
+

@@ -1,0 +1,155 @@
+<div class="w-full max-w-md mx-auto bg-base-400 rounded-2xl shadow-lg p-8">
+  <div class="flex justify-center mb-6">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", alt: "Stop & Dance", class: "h-12 w-auto" %>
+    <% end %>
+  </div>
+
+  <h2 class="text-2xl font-bold text-center mb-6">Modifier mon profil</h2>
+
+  <!-- Section Avatar -->
+  <div class="flex flex-col items-center mb-6">
+    <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-200 mb-4">
+      <% if current_user.avatar_url %>
+        <%= image_tag current_user.avatar_url(:medium),
+            alt: "Avatar", class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="w-full h-full flex items-center justify-center text-gray-400">
+          <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Bouton d’upload Cloudinary -->
+    <button id="upload_avatar_widget" type="button" class="btn btn-primary w-full mt-1">
+      Uploader et Recadrer mon avatar
+    </button>
+
+    <div class="text-sm text-gray-500 mt-2">
+      ⏳ Parfois il faut recharger la page si le bouton de ne fonctionne pas.
+      <br>
+      ⚠️ N’oubliez pas de cliquer sur « Modifier le professeur » pour enregistrer votre nouvelle photo.
+   </div>
+
+  </div>
+
+  <!-- Formulaire Devise -->
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :patch, class: "space-y-4" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- Champ caché pour stocker l’ID Cloudinary -->
+    <%= f.hidden_field :avatar_cloudinary_id, id: "user_avatar_cloudinary_id" %>
+
+    <div>
+      <%= f.label :first_name, "Prénom", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :first_name, autofocus: true, class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :last_name, "Nom", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :last_name, class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="text-sm text-amber-600 bg-amber-50 p-3 rounded">
+        En attente de confirmation pour : <%= resource.unconfirmed_email %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :password, "Nouveau mot de passe", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full mt-1", placeholder: "Laisser vide si inchangé" %>
+      <% if @minimum_password_length %>
+        <p class="text-xs text-gray-500 mt-1">(<%= @minimum_password_length %> caractères minimum)</p>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, "Confirmation du nouveau mot de passe", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :current_password, "Mot de passe actuel", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full mt-1" %>
+      <p class="text-xs text-gray-500 mt-1">Requis pour confirmer les modifications</p>
+    </div>
+
+    <%= f.submit "Mettre à jour", class: "btn btn-success w-full" %>
+  <% end %>
+
+  <div class="divider">Actions</div>
+
+  <div class="space-y-2">
+    <%= link_to "Annuler mon compte", registration_path(resource_name), 
+        data: { 
+          confirm: "Êtes-vous sûr(e) ? Cette action est irréversible.",
+          turbo_method: :delete 
+        }, 
+        class: "btn btn-error btn-outline w-full" %>
+    
+    <%= link_to "Retour", :back, class: "btn btn-ghost w-full" %>
+  </div>
+</div>
+
+<!-- Script Cloudinary Upload Widget -->
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script>
+(function() {
+  function initCloudinaryAvatarWidget() {
+    const btn = document.getElementById("upload_avatar_widget");
+    if (!btn) return;
+    if (btn.dataset.cldInit === "1") return;
+
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: "<%= ENV["CLOUDINARY_CLOUD_NAME"] %>",
+      uploadPreset: "<%= ENV["CLOUDINARY_UPLOAD_PRESET"] %>",
+      cropping: true,
+      croppingAspectRatio: 1,
+      multiple: false,
+      folder: "avatars",
+      language: "fr",
+      text: {
+        fr: {
+          crop: { title: "Recadrer l’image", crop_btn: "Recadrer", skip_btn: "Ignorer", reset_btn: "Réinitialiser" },
+          local: { browse: "Choisir une image" },
+          or: "ou"
+        }
+      }
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        document.querySelector("#user_avatar_cloudinary_id").value = result.info.public_id;
+
+        // Preview immédiate
+        const preview = document.createElement("img");
+        preview.src = result.info.secure_url;
+        preview.className = "rounded-full w-24 h-24 mt-3 object-cover mx-auto";
+        const container = document.querySelector("#user_avatar_cloudinary_id").closest("div");
+        const oldPreview = container.querySelector("img");
+        if (oldPreview) oldPreview.remove();
+        container.appendChild(preview);
+
+        alert("Votre avatar a été mis à jour en aperçu.\n\nCliquez sur « Mettre à jour » pour enregistrer définitivement.");
+      }
+    });
+
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      myWidget.open();
+    });
+
+    btn.dataset.cldInit = "1";
+  }
+
+  document.addEventListener("turbo:load", initCloudinaryAvatarWidget);
+  document.addEventListener("turbo:render", initCloudinaryAvatarWidget); // ⚠️ important avec Turbo
+  document.addEventListener("DOMContentLoaded", initCloudinaryAvatarWidget);
+})();
+</script>

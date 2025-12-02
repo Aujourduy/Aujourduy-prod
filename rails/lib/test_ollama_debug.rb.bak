@@ -1,0 +1,72 @@
+# Test avec debug pour voir ce que Ollama retourne
+
+test_html = <<~HTML
+  <html>
+  <body>
+    <h1>Marc Silvestre - Agenda</h1>
+
+    <div class="event">
+      <h2>VAGUES PARIS</h2>
+      <p>Tous les vendredis de 19h30 à 21h30</p>
+      <p>Prix: 20€ / 17€ réduit</p>
+      <p>Lieu: Micadanses - Studio Maybe - 15 rue Geoffroy L'Asnier - 75004 Paris</p>
+      <p>Type: 5 Rythmes</p>
+      <p>Reprise le vendredi 5 septembre 2025</p>
+    </div>
+
+    <div class="event">
+      <h2>STAGE WEEKEND LYON</h2>
+      <p>Les 14-15 mars 2026</p>
+      <p>Prix: 120€</p>
+      <p>Lieu: Studio Danse Lyon, Lyon</p>
+      <p>Type: 5 Rythmes - Stage intensif</p>
+      <p>Professeur: Marc Silvestre</p>
+    </div>
+  </body>
+  </html>
+HTML
+
+puts '⏳ Test extraction avec Ollama...'
+puts "HTML size: #{test_html.length} caractères"
+puts
+
+# Créer le service
+service = QwenApiService.new(test_html, 'https://marcsilvestre.com/agenda')
+
+# Activer les logs
+Rails.logger.level = Logger::DEBUG
+
+# Extraire
+events = service.extract!
+
+puts
+puts "="*80
+puts "RÉSULTATS"
+puts "="*80
+
+if events.nil?
+  puts "❌ Extraction échouée"
+  puts "Erreur: #{service.error}"
+else
+  puts "✅ Extraction terminée"
+  puts "Nombre d'événements: #{events.count}"
+  puts
+  if events.empty?
+    puts "⚠️  Aucun événement extrait"
+    puts "Le modèle n'a peut-être pas compris le format ou le HTML"
+  else
+    puts "Événements extraits:"
+    events.each_with_index do |event, i|
+      puts
+      puts "Événement #{i+1}:"
+      puts "  Titre: #{event.dig('event', 'title')}"
+      puts "  Description: #{event.dig('event', 'description')}"
+      puts "  Date début: #{event.dig('event', 'start_date')}"
+      puts "  Date fin: #{event.dig('event', 'end_date')}"
+      puts "  Prix normal: #{event.dig('event', 'price_normal')}€"
+      puts "  Prix réduit: #{event.dig('event', 'price_reduced')}€"
+      puts "  Ville: #{event.dig('venue', 'city')}"
+      puts "  Adresse: #{event.dig('venue', 'address_line1')}"
+    end
+  end
+end

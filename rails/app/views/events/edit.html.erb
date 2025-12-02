@@ -1,0 +1,231 @@
+<div class="container mx-auto p-6">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Modifier l'événement</h1>
+
+    <%= form_with model: @event, local: true, html: { id: "event-form" }, class: "space-y-8" do |form| %>
+      <% if @event.errors.any? %>
+        <div class="alert alert-error">
+          <div>
+            <h3 class="font-bold">Erreurs détectées :</h3>
+            <ul class="list-disc list-inside">
+              <% @event.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- === INFORMATIONS GÉNÉRALES === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-primary text-primary-content p-4">
+          <h2 class="card-title">📋 Informations générales</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <!-- Titre -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Titre de l'événement</span>
+            </label>
+            <%= form.text_field :title, class: "input input-bordered w-full" %>
+          </div>
+
+          <!-- Description -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Description</span>
+            </label>
+            <%= form.text_area :description, rows: 4, class: "textarea textarea-bordered w-full" %>
+          </div>
+
+          <!-- URL de référence -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">URL de référence</span>
+            </label>
+            <%= form.text_field :source_url, 
+                class: "input input-bordered w-full url-field", 
+                placeholder: "exemple.com ou https://exemple.com",
+                data: { url_field: true } %>
+            <label class="label">
+              <span class="label-text-alt text-base-content/60">
+                💡 Lien vers la page officielle de l'événement (optionnel)
+              </span>
+            </label>
+          </div>
+
+          <!-- Professeur principal -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Professeur principal</span>
+            </label>
+            <%= form.select :principal_teacher_id, 
+                options_from_collection_for_select(@teachers, :id, :full_name, @event.principal_teacher_id),
+                { prompt: "Sélectionner un professeur" },
+                { class: "select select-bordered w-full" } %>
+          </div>
+
+          <!-- Pratique -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Pratique</span>
+            </label>
+            <%= form.select :practice_id, 
+                options_from_collection_for_select(Practice.order(:name), :id, :name, @event.practice_id),
+                { prompt: "Sélectionner une pratique" },
+                { class: "select select-bordered w-full" } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- === TARIFICATION === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-success text-success-content p-4">
+          <h2 class="card-title">💰 Tarification</h2>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Prix normal -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Prix normal</span>
+              </label>
+              <%= form.number_field :price_normal, step: 0.01, min: 0, class: "input input-bordered" %>
+            </div>
+
+            <!-- Prix réduit -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Prix réduit</span>
+              </label>
+              <%= form.number_field :price_reduced, step: 0.01, min: 0, class: "input input-bordered" %>
+            </div>
+
+            <!-- Devise -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Devise</span>
+              </label>
+              <%= form.select :currency, 
+                  options_for_select([['Euro (€)', 'EUR'], ['Dollar US ($)', 'USD'], ['Dollar Canadien (CA$)', 'CAD'], ['Franc Suisse (CHF)', 'CHF']], @event.currency),
+                  {},
+                  { class: "select select-bordered w-full" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === MODALITÉS (EN LIGNE / EN PERSONNE) === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-secondary text-secondary-content p-4">
+          <h2 class="card-title">🌐 Modalités</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-4">
+              <%= form.check_box :is_online, class: "checkbox checkbox-primary", data: { action: "change->event-form#toggleOnlineUrl" } %>
+              <div>
+                <span class="label-text font-semibold">Événement accessible en ligne</span>
+                <p class="label-text-alt text-base-content/60">Cochez si l'événement est diffusé en ligne (Zoom, Stream, etc.)</p>
+              </div>
+            </label>
+          </div>
+
+          <div id="online-url-field" class="form-control <%= 'hidden' unless @event.is_online %>" data-event-form-target="onlineUrlField">
+            <label class="label"><span class="label-text font-semibold">Lien de l'événement en ligne</span></label>
+            <%= form.text_field :online_url, 
+                class: "input input-bordered w-full url-field", 
+                placeholder: "https://zoom.us/j/123456789 ou lien de stream",
+                data: { url_field: true } %>
+            <label class="label">
+              <span class="label-text-alt text-base-content/60">
+                💡 Lien Zoom, Youtube Live, ou autre plateforme de diffusion
+              </span>
+            </label>
+          </div>
+
+          <div class="alert alert-info">
+            <div>
+              <h3 class="font-bold">ℹ️ Types d'événements</h3>
+              <ul class="text-sm list-disc list-inside mt-2">
+                <li><strong>En personne uniquement</strong> : Ne cochez pas "accessible en ligne"</li>
+                <li><strong>En ligne uniquement</strong> : Cochez "accessible en ligne" et ne renseignez pas de lieu physique</li>
+                <li><strong>Hybride</strong> : Cochez "accessible en ligne" ET renseignez un lieu physique</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === STATUT === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-warning text-warning-content p-4">
+          <h2 class="card-title">⚡ Statut</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Statut de l'événement</span>
+            </label>
+            <%= form.select :status,
+                options_for_select([['Actif', 'active'], ['Brouillon', 'draft'], ['Annulé', 'cancelled']], @event.status),
+                {},
+                { class: "select select-bordered w-full" } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- === INFO RÉCURRENCE === -->
+      <% if @event.is_recurring? %>
+        <div class="alert alert-info">
+          <div>
+            <h3 class="font-bold">ℹ️ Événement récurrent</h3>
+            <p>Cet événement est récurrent. Pour modifier les occurrences individuelles, consultez la liste des occurrences.</p>
+          </div>
+        </div>
+      <% end %>
+      
+      <!-- Info si scrapé -->
+      <% if @event.scraped? %>
+        <div class="alert alert-warning">
+          <div>
+            <h3 class="font-bold">⚠️ Événement scrapé automatiquement</h3>
+            <p>Cet événement a été importé depuis : <strong><%= @event.teacher_url.display_name %></strong></p>
+            <p class="text-sm mt-1">Les modifications manuelles peuvent être écrasées lors du prochain scraping.</p>
+          </div>
+        </div>
+      <% end %>
+      
+      <!-- === ACTIONS === -->
+      <div class="flex justify-end space-x-4">
+        <%= link_to "Annuler", @event, class: "btn btn-ghost" %>
+        <%= form.submit "Mettre à jour", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Fonction pour normaliser les URLs
+function normalizeUrl(url) {
+  if (!url || url.trim() === '') return '';
+  url = url.trim();
+  if (url.match(/^https?:\/\//i)) return url;
+  return 'https://' + url;
+}
+
+document.addEventListener('turbo:load', () => {
+  // Normaliser les URLs avant soumission
+  const form = document.getElementById('event-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const urlFields = form.querySelectorAll('.url-field, [data-url-field]');
+      urlFields.forEach(field => {
+        if (field.value) {
+          field.value = normalizeUrl(field.value);
+        }
+      });
+    });
+  }
+});
+</script>

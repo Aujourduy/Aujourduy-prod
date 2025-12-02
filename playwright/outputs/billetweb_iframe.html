@@ -1,0 +1,884 @@
+<!DOCTYPE html><html lang="en" data-sid="b7342097d6af690d03600c4cd123875b"><!--<![endif]--><head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="language" content="en-en">
+	<title></title>
+
+	<link rel="stylesheet" href="/css/bo/jquery-ui.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/css/bo/jquery.ui.theme.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/ext/fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="/ext/colpick/colpick.css">
+	<link rel="stylesheet" type="text/css" href="/css/shop.css?v=254">
+	<link rel="stylesheet/less" type="text/css" href="/css/shop.less.css?v=254"><style type="text/css" id="less:css-shop:less:css-v-254">/*----------------------------------------------------------------------------------------------------------------
+  GLOBAL
+------------------------------------------------------------------------------------------------------------------*/
+body .main_color {
+  color: #635BFF;
+}
+body.organizer_page.custom_color {
+  border-top: none;
+}
+.organizer_page .filter_container {
+  padding-top: 0px;
+}
+#fallback {
+  background-color: #635BFF;
+}
+body {
+  color: #505050;
+  background-color: #FFF;
+}
+input,
+select {
+  color: #505050;
+  background-color: #FFF;
+}
+#checkout_step_description {
+  color: #635BFF;
+}
+#checkout .active.step {
+  border-color: #635BFF;
+}
+.public .shop_step1_table .shop_step1_ticket {
+  box-shadow: inset 0 0 0px 1px #FFF;
+}
+.public .shop_step1_table .shop_step1_ticket.selected {
+  border-color: #635BFF;
+  box-shadow: inset 0 0 0px 1px #635BFF;
+}
+.step_2 .shop_step1_table .shop_step1_ticket:has(.shop_step1_quantity_radio:checked) {
+  border-color: #635BFF;
+  box-shadow: inset 0 0 0px 1px #635BFF;
+}
+.shop_step1_choice {
+  color: #635BFF;
+}
+.step_2 .shop_step1_table .shop_step1_ticket:has(.shop_step1_quantity_radio_container .shop_step1_quantity_select[value='1']:checked) {
+  border-color: #635BFF;
+  box-shadow: inset 0 0 0px 1px #635BFF;
+}
+.public .shop_step1_table .shop_step1_quantity.selected .shop_step1_quantity_icon_remove {
+  opacity: 1;
+  background: #635BFF;
+}
+.public .shop_step1_table .shop_step1_quantity.selected .shop_step1_quantity_icon_add {
+  background: #635BFF;
+  opacity: 1;
+}
+@media (hover: hover) {
+  .shop_step1_table tr:hover .shop_step1_quantity_icon_add {
+    background-color: #635BFF;
+  }
+}
+.custom_color_block {
+  background: #635BFF !important;
+}
+.basket_container a.smart_link {
+  color: #635BFF;
+}
+.navButton {
+  background: #1D1D1B;
+  color: #FFF;
+}
+a.navButton {
+  background: #1D1D1B;
+  color: #FFF;
+}
+.navButtonActive a,
+.navButtonActive {
+  background-color: #635BFF;
+  color: #FFF;
+}
+.navButton:hover a {
+  color: #FFF;
+}
+/*
+.previousButton .navButton, .navButton.secondary{
+	color: #1D1D1B;
+    border: solid 1px #1D1D1B;
+    background:#FFF;
+}
+
+.previousButton .navButton:hover, .navButton.secondary:hover{
+	background:#1D1D1B;
+	border-color:#1D1D1B;
+	color:#FFF;
+}*/
+#add_multiple {
+  color: #635BFF;
+}
+.shop_step2_table input:focus,
+.shop_step2_table select:focus {
+  outline-color: #635BFF !important;
+}
+@-moz-document url-prefix() {
+  .shop_step2_table input[type=text] {
+    margin-left: 3px;
+  }
+}
+.promote_block a {
+  color: #505050;
+}
+#reduction_code:focus {
+  outline-color: #635BFF !important;
+}
+/*----------------------------------------------------------------------------------------------------------------
+ VALIDATION
+------------------------------------------------------------------------------------------------------------------*/
+input:not([type=radio]).valid {
+  border-right: 4px solid #635BFF;
+}
+/* --------------------------------------
+    BASKET
+----------------------------------------*/
+.basket_menu .smart_link {
+  color: #635BFF;
+}
+/*----------------------------------------------------------------------------------------------------------------
+  SHOP HEADER
+------------------------------------------------------------------------------------------------------------------*/
+#checkout .active .text {
+  color: #635BFF;
+}
+.public .selected .shop_step1_quantity_icon_add {
+  background: #635BFF;
+}
+.shop_step1_quantity .included {
+  color: #635BFF;
+}
+.back_header {
+  color: #635BFF;
+}
+/*----------------------------------------------------------------------------------------------------------------
+  STEP 1
+------------------------------------------------------------------------------------------------------------------*/
+.shop_step1_table .special {
+  color: #f64848 !important;
+}
+.shop_step1_category .shop_step1_name,
+.stop_step1_div_container .shop_step1_name {
+  color: #505050;
+}
+.shop_step1_description {
+  color: #505050;
+}
+.shop_step1_description {
+  border-color: #635BFF;
+}
+.shop_step1_header.shop_step1_title {
+  color: #4b42ff;
+}
+.shop_step1_add_quantity,
+.shop_step1_remove_quantity {
+  color: #505050;
+}
+.step_2 .options_category {
+  background: #fff;
+  border-color: #FFF;
+}
+.ui-datepicker.ui-widget-content {
+  background: #FFF !important;
+}
+.ui-datepicker-header {
+  color: #505050 !important;
+}
+.ui-state-active {
+  border-color: #4b42ff !important;
+}
+thead {
+  color: #505050 !important;
+}
+.ui-state-active {
+  color: #635BFF !important;
+  border-color: #635BFF !important;
+}
+/*----------------------------------------------------------------------------------------------------------------
+  STEP 2
+------------------------------------------------------------------------------------------------------------------*/
+input[type=radio]:checked::before,
+input[type=checkbox]:checked::before {
+  background-color: #635BFF;
+}
+select.copy_details {
+  border: solid 2px #635BFF;
+}
+select.dynamic_copy_details {
+  border: solid 2px #635BFF;
+}
+/*----------------------------------------------------------------------------------------------------------------
+  STEP 3
+------------------------------------------------------------------------------------------------------------------*/
+.shop_step3_separator td {
+  background-color: #FFF;
+}
+.shop_step3_payment {
+  background-color: #FFF;
+}
+.shop_step3_payment_mode {
+  background-color: #FFF;
+}
+#reduction_question {
+  color: #635BFF;
+}
+#reduction_apply {
+  background-color: #635BFF;
+  color: #FFF;
+  border-color: #635BFF;
+}
+.donation_preset.active {
+  border-color: #635BFF;
+  border-width: 3px;
+}
+.donation_logo_container.active {
+  border-color: #635BFF;
+  border-width: 1px;
+  outline: solid 2px #635BFF;
+}
+/*----------------------------------------------------------------------------------------------------------------
+  STEP 4
+------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------
+  MULTI
+------------------------------------------------------------------------------------------------------------------*/
+.multi_body {
+  color: #505050;
+  background-color: #FFF;
+}
+.multi_event_desc_control a,
+.multi_event_desc_control_compact a {
+  color: #635BFF;
+  font-weight: 600;
+}
+.multi_event_desc_control {
+  border-color: #635BFF;
+}
+.multi_event_button a {
+  color: #FFF;
+  background-color: #635BFF;
+}
+.multi_event_button_disabled {
+  color: #FFF !important;
+  background-color: #635BFF !important;
+  opacity: 0.3;
+}
+.multi_event_info_empty {
+  border-color: #4b42ff;
+}
+.multi_event_tile_title {
+  color: #635BFF;
+  font-weight: bold;
+}
+.filter_item.selected {
+  background: #635BFF;
+  color: #FFF;
+  border: none;
+}
+.filter_date_datepicker input {
+  background: #635BFF;
+  color: #FFF;
+}
+#calendar_datepicker td.closed > .ui-state-default {
+  opacity: 0.6;
+}
+.ui-priority-secondary,
+.ui-widget-content .ui-priority-secondary,
+.ui-widget-header .ui-priority-secondary {
+  opacity: 1 !important;
+}
+#calendar_datepicker .calendar_link {
+  color: #4b42ff !important;
+}
+.calendar_button {
+  background: #635BFF !important;
+}
+.shop_step1_session_validate {
+  background-color: #635BFF;
+}
+@media (max-width: 440px) {
+  .public .shop_step1_table .shop_step1_ticket.selected {
+    outline: none;
+  }
+}
+@media (max-width: 480px) {
+  .shop_step2_table input:focus,
+  .shop_step2_table select:focus {
+    border-color: #635BFF !important;
+    outline: none !important;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+</style>
+	<link rel="stylesheet" href="/ext/poshytip-1.2/src/tip-twitter/tip-twitter.css" type="text/css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&amp;display=swap" rel="stylesheet">
+
+
+	<script type="text/javascript" language="javascript" src="/js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" language="javascript" src="/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="/ext/less.js-master/dist/less.js" type="text/javascript"></script>
+
+
+
+	<script type="text/javascript" language="javascript" src="/ext/poshytip-1.2/src/jquery.poshytip.js"></script>
+
+	<script language="javascript" src="/js/shop.js?v=254" type="text/javascript"></script>
+	<script type="text/javascript">
+
+	String.prototype.sansAccent = function(){
+	    var accent = [
+	        /[\300-\306]/g, /[\340-\346]/g, // A, a
+	        /[\310-\313]/g, /[\350-\353]/g, // E, e
+	        /[\314-\317]/g, /[\354-\357]/g, // I, i
+	        /[\322-\330]/g, /[\362-\370]/g, // O, o
+	        /[\331-\334]/g, /[\371-\374]/g, // U, u
+	        /[\321]/g, /[\361]/g, // N, n
+	        /[\307]/g, /[\347]/g, // C, c
+	    ];
+	    var noaccent = ['A','a','E','e','I','i','O','o','U','u','N','n','C','c'];
+
+	    var str = this;
+	    for(var i = 0; i < accent.length; i++){
+	        str = str.replace(accent[i], noaccent[i]);
+	    }
+
+	    return str;
+	}
+
+	function getCustomParam(){
+		var string="";
+		$(".custom_dropdown.selected").each(function( index ) {
+			if($(this).data('key').length>0)
+				string+=encodeURIComponent($(this).data('key'))+":"+encodeURIComponent($(this).data('value'))+",";
+		})
+
+		return string;
+	}
+
+	function imgError(image) {
+	    image.onerror = "";
+	    image.src = "/images/shop/tickets.jpg";
+	    image.width= "200";
+	    return true;
+	}
+
+	function filter(search_val){
+
+		 var found_items = [];
+		 $(".multi_event_list").hide();
+		 $("#no_results").hide();
+		 $(".filterable").show();
+
+		 if(search_val.length>0)
+			  $("#search_clear").show();
+		  else
+			  $("#search_clear").hide();
+
+		 if(search_val.length>1){
+
+			$(".filterable").hide();
+			var words= search_val.sansAccent().replace('+',' ').split(' ');
+			for (var j = 0; j < words.length; j++) {
+
+				if(words.length>1 && words[j].length<3){
+					continue;
+				}
+
+				$(".filterable").each(function( index ) {
+					var that = $(this);
+					that.find(".searchable").each(function( index ) {
+				 		if($(this).text().sansAccent().toUpperCase().indexOf(words[j].toUpperCase()) !== -1){
+				 			that.show();
+						 }
+					 });
+				})
+			 }
+
+			if($(".searchable:visible").length==0){
+				 $("#no_results").show();
+			}
+
+		 }
+		 else{
+			 $(".multi_event_list").show();
+		 }
+	}
+
+	$(function(){
+
+		$("#search").keyup(function() {
+			var search_val=$("#search").val();
+			filter(search_val);
+		});
+
+		$('.multi_event_desc_show').on('click', function(event) {
+			event.stopPropagation();
+			var that = $(this);
+			var bloc = that.parents('.multi_event_container').first();
+			var height = bloc.find('.multi_event_button').first().height();
+			if(!$(this).parents('.multi_event_container').first().hasClass('offer')){
+				$.get( "/tools.php?description="+$(this).data('event'), function(data){
+					that.hide();
+					bloc.find('.multi_event_button').css('height',height);
+					bloc.find('.multi_event_intro').toggle();
+					bloc.find('.multi_event_desc').html(data);
+					bloc.find('.multi_event_desc').show();
+					bloc.find('.multi_event_desc_hide').show();
+					if($(window).width()<640 && data.length>1000)
+					bloc.find('.multi_event_picture').hide();
+				});
+			}
+			else{
+				$(this).parents('.multi_event_container').first().find('.multi_event_desc').slideToggle();
+				that.hide();
+				bloc.find('.multi_event_intro').toggle();
+				bloc.find('.multi_event_desc').show();
+				bloc.find('.multi_event_desc_hide').show();
+			}
+		 });
+
+
+		$('.multi_event_desc_control_compact').on('click', function(event) {
+			event.stopPropagation();
+			var that = $(this);
+
+			if(!$(this).parents('.multi_event_container').first().hasClass('offer')){
+				$.get( "/tools.php?description="+$(this).data('event'), function(data){
+					that.parents('.multi_event_container').first().find('.multi_event_intro').toggle();
+					that.parents('.multi_event_container').first().find(".multi_event_desc").html(data);
+					that.parents('.multi_event_container').first().find(".multi_event_desc").slideToggle();
+				});
+			}
+			else{
+				$(this).parents('.multi_event_container').first().find('.multi_event_desc').slideToggle();
+			}
+		 });
+
+		$('.multi_event_desc_hide').on('click', function(event) {
+			event.stopPropagation();
+			$(this).hide();
+			$(this).parent().find('.multi_event_desc').hide();
+			$(this).parent().find('.multi_event_intro').show();
+			$(this).parent().find('.multi_event_desc_show').show();
+			$(this).parent().parent().find('.multi_event_picture').show();
+		 });
+
+
+
+		$("#filter_date_datepicker_show").on('click', function(event) {
+			$(this).hide();
+			$(this).next().show();
+			$(".datepicker").first().datepicker('show');
+		 });
+
+		$(".filter_date_datepicker input").on('change', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"date",$(this).val()));
+		});
+
+		$(".filter_date").on('click', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"date",$(this).data('date')));
+		});
+
+		$(".reset_filter").on('click', function(event) {
+			href = window.location.href;
+			href=replaceUrlParam(href,"events","");
+			href=replaceUrlParam(href,"name","");
+			href=replaceUrlParam(href,"tag","");
+			href=replaceUrlParam(href,"filters","");
+			href=replaceUrlParam(href,"event_id","");
+			naviguateTo(href);
+		});
+
+
+		$(".filter_events").on('click', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"events",""));
+		 });
+
+		$(".filter_name").on('click', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"name",""));
+		 });
+
+		$("#switch_to_calendar").on('click', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"view","calendar"));
+		 });
+
+		$("#switch_to_list").on('click', function(event) {
+			naviguateTo(replaceUrlParam(window.location.href,"view","list"));
+		 });
+
+		$(".custom_dropdown .item").on('click', function(event) {
+			$(this).parents('.custom_dropdown').data('value',encodeURIComponent($(this).data('value'))).addClass('selected');
+			naviguateTo(replaceUrlParam(window.location.href,"filters",getCustomParam()));
+		});
+
+
+
+		$(".custom_dropdown").on('click', function(event) {
+			var this_visible=false;
+			if($(this).find('.menu:visible').length>0){
+				this_visible=true;
+			}
+			$(".custom_dropdown .menu").hide();
+			if($(this).find('.clear:visible').length>0){
+				$(this).data('key','');
+				naviguateTo(replaceUrlParam(window.location.href,"filters",getCustomParam()));
+			}
+			else{
+				if(!this_visible)
+					$(this).find('.menu').toggle();
+			}
+		 });
+
+		if(getURLParameter('date')!=false){
+			var date = getURLParameter('date');
+			$('.filter_date').removeClass('selected');
+			$('.filter_date[data-date="'+date+'"]').addClass('selected');
+			if($('.filter_date[data-date="'+date+'"]').length==0){
+				$("#filter_date_datepicker_show").hide();
+				$(".filter_date_datepicker").show();
+				$(".filter_date_datepicker input").val(date);
+			}
+		}
+
+		if(getURLParameter('name')!=false){
+			var name = getURLParameter('name');
+			$('.filter_name').show();
+			$('.filter_name').nextAll().hide();
+		}
+
+		if(getURLParameter('events')!=false){
+			var name = getURLParameter('events');
+			$('.filter_events').show();
+			$('.filter_events').nextAll().hide();
+		}
+
+		if(getURLParameter('demo')!=false){
+			$("#switch_to_calendar").show();
+			$("#filter_date_datepicker_show").hide();
+		}
+
+
+
+
+
+		$('.multi_event_tile_description_show').click(function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+
+		    if($(this).hasClass('active')){
+				$(this).poshytip('hide');
+			}
+		    else{
+		    	$(this).poshytip('show');
+		    }
+		    $(this).toggleClass('active');
+		});
+
+		//autozoom tiles
+		if($(".multi_event_tile").length>0){
+			var gap = 20;
+			var tile_per_row = Math.round(($("#shop").width()+gap)/($(".multi_event_tile").first().width()+gap));
+			if(tile_per_row==1)
+				tile_per_row=2;
+			var modulo = ($("#shop").width()%$(".multi_event_tile").first().width());
+			if(modulo>10){
+				var ratio = ($("#shop").width()+gap)/($(".multi_event_tile").first().width()+gap+3);
+				$(".multi_event_container_tile").css('zoom',ratio/tile_per_row);
+			}
+		}
+
+		$(".multi_event_tile_description_show").each(function( index ) {
+			$(this).poshytip({
+				className: 'tip-twitter',
+				alignTo: 'target',
+				alignX: 'center',
+				alignY: 'bottom',
+				offsetX: 15,
+				showTimeout: 300,
+				unsecure:true,
+				'content':  function(updateCallback) {
+					$.get( "/tools.php?description="+$(this).data('event'), function( data ) {
+						updateCallback(data);
+					});
+					return 'Chargement...';
+				},
+			});
+		});
+
+		$(".tip-twitter").click(function(e) {
+		    e.preventDefault();
+			e.stopPropagation();
+			$(".multi_event_tile_description_show").poshytip('hide');
+		});
+
+		$(".tip-twitter").css('max-height',$(window).height()*0.75);
+
+		if(getURLParameter('from_event')!=false && $("#multi_event_container_"+getURLParameter('from_event')).length>0){
+			setTimeout(function () {
+				scrollTo($("#multi_event_container_"+getURLParameter('from_event')).position().top);
+			}, 500);
+		}
+
+		$(".multi_event_date").each(function( index ) {
+			if(($(window).width()<640 && $(this).html().length>50))
+				$(this).html($(this).html().replace(' au ',' <br>au '));
+		});
+
+
+
+
+	});
+
+	</script>
+
+
+
+</head>
+<body class="multi_body    custom_color no_iframe" data-color="635BFF" style="">
+
+
+
+<style>
+
+
+	.organizer_page .agenda_promote{
+		display:none;
+	}
+
+	.multi_body.tile_view{
+		text-align:center;
+	}
+
+	.tile_view #shop{
+		min-height:500px;
+	}
+
+	.tip-twitter{
+		background:#FFF;
+		color:#000;
+		border:solid 1px #AAA;
+		overflow:hidden;
+	    overflow-y: auto;
+	}
+
+	.tip-twitter img{
+		max-width:100%;
+	}
+
+	.tip-twitter .tip-arrow-bottom{
+		display:none;
+	}
+
+	.tip-twitter .tip-inner {
+	    font: 16px/16px 'Lucida Grande',sans-serif;
+	    line-height: 18px;
+	}
+
+	#shop{
+		display:flex;
+		flex-direction: column;
+		gap:20px;
+	}
+
+	#shop{
+		display:flex;
+		flex-direction: column;
+		gap:20px;
+	}
+
+	.multi_body #multi_event_list{
+		display:flex;
+		flex-direction: column;
+		gap:20px;
+	}
+
+	.multi_body.tile_view #multi_event_list{
+		display:flex;
+		flex-direction: row;
+		gap:20px;
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 640px) {
+		.tip-twitter{
+			width: 100% !important;
+		    max-width: 100% !important;
+		    left: 0px !important;
+		    box-sizing: border-box;
+		}
+	}
+
+</style>
+
+
+<section id="shop" event="" class="user_page no_margin">
+
+<div id="fallback">
+	Display fullscreen
+</div>
+
+<div class="filter_container">
+	<div class="">
+
+
+		<div class="filter_item" style="border:none;"><span class="fa fa-search" style="font-size:15px;"> </span> <input id="search" placeholder="Search" style="border: none; border-bottom: solid 1px; padding: 8px; width: 87px; outline: none; font-size: 16px; border-radius: 0px;">	</div>
+
+
+		<span class="filter_date filter_item selected" data-date="" style="display:none;">All dates <span class="clear" style="display:none;"><span class="far fa-times"></span></span> </span>
+		<span id="filter_date_datepicker_show" class="filter_item" style="display:none;"> A specific day <span class="clear" style="display:none;"><span class="far fa-times"></span></span></span>
+		<span style="display:none;" class="filter_date_datepicker"><input type="text" class="datepicker hasDatepicker" id="dp1763213248272"></span>
+		<span id="switch_to_calendar" style="" class="filter_item"><span class="far fa-calendar-alt"></span> Calendar</span>
+
+
+
+	</div>
+</div>
+
+
+
+<div id="multi_event_list">
+
+ <div id="multi_event_container_1286683" class="gap_check multi_event_container filterable multi_event_list     location   inline_date">
+   <div class="multi_event_info">
+ 		 <div class="multi_event_picture">
+ 		 	<img src="/files/event/150/1286683.jpg?v=1751390085">
+ 		 </div>
+ 		 <div class="multi_event_info_text ">
+ 		 	 <div>
+		    	 <div class="multi_event_name searchable">
+		    	 	<span class="multi_event_name_span">LE CORPS DE LA DANSE</span>
+		    	 	<span data-event="1286683" class="multi_event_desc_control_compact" style=""><a><span class="far fa-info-circle"></span><span>More info</span></a></span>
+		    	 </div>
+	    	 </div>
+	    	 <div class="multi_event_date" style="">
+	    	 	<span class="text"><span class="multi_event_time">Tue 11/25</span><span class="multi_event_time">Tue 12/02</span><span class="multi_event_time">Tue 12/16</span></span>
+	    	 </div>
+	    	 <div class="multi_event_place" style="">
+	    	 	<span class="text searchable">Studio Variations sur le Corps, Square Dunois, 75013 Paris</span>
+	    	 </div>
+	    	 <div data-event="1286683" class="multi_event_desc_show multi_event_desc_control" style=""><a>More information</a></div>
+	    	 <div class="multi_event_desc_hide multi_event_desc_control" style="display:none;"><a>Hide description</a></div>
+	    	 <div class="multi_event_desc searchable" style="display:none;"></div>
+			 <div class="multi_event_tags searchable" style="display:none;">5Rythmes,Danselibre,méditation</div>
+    	 </div>
+   </div>
+   <div class="multi_event_button">
+
+
+   		<a class="naviguate custom_color_block " href="https://www.billetweb.fr/le-corps-de-la-danse&amp;multi=u237930&amp;margin=no_margin&amp;color=635BFF&amp;parent=1&amp;margin=no_margin&amp;color=635BFF">Book</a>
+
+    </div>
+</div>
+ <div id="multi_event_container_1291670" class="gap_check multi_event_container filterable multi_event_list  border   location   ">
+   <div class="multi_event_info">
+ 		 <div class="multi_event_picture">
+ 		 	<img src="/files/event/150/1291670.jpg?v=1753983752">
+ 		 </div>
+ 		 <div class="multi_event_info_text ">
+ 		 	 <div>
+		    	 <div class="multi_event_name searchable">
+		    	 	<span class="multi_event_name_span">WEDNESDAY WAVES</span>
+		    	 	<span data-event="1291670" class="multi_event_desc_control_compact" style=""><a><span class="far fa-info-circle"></span><span>More info</span></a></span>
+		    	 </div>
+	    	 </div>
+	    	 <div class="multi_event_date" style="">
+	    	 	<span class="text">Wed Nov 26, 2025 to Wed Jun 24, 2026</span>
+	    	 </div>
+	    	 <div class="multi_event_place" style="">
+	    	 	<span class="text searchable">Studio Bleu Danse 12ème, Rue Erard, Paris, France</span>
+	    	 </div>
+	    	 <div data-event="1291670" class="multi_event_desc_show multi_event_desc_control" style=""><a>More information</a></div>
+	    	 <div class="multi_event_desc_hide multi_event_desc_control" style="display:none;"><a>Hide description</a></div>
+	    	 <div class="multi_event_desc searchable" style="display:none;"></div>
+			 <div class="multi_event_tags searchable" style="display:none;"></div>
+    	 </div>
+   </div>
+   <div class="multi_event_button">
+
+
+   		<a class="naviguate custom_color_block " href="https://www.billetweb.fr/wednesday-waves&amp;multi=u237930&amp;margin=no_margin&amp;color=635BFF&amp;parent=1&amp;margin=no_margin&amp;color=635BFF">Book</a>
+
+    </div>
+</div>
+ <div id="multi_event_container_1284832" class="gap_check multi_event_container filterable multi_event_list  border   location   ">
+   <div class="multi_event_info">
+ 		 <div class="multi_event_picture">
+ 		 	<img src="/files/event/150/1284832.jpg?v=1753983844">
+ 		 </div>
+ 		 <div class="multi_event_info_text ">
+ 		 	 <div>
+		    	 <div class="multi_event_name searchable">
+		    	 	<span class="multi_event_name_span">LA DANSE DES 5RYTHMES®</span>
+		    	 	<span data-event="1284832" class="multi_event_desc_control_compact" style="display:none;"><a><span class="far fa-info-circle"></span><span>More info</span></a></span>
+		    	 </div>
+	    	 </div>
+	    	 <div class="multi_event_date" style="">
+	    	 	<span class="text">Sat Dec 13, 2025 to Sat Jun 13, 2026</span>
+	    	 </div>
+	    	 <div class="multi_event_place" style="">
+	    	 	<span class="text searchable">Alter Activ, Chemin des Prés, Thomery, France</span>
+	    	 </div>
+	    	 <div data-event="1284832" class="multi_event_desc_show multi_event_desc_control" style="display:none;"><a>More information</a></div>
+	    	 <div class="multi_event_desc_hide multi_event_desc_control" style="display:none;"><a>Hide description</a></div>
+	    	 <div class="multi_event_desc searchable" style="display:none;"></div>
+			 <div class="multi_event_tags searchable" style="display:none;"></div>
+    	 </div>
+   </div>
+   <div class="multi_event_button">
+
+
+   		<a class="naviguate custom_color_block " href="https://www.billetweb.fr/shop.php?event=la-danse-des-5rythmes&amp;multi=u237930&amp;margin=no_margin&amp;color=635BFF&amp;margin=no_margin&amp;color=635BFF&amp;from_multi=1">Book</a>
+
+    </div>
+</div>
+ <div id="multi_event_container_1286720" class="gap_check multi_event_container filterable multi_event_list  border   location   ">
+   <div class="multi_event_info">
+ 		 <div class="multi_event_picture">
+ 		 	<img src="/files/event/150/1286720.jpg?v=1754313689">
+ 		 </div>
+ 		 <div class="multi_event_info_text ">
+ 		 	 <div>
+		    	 <div class="multi_event_name searchable">
+		    	 	<span class="multi_event_name_span">ENSEMBLE...</span>
+		    	 	<span data-event="1286720" class="multi_event_desc_control_compact" style=""><a><span class="far fa-info-circle"></span><span>More info</span></a></span>
+		    	 </div>
+	    	 </div>
+	    	 <div class="multi_event_date" style="">
+	    	 	<span class="text">Fri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM</span>
+	    	 </div>
+	    	 <div class="multi_event_place" style="">
+	    	 	<span class="text searchable">Ecole de Théâtre et Cinéma Aberratio, Rue des Orteaux, Paris, France</span>
+	    	 </div>
+	    	 <div data-event="1286720" class="multi_event_desc_show multi_event_desc_control" style=""><a>More information</a></div>
+	    	 <div class="multi_event_desc_hide multi_event_desc_control" style="display:none;"><a>Hide description</a></div>
+	    	 <div class="multi_event_desc searchable" style="display:none;"></div>
+			 <div class="multi_event_tags searchable" style="display:none;">5Rythmes,Feldenkrais,chant,méditation</div>
+    	 </div>
+   </div>
+   <div class="multi_event_button">
+
+
+   		<a class="naviguate custom_color_block " href="https://www.billetweb.fr/ensemble8&amp;multi=u237930&amp;margin=no_margin&amp;color=635BFF&amp;parent=1&amp;margin=no_margin&amp;color=635BFF">Book</a>
+
+    </div>
+</div>
+
+
+
+
+
+</div>
+
+<div id="no_results" class="multi_event_container" style="display:none;">
+   <div class="multi_event_info multi_event_info_empty">
+  		 No result
+   </div>
+</div>
+
+
+
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;77d572fed8794033a3fb6d1b9a0eadb0&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+</section><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

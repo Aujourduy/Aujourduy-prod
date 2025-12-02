@@ -1,0 +1,62 @@
+./app/views/home/index.html.erb
+./app/views/home/infos.html.erb
+./app/views/shared/_navbar.html.erb
+./app/views/teachers/_form.html.erb.backup
+./app/views/teachers/edit.html.erb
+./app/views/teachers/_form.html.erb.backup2
+./app/views/teachers/show.html.erb
+./app/views/teachers/index.html.erb
+./app/views/teachers/new.html.erb
+./app/views/teachers/_form.html.erb
+./app/views/teachers/_teacher.html.erb
+./app/views/welcome/index.html.erb
+./app/views/layouts/application.html.erb
+./app/views/layouts/mailer.html.erb
+./app/views/venues/edit.html.erb
+./app/views/venues/show.html.erb
+./app/views/venues/index.html.erb
+./app/views/venues/new.html.erb
+./app/views/venues/_venue.html.erb
+./app/views/venues/_form.html.erb
+./app/views/events/edit.html.erb
+./app/views/events/show.html.erb
+./app/views/events/update.html.erb
+./app/views/events/index.html.erb
+./app/views/events/new.html.erb
+./app/views/events/destroy.html.erb
+./app/views/events/create.html.erb
+./app/views/devise/shared/_error_messages.html.erb
+./app/views/devise/shared/_links.html.erb
+./app/views/devise/confirmations/new.html.erb
+./app/views/devise/mailer/password_change.html.erb
+./app/views/devise/mailer/email_changed.html.erb
+./app/views/devise/mailer/confirmation_instructions.html.erb
+./app/views/devise/mailer/unlock_instructions.html.erb
+./app/views/devise/mailer/reset_password_instructions.html.erb
+./app/views/devise/sessions/new.html.erb
+./app/views/devise/passwords/edit.html.erb
+./app/views/devise/passwords/new.html.erb
+./app/views/devise/registrations/edit.html.erb
+./app/views/devise/registrations/new.html.erb
+./app/views/devise/registrations/edit.html.erb.backup
+./app/views/devise/unlocks/new.html.erb
+./app/views/users/_profile_info_form.html.erb
+./app/views/users/show.html.erb
+./app/views/users/_profile_preferences_form.html.erb
+./app/views/phone_verifications/new.html.erb
+./app/views/favorites/index.html.erb
+./app/views/dashboard/index.html.erb
+./app/views/test/Claude2.html.erb
+./app/views/test/Qwen.html.erb
+./app/views/test/Chaussures Claude 3.html.erb
+./app/views/test/Claude.html.erb
+./app/views/test/mistral.html.erb
+./app/views/test/index.html.erb
+./app/views/test/Chaussures 4.html.erb
+./app/views/test/ClaudeMistral3.html.erb
+./app/views/test/Gpt.html.erb
+./app/views/test/Chaussures Claude 2.html.erb
+./app/views/test/Palettes.html.erb
+./app/views/test/Mistral2.html.erb
+./app/views/test/Chaussures Claude.html.erb
+./app/views/test/test hsl theme color.html.erb

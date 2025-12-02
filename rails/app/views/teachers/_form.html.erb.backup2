@@ -1,0 +1,180 @@
+<%= form_with(model: teacher, html: { class: "space-y-4" }) do |f| %>
+  <% if teacher.errors.any? %>
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+      <h2 class="font-semibold mb-2">
+        <%= pluralize(teacher.errors.count, "erreur") %> ont empêché l'enregistrement :
+      </h2>
+      <ul class="list-disc list-inside">
+        <% teacher.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Upload Photo avec Cloudinary -->
+  <div>
+    <%= f.label :photo_cloudinary_id, "Photo", class: "block text-sm font-medium text-gray-700" %>
+
+    <!-- Bouton d'upload -->
+    <button id="upload_widget" type="button" class="btn btn-primary w-full mt-1">
+      Uploader et Recadrer
+    </button>
+    <div class="text-sm text-gray-500 mt-2">
+      ⚠️ IMPORTANT : Après avoir sélectionné votre image, ajustez le cadrage puis cliquez OBLIGATOIREMENT sur "Done" pour confirmer le crop.
+      <br>
+      ⏳ N'oubliez pas de cliquer sur « Modifier le professeur » pour enregistrer.
+    </div>
+
+    <!-- Preview si déjà une photo -->
+    <% if teacher.photo_cloudinary_id.present? %>
+      <div class="mt-3 flex justify-center">
+        <%= image_tag teacher.photo_url(:medium), class: "rounded-full w-24 h-24 object-cover" %>
+      </div>
+    <% end %>
+
+    <!-- Champ caché pour stocker l'ID Cloudinary -->
+    <%= f.hidden_field :photo_cloudinary_id, id: "teacher_photo_cloudinary_id" %>
+  </div>
+
+  <div>
+    <%= f.label :first_name, "Prénom", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :first_name, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, "Nom", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :last_name, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :bio, "Biographie", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :bio, rows: 4, class: "textarea textarea-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :contact_email, "Email de contact", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :contact_email, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :phone, "Téléphone", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :phone, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= f.label :user_id, "Utilisateur associé", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :user_id, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <%= f.submit (teacher.persisted? ? "Modifier le professeur" : "Créer le professeur"),
+             class: "btn btn-success w-full" %>
+<% end %>
+
+<!-- Script Cloudinary Upload Widget -->
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script>
+(function() {
+  function loadCloudinary(cb) {
+    if (window.cloudinary) return cb();
+
+    let s = document.getElementById("cld-widget");
+    if (!s) {
+      s = document.createElement("script");
+      s.id = "cld-widget";
+      s.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+      s.async = true;
+      s.onload = cb;
+      document.head.appendChild(s);
+    } else {
+      s.addEventListener("load", cb, { once: true });
+    }
+  }
+
+  function initCloudinaryWidget() {
+    const btn = document.getElementById("upload_widget");
+    if (!btn) return;
+    if (btn.dataset.cldInit === "1") return;
+
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: "<%= ENV["CLOUDINARY_CLOUD_NAME"] %>",
+      uploadPreset: "teachers_crop",
+      
+      // Configuration crop STRICTE
+      cropping: true,
+      croppingAspectRatio: 1,
+      croppingValidate: true,
+      croppingCoordinatesMode: 'custom',
+      croppingShowBackButton: true,
+      croppingShowDimensions: true,
+      showSkipCropButton: false,  // Empêche de skip le crop
+      multiple: false,
+      sources: ['local', 'url'],
+      
+      // Interface
+      language: "fr",
+      text: {
+        fr: {
+          crop: {
+            title: "Recadrer votre image",
+            crop_btn: "Done - Valider le recadrage",
+            skip_btn: "Ignorer le recadrage",
+            reset_btn: "Réinitialiser",
+            close_btn: "Fermer"
+          }
+        }
+      },
+      
+      folder: "teachers"
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Résultat complet:", result);
+        
+        // Vérification qu'on a bien les coordonnées de crop
+        if (result.info.coordinates && result.info.coordinates.custom && result.info.coordinates.custom.length > 0) {
+          console.log("Coordonnées de crop détectées:", result.info.coordinates.custom);
+          
+          // Construction de l'URL avec crop manual
+          const coords = result.info.coordinates.custom[0];
+          const cropTransform = `c_crop,x_${coords.x},y_${coords.y},w_${coords.width},h_${coords.height}/c_fill,w_400,h_400,g_auto`;
+          
+          const croppedUrl = `https://res.cloudinary.com/<%= ENV["CLOUDINARY_CLOUD_NAME"] %>/image/upload/${cropTransform}/${result.info.public_id}.${result.info.format}`;
+          
+          console.log("URL image croppée:", croppedUrl);
+          
+          document.querySelector("#teacher_photo_cloudinary_id").value = result.info.public_id;
+
+          // Preview avec l'image croppée
+          const preview = document.createElement("img");
+          preview.src = croppedUrl;
+          preview.className = "rounded-full w-24 h-24 object-cover";
+          const container = document.querySelector("#teacher_photo_cloudinary_id").closest("div");
+          const oldPreview = container.querySelector("img");
+          if (oldPreview) oldPreview.remove();
+          container.appendChild(preview);
+          
+          alert("Image recadrée avec succès ! Cliquez sur 'Modifier le professeur' pour sauvegarder.");
+          
+        } else {
+          console.warn("Aucune coordonnée de crop trouvée - image possiblement pas croppée");
+          alert("ATTENTION: Il semble que l'image n'ait pas été correctement recadrée. Réessayez en cliquant bien sur 'Done' après le recadrage.");
+        }
+      }
+    });
+
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      myWidget.open();
+    });
+
+    btn.dataset.cldInit = "1";
+  }
+
+  function bootstrap() {
+    loadCloudinary(initCloudinaryWidget);
+  }
+
+  document.addEventListener("turbo:load", bootstrap);
+  document.addEventListener("DOMContentLoaded", bootstrap);
+})();
+</script>

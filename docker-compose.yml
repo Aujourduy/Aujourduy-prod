@@ -1,0 +1,326 @@
+services:
+
+  # ————————————————————————————————————————————————————————————————
+  # PREPARE-DB PROD : Génère les fichiers SQL et userlist.txt
+  # ————————————————————————————————————————————————————————————————
+  prepare-db-prod:
+    image: alpine:3.19
+    container_name: prepare-db-prod
+    user: "${DOCKER_UID}:${DOCKER_GID}"
+    volumes:
+      - ./:/app
+      - ./postgres/init/generated:/app/postgres/init/generated
+    working_dir: /app
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      echo "🔧 [prepare-db-prod] Vérification du script..."
+      ls -la /app/prepare_db.sh || exit 1
+      chmod +x /app/prepare_db.sh
+      echo "✅ [prepare-db-prod] Exécution du script de génération..."
+      /app/prepare_db.sh
+      echo "✅ [prepare-db-prod] Fichiers générés dans /app/postgres/init/generated/"
+    networks:
+      - prod_internal
+
+  # ————————————————————————————————————————————————————————————————
+  # POSTGRESQL PROD : Serveur principal production
+  # ————————————————————————————————————————————————————————————————
+  postgres-prod:
+    image: postgres:16
+    container_name: postgres-prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_ADMIN_USER}
+      POSTGRES_PASSWORD: ${PG_ADMIN_PASSWORD}
+      POSTGRES_DB: ${PG_DB_PROD}
+      POSTGRES_INITDB_ARGS: "--locale=C.UTF-8 --encoding=UTF8"
+      TZ: Europe/Paris
+    volumes:
+      - /srv/postgres-prod/data:/var/lib/postgresql/data
+      - ./postgres/conf/postgresql.conf:/etc/postgresql-custom/postgresql.conf:ro
+      - ./postgres/conf/pg_hba.conf:/etc/postgresql-custom/pg_hba.conf:ro
+      - ./postgres/init/generated:/docker-entrypoint-initdb.d:ro
+    command: [
+      "postgres",
+      "-c", "config_file=/etc/postgresql-custom/postgresql.conf",
+      "-c", "hba_file=/etc/postgresql-custom/pg_hba.conf"
+    ]
+    networks:
+      - prod_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_ADMIN_USER} -d ${PG_DB_PROD}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      prepare-db-prod:
+        condition: service_completed_successfully
+
+  # ————————————————————————————————————————————————————————————————
+  # PGBOUNCER PROD : Proxy SQL
+  # ————————————————————————————————————————————————————————————————
+  pgbouncer-prod:
+    image: edoburu/pgbouncer:latest
+    container_name: pgbouncer-prod
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres-prod
+      DB_PORT: "5432"
+      DB_USER: ${PG_ADMIN_USER}
+      DB_PASSWORD: ${PG_ADMIN_PASSWORD}
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: "500"
+      DEFAULT_POOL_SIZE: "30"
+      IGNORE_STARTUP_PARAMETERS: "extra_float_digits"
+      TZ: Europe/Paris
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./postgres/init/generated/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    networks:
+      - prod_internal
+    ports:
+      - "100.95.124.70:6433:6432"
+    depends_on:
+      postgres-prod:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "6432", "-U", "${PG_ADMIN_USER}", "-d", "aujourduy_production"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  # ————————————————————————————————————————————————————————————————
+  # PGADMIN PROD : Interface web
+  # ————————————————————————————————————————————————————————————————
+  pgadmin-prod:
+    image: dpage/pgadmin4:8.12
+    container_name: pgadmin-prod
+    restart: unless-stopped
+    user: "5050:5050"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      TZ: Europe/Paris
+    volumes:
+      - prod_pgadmin_data:/var/lib/pgadmin
+    networks:
+      - prod_internal
+    ports:
+      - "100.95.124.70:5051:80"
+    depends_on:
+      postgres-prod:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/login?next=%2F"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  # ————————————————————————————————————————————————————————————————
+  # RAILS PROD : Application principale production
+  # ————————————————————————————————————————————————————————————————
+  rails-prod:
+    build: ./rails
+    container_name: rails-prod
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - RAILS_ENV=production
+      - PG_HOST=${PG_HOST}
+      - PG_PORT=${PG_PORT}
+      - PG_ADMIN_USER=${PG_ADMIN_USER}
+      - PG_ADMIN_PASSWORD=${PG_ADMIN_PASSWORD}
+      - PG_DB_PROD=${PG_DB_PROD}
+      - APP_DATABASE_USER=${APP_DATABASE_USER}
+      - APP_DATABASE_PASSWORD=${APP_DATABASE_PASSWORD}
+      - RAILS_LOG_TO_STDOUT=true
+      - TZ=Europe/Paris
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      # GOOGLE OAUTH
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      # GOOGLE GEO CODING GPS
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      # CLOUDINARY
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_UPLOAD_PRESET=${CLOUDINARY_UPLOAD_PRESET}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      # TWILIO
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_VERIFY_SID=${TWILIO_VERIFY_SID}
+      # POSTMARK
+      - POSTMARK_API_TOKEN=${POSTMARK_API_TOKEN}
+      - RAILS_HOST=${RAILS_HOST}
+      - RAILS_FORCE_SSL=${RAILS_FORCE_SSL}
+      # SCRAPING avec OpenRouter
+      - USE_OLLAMA=${USE_OLLAMA}
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - USE_OPENROUTER=${USE_OPENROUTER}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL}
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./rails:/app
+      - ./rails/entrypoint.sh:/usr/local/bin/entrypoint.sh:ro
+      - prod_gem_cache:/usr/local/bundle
+      - ./.git:/app/.git:ro
+    command: ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+    networks:
+      - prod_internal
+    depends_on:
+      postgres-prod:
+        condition: service_healthy
+      pgbouncer-prod:
+        condition: service_healthy
+
+  # ————————————————————————————————————————————————————————————————
+  # SOLID QUEUE PROD : Worker pour background jobs production
+  # ————————————————————————————————————————————————————————————————
+  solid-queue-prod:
+    build: ./rails
+    container_name: solid-queue-prod
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - RAILS_ENV=production
+      - PG_HOST=${PG_HOST}
+      - PG_PORT=${PG_PORT}
+      - PG_ADMIN_USER=${PG_ADMIN_USER}
+      - PG_ADMIN_PASSWORD=${PG_ADMIN_PASSWORD}
+      - PG_DB_PROD=${PG_DB_PROD}
+      - APP_DATABASE_USER=${APP_DATABASE_USER}
+      - APP_DATABASE_PASSWORD=${APP_DATABASE_PASSWORD}
+      - RAILS_LOG_TO_STDOUT=true
+      - TZ=Europe/Paris
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      # GOOGLE OAUTH
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      # GOOGLE MAPS
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      # CLOUDINARY
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_UPLOAD_PRESET=${CLOUDINARY_UPLOAD_PRESET}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      # TWILIO
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_VERIFY_SID=${TWILIO_VERIFY_SID}
+      # POSTMARK
+      - POSTMARK_API_TOKEN=${POSTMARK_API_TOKEN}
+      - RAILS_HOST=${RAILS_HOST}
+      # SCRAPING
+      - USE_OLLAMA=${USE_OLLAMA}
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - USE_OPENROUTER=${USE_OPENROUTER}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL}
+    volumes:
+      - ./rails:/app
+      - prod_gem_cache:/usr/local/bundle
+      - ./.git:/app/.git:ro
+    command: ["bundle", "exec", "rails", "solid_queue:start"]
+    networks:
+      - prod_internal
+    depends_on:
+      postgres-prod:
+        condition: service_healthy
+      pgbouncer-prod:
+        condition: service_healthy
+
+  # ————————————————————————————————————————————————————————————————
+  # N8N PROD : Automatisation production
+  # ————————————————————————————————————————————————————————————————
+  n8n-prod:
+    image: n8nio/n8n:latest
+    container_name: n8n-prod
+    user: "${UID:-1000}:${GID:-1000}"
+    restart: always
+    ports:
+      - "5679:5678"
+    environment:
+      # Auth basique
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - N8N_USER_MANAGEMENT_DISABLED=true
+      # URLs
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=${N8N_PORT}
+      - N8N_PROTOCOL=http
+      - N8N_PUBLIC_API_URL=http://${N8N_HOST}
+      - N8N_WEBHOOK_URL=http://${N8N_HOST}
+      # Sécurité
+      - N8N_SECURE_COOKIE=false
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - N8N_API_KEY_AUTH_ACTIVE=true
+      - N8N_API_KEY=${N8N_API_KEY}
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      # Data & Storage
+      - N8N_DEFAULT_DATA_STORAGE_MODE=filesystem
+      - DB_SQLITE_POOL_SIZE=5
+      # Fonctionnalités
+      - N8N_ENABLED_MODULES=data-table
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      # Code Node
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - NODE_FUNCTION_ALLOW_EXTERNAL=axios,moment,lodash
+      # Runners
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_RUNNERS_MODE=internal
+      # Performance
+      - N8N_CONCURRENCY_PRODUCTION_LIMIT=10
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=336
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=all
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=all
+      - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=true
+      # Logs
+      - N8N_LOG_LEVEL=info
+      - N8N_LOG_OUTPUT=console
+      # Métriques
+      - N8N_METRICS=true
+      # Misc
+      - TZ=Europe/Paris
+      - N8N_LISTEN_ADDRESS=0.0.0.0
+      - N8N_DISABLE_SCHEDULED_TRIGGER=false
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+    volumes:
+      - ./n8n/config:/home/node/.n8n
+    networks:
+      - prod_internal
+
+  # ————————————————————————————————————————————————————————————————
+  # PLAYWRIGHT PROD : Tests E2E production
+  # ————————————————————————————————————————————————————————————————
+  playwright-prod:
+    build:
+      context: ./playwright
+    container_name: playwright-prod
+    restart: unless-stopped
+    volumes:
+      - ./playwright:/app
+      - ./playwright/outputs:/app/outputs
+      - /app/node_modules
+    networks:
+      - prod_internal
+
+
+volumes:
+  prod_gem_cache:
+  prod_pgadmin_data:
+
+networks:
+  prod_internal:
+    driver: bridge

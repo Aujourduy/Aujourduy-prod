@@ -1,0 +1,198 @@
+<div class="w-full max-w-md mx-auto bg-base-400 rounded-2xl shadow-lg p-8">
+  <div class="flex justify-center mb-6">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", alt: "Stop & Dance", class: "h-12 w-auto" %>
+    <% end %>
+  </div>
+
+  <h2 class="text-2xl font-bold text-center mb-6">Modifier mon profil</h2>
+
+  <!-- Section Avatar -->
+  <div class="flex flex-col items-center mb-6">
+    <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-200 mb-4">
+      <% if current_user.avatar_url %>
+        <%= image_tag current_user.avatar_url(:medium),
+            alt: "Avatar", class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="w-full h-full flex items-center justify-center text-gray-400">
+          <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Bouton d'upload Cloudinary -->
+    <button id="upload_avatar_widget" type="button" class="btn btn-primary w-full mt-1">
+      Uploader et Recadrer mon avatar
+    </button>
+
+    <div class="text-sm text-gray-500 mt-2">
+      ⚠️ IMPORTANT : Après avoir sélectionné votre image, ajustez le cadrage puis cliquez OBLIGATOIREMENT sur "Done" pour confirmer le crop.
+      <br>
+      ⏳ N'oubliez pas de cliquer sur « Mettre à jour » pour enregistrer.
+   </div>
+
+  </div>
+
+  <!-- Formulaire Devise -->
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :patch, class: "space-y-4" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- Champ caché pour stocker l'ID Cloudinary -->
+    <%= f.hidden_field :avatar_cloudinary_id, id: "user_avatar_cloudinary_id" %>
+
+    <div>
+      <%= f.label :first_name, "Prénom", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :first_name, autofocus: true, class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :last_name, "Nom", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :last_name, class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="text-sm text-amber-600 bg-amber-50 p-3 rounded">
+        En attente de confirmation pour : <%= resource.unconfirmed_email %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :password, "Nouveau mot de passe", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full mt-1", placeholder: "Laisser vide si inchangé" %>
+      <% if @minimum_password_length %>
+        <p class="text-xs text-gray-500 mt-1">(<%= @minimum_password_length %> caractères minimum)</p>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, "Confirmation du nouveau mot de passe", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full mt-1" %>
+    </div>
+
+    <div>
+      <%= f.label :current_password, "Mot de passe actuel", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full mt-1" %>
+      <p class="text-xs text-gray-500 mt-1">Requis pour confirmer les modifications</p>
+    </div>
+
+    <%= f.submit "Mettre à jour", class: "btn btn-success w-full" %>
+  <% end %>
+
+  <div class="divider">Actions</div>
+
+  <div class="space-y-2">
+    <%= link_to "Annuler mon compte", registration_path(resource_name), 
+        data: { 
+          confirm: "Êtes-vous sûr(e) ? Cette action est irréversible.",
+          turbo_method: :delete 
+        }, 
+        class: "btn btn-error btn-outline w-full" %>
+    
+    <%= link_to "Retour", :back, class: "btn btn-ghost w-full" %>
+  </div>
+</div>
+
+<!-- Script Cloudinary Upload Widget -->
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script>
+(function() {
+  function loadCloudinary(cb) {
+    if (window.cloudinary) return cb();
+
+    let s = document.getElementById("cld-widget");
+    if (!s) {
+      s = document.createElement("script");
+      s.id = "cld-widget";
+      s.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+      s.async = true;
+      s.onload = cb;
+      document.head.appendChild(s);
+    } else {
+      s.addEventListener("load", cb, { once: true });
+    }
+  }
+
+  function initCloudinaryAvatarWidget() {
+    const btn = document.getElementById("upload_avatar_widget");
+    if (!btn) return;
+    if (btn.dataset.cldInit === "1") return;
+
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: "<%= ENV["CLOUDINARY_CLOUD_NAME"] %>",
+      uploadPreset: "avatars_crop",
+      
+      // Configuration crop STRICTE
+      cropping: true,
+      croppingAspectRatio: 1,
+      croppingValidate: true,
+      croppingCoordinatesMode: 'custom',
+      croppingShowBackButton: true,
+      croppingShowDimensions: true,
+      showSkipCropButton: false,  // Empêche de skip le crop
+      multiple: false,
+      sources: ['local', 'url'],
+      
+      // Interface
+      language: "fr",
+      text: {
+        fr: {
+          crop: {
+            title: "Recadrer votre avatar",
+            crop_btn: "Done - Valider le recadrage",
+            skip_btn: "Ignorer le recadrage",
+            reset_btn: "Réinitialiser",
+            close_btn: "Fermer"
+          }
+        }
+      },
+      
+      folder: "avatars"
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Résultat complet:", result);
+        
+        // Utilise d'abord l'URL eager (transformation automatique du preset)
+        let imageUrl = result.info.secure_url; // URL par défaut
+        
+        if (result.info.eager && result.info.eager.length > 0) {
+          // Utilise la première transformation eager (définie dans ton preset)
+          imageUrl = result.info.eager[0].secure_url;
+          console.log("Utilisation de l'URL eager:", imageUrl);
+        } else {
+          console.log("Pas d'URL eager, utilisation de l'URL standard");
+        }
+        
+        document.querySelector("#user_avatar_cloudinary_id").value = result.info.public_id;
+
+        // Preview immédiat avec l'image croppée dans le conteneur avatar
+        const avatarContainer = document.querySelector(".w-24.h-24.rounded-full.overflow-hidden");
+        avatarContainer.innerHTML = `<img src="${imageUrl}" alt="Avatar" class="w-full h-full object-cover">`;
+        
+        alert("Avatar recadré avec succès ! Cliquez sur 'Mettre à jour' pour sauvegarder.");
+      }
+    });
+
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      myWidget.open();
+    });
+
+    btn.dataset.cldInit = "1";
+  }
+
+  function bootstrap() {
+    loadCloudinary(initCloudinaryAvatarWidget);
+  }
+
+  document.addEventListener("turbo:load", bootstrap);
+  document.addEventListener("turbo:render", bootstrap);
+  document.addEventListener("DOMContentLoaded", bootstrap);
+})();
+</script>

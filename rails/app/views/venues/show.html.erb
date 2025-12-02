@@ -1,0 +1,86 @@
+<div class="min-h-screen w-full flex items-center justify-center py-10 bg-base-200">
+  <div class="w-full max-w-2xl bg-base-100 rounded-2xl shadow-xl p-8">
+    <% if notice %>
+      <div class="alert alert-success mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span><%= notice %></span>
+      </div>
+    <% end %>
+
+    <!-- Header avec avatar du propriétaire -->
+    <div class="text-center mb-8">
+      <div class="avatar mb-4">
+        <div class="w-20 rounded-full bg-primary text-primary-content flex items-center justify-center">
+          <% if @venue.user.avatar_cloudinary_id.present? %>
+            <%= image_tag cl_image_path(@venue.user.avatar_cloudinary_id, width: 80, height: 80, crop: :fill, gravity: :face), 
+                          alt: "#{@venue.user.first_name}", class: "rounded-full" %>
+          <% else %>
+            <span class="font-bold text-2xl">
+              <%= @venue.user.first_name&.first %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+      
+      <h1 class="text-3xl font-bold mb-2">📍 <%= @venue.name %></h1>
+      <p class="text-base-content/70">
+        Créé par <%= @venue.user.first_name %> <%= @venue.user.last_name %>
+      </p>
+    </div>
+
+    <!-- Informations du lieu -->
+    <div class="bg-base-200 rounded-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">📍 Adresse</h2>
+      <div class="space-y-3">
+        <p class="flex items-start">
+          <span class="font-medium w-24 flex-shrink-0">Adresse :</span>
+          <span><%= @venue.full_address %></span>
+        </p>
+
+        <% if @venue.department_code.present? || @venue.department_name.present? %>
+          <p class="flex items-center">
+            <span class="font-medium w-24 flex-shrink-0">Département :</span>
+            <span>
+              <%= @venue.department_code %><%= " - " if @venue.department_code && @venue.department_name %><%= @venue.department_name %>
+            </span>
+          </p>
+        <% end %>
+
+        <% if @venue.coordinates? %>
+          <p class="flex items-center">
+            <span class="font-medium w-24 flex-shrink-0">GPS :</span>
+            <span class="mr-2"><%= @venue.latitude %>, <%= @venue.longitude %></span>
+            <div class="badge badge-success badge-sm">Géolocalisé</div>
+          </p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Événements dans ce lieu (plus tard) -->
+    <% if @venue.events.any? %>
+      <div class="bg-base-200 rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4">🎉 Événements</h2>
+        <div class="space-y-2">
+          <% @venue.events.limit(5).each do |event| %>
+            <div class="bg-base-100 p-3 rounded">
+              <h3 class="font-medium"><%= event.title %></h3>
+              <p class="text-sm text-base-content/70"><%= event.description %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Actions -->
+    <div class="flex flex-col space-y-3">
+      <% if @venue.user == current_user %>
+        <%= link_to "✏️ Modifier ce lieu", edit_venue_path(@venue), class: "btn btn-primary w-full" %>
+        <%= button_to "🗑️ Supprimer ce lieu", @venue, method: :delete, 
+                     data: { turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce lieu ?" }, 
+                     class: "btn btn-error w-full" %>
+      <% end %>
+      
+      <%= link_to "← Retour à la liste", venues_path, class: "btn btn-ghost w-full" %>
+    </div>
+  </div>
+</div>

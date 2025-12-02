@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# Script de configuration des fréquences de scraping
+# Usage: docker compose exec rails rails runner lib/configure_scraping_frequencies.rb
+
+puts '=' * 80
+puts 'CONFIGURATION DES FRÉQUENCES DE SCRAPING'
+puts '=' * 80
+puts
+
+# WEEKLY (4 teachers avec sites fonctionnels)
+weekly_urls = [
+  { name: 'Marc Silvestre', id: 'a8a6f96f-a7e3-4ec7-92e7-5df854ce9ff3' },
+  { name: 'Catarina Dias', id: '27a305c3-67cd-49b5-8e79-45f11a8684ff' },
+  { name: 'Alexandra Stagliano', id: '282e94f4-4988-4cfb-8ac3-a7e4c1906d62' },
+  { name: 'Nicolas Bernard', id: 'e7337a93-f359-42c3-a226-5ff843dd0cd7' }
+]
+
+# YEARLY (2 teachers sans événements)
+yearly_urls = [
+  { name: 'Maude Massard-Friat', id: '50c81b75-0e74-4e7d-936f-416cc214ae91' },
+  { name: 'Brunehilde Yvrande', id: 'f2c38b3d-99f1-4efb-84cf-b87653276971' }
+]
+
+puts '📅 Configuration WEEKLY (scraping chaque lundi 2h):'
+puts
+
+weekly_urls.each do |url_data|
+  begin
+    teacher_url = TeacherUrl.find(url_data[:id])
+    teacher_url.update!(scraping_config: { frequency: 'weekly' })
+    puts "   ✅ #{url_data[:name]}"
+    puts "      URL: #{teacher_url.url}"
+    puts "      Config: #{teacher_url.scraping_config}"
+    puts
+  rescue => e
+    puts "   ❌ ERREUR #{url_data[:name]}: #{e.message}"
+    puts
+  end
+end
+
+puts
+puts '📅 Configuration YEARLY (scraping 1er janvier 3h):'
+puts
+
+yearly_urls.each do |url_data|
+  begin
+    teacher_url = TeacherUrl.find(url_data[:id])
+    teacher_url.update!(scraping_config: { frequency: 'yearly' })
+    puts "   ✅ #{url_data[:name]}"
+    puts "      URL: #{teacher_url.url}"
+    puts "      Config: #{teacher_url.scraping_config}"
+    puts
+  rescue => e
+    puts "   ❌ ERREUR #{url_data[:name]}: #{e.message}"
+    puts
+  end
+end
+
+puts '=' * 80
+puts 'CONFIGURATION TERMINÉE'
+puts '=' * 80
+puts
+
+puts "✅ Teachers configurés: #{weekly_urls.count + yearly_urls.count}"
+puts "   - Weekly: #{weekly_urls.count} teachers"
+puts "   - Yearly: #{yearly_urls.count} teachers"
+puts
+
+puts "📋 Les jobs Solid Queue lanceront automatiquement:"
+puts "   - WeeklyScrapingJob : chaque lundi à 2h (production) / tous les jours 9h (dev)"
+puts "   - YearlyScrapingJob : 1er janvier à 3h (production)"
+puts
+
+puts "🔍 Vérification de la configuration:"
+puts "   TeacherUrl.where(\"scraping_config->>'frequency' = 'weekly'\").count"
+puts "   TeacherUrl.where(\"scraping_config->>'frequency' = 'yearly'\").count"

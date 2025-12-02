@@ -1,0 +1,355 @@
+<div class="container mx-auto p-6">
+
+  <style>
+  .card-selected {
+    border: 3px solid oklch(var(--p));
+    background: oklch(var(--p) / 0.1);
+    transform: scale(1.02);
+  }
+
+  #card-single,
+  #card-recurring {
+    border-width: 2px;
+    transition: all 0.2s ease;
+  }
+
+  #card-single.selected,
+  #card-recurring.selected {
+    border-width: 4px;
+    border-color: oklch(var(--p));
+  }
+
+  .card {
+    transition: all 0.2s ease;
+  }
+  </style>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Nouvel événement</h1>
+
+    <%= form_with model: @event, 
+        data: { 
+          turbo: false,
+          controller: "event-form event-form-persist",
+          event_form_persist_target: "form",
+          action: "submit->event-form-persist#onSubmit"
+        }, 
+        html: { id: "event-form" },
+        class: "space-y-8" do |form| %>
+
+      <% if @event.errors.any? %>
+        <div class="alert alert-error">
+          <h3 class="font-bold">Erreurs détectées :</h3>
+          <ul class="list-disc list-inside">
+            <% @event.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- === INFORMATIONS GÉNÉRALES === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-primary text-primary-content p-4">
+          <h2 class="card-title">📋 Informations générales</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="form-control">
+            <label class="label"><span class="label-text font-semibold">Titre *</span></label>
+            <%= form.text_field :title, class: "input input-bordered w-full", placeholder: "Ex : Ecstatic Dance Paris", required: true %>
+          </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text font-semibold">Description *</span></label>
+            <%= form.text_area :description, rows: 4, class: "textarea textarea-bordered w-full", placeholder: "Décrivez votre événement...", required: true %>
+          </div>
+
+          <!-- URL de référence -->
+          <div class="form-control">
+            <label class="label"><span class="label-text font-semibold">URL de référence</span></label>
+            <%= form.text_field :source_url, 
+                class: "input input-bordered w-full url-field", 
+                placeholder: "exemple.com ou https://exemple.com",
+                data: { url_field: true }, required: true %>
+            <label class="label">
+              <span class="label-text-alt text-base-content/60">
+                💡 Lien vers la page officielle de l'événement (optionnel)
+              </span>
+            </label>
+          </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text font-semibold">Professeur principal *</span></label>
+            <%= form.select :principal_teacher_id, 
+                options_from_collection_for_select(@teachers, :id, :full_name, @event.principal_teacher_id),
+                { prompt: "Sélectionner un professeur" },
+                { class: "select select-bordered w-full", required: true } %>
+            <label class="label">
+              <span class="label-text-alt">
+                <%= link_to "➕ Créer un nouveau professeur", new_teacher_path(return_to: 'events_new'), class: "link link-primary" %>
+              </span>
+            </label>
+          </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text font-semibold">Pratique *</span></label>
+            <%= form.select :practice_id, 
+                options_from_collection_for_select(Practice.order(:name), :id, :name, @event.practice_id),
+                { prompt: "Sélectionner une pratique" },
+                { class: "select select-bordered w-full", required: true } %>
+            <label class="label">
+              <span class="label-text-alt">
+                <%= link_to "➕ Créer une nouvelle pratique", new_practice_path(return_to: 'events_new'), class: "link link-primary" %>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- === TARIFICATION === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-success text-success-content p-4">
+          <h2 class="card-title">💰 Tarification</h2>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Prix normal *</span></label>
+              <%= form.number_field :price_normal, step: 0.01, min: 0, class: "input input-bordered", required: true %>
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Prix réduit *</span></label>
+              <%= form.number_field :price_reduced, step: 0.01, min: 0, class: "input input-bordered", required: true %>
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Devise *</span></label>
+              <%= form.select :currency, 
+                  options_for_select([['Euro (€)', 'EUR'], ['Dollar US ($)', 'USD'], ['Dollar Canadien (CA$)', 'CAD'], ['Franc Suisse (CHF)', 'CHF']], @event.currency),
+                  {}, { class: "select select-bordered w-full", required: true } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- === MODALITÉS (EN LIGNE / EN PERSONNE) === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-secondary text-secondary-content p-4">
+          <h2 class="card-title">🌐 Modalités</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-4">
+              <%= form.check_box :is_online, class: "checkbox checkbox-primary", data: { action: "change->event-form#toggleOnlineUrl" } %>
+              <div>
+                <span class="label-text font-semibold">Événement accessible en ligne</span>
+                <p class="label-text-alt text-base-content/60">Cochez si l'événement est diffusé en ligne (Zoom, Stream, etc.)</p>
+              </div>
+            </label>
+          </div>
+
+          <div id="online-url-field" class="form-control hidden" data-event-form-target="onlineUrlField">
+            <label class="label"><span class="label-text font-semibold">Lien de l'événement en ligne *</span></label>
+            <%= form.text_field :online_url, 
+                class: "input input-bordered w-full url-field", 
+                placeholder: "https://zoom.us/j/123456789 ou lien de stream",
+                data: { url_field: true } %>
+            <label class="label">
+              <span class="label-text-alt text-base-content/60">
+                💡 Lien Zoom, Youtube Live, ou autre plateforme de diffusion
+              </span>
+            </label>
+          </div>
+
+          <div class="alert alert-info">
+            <div>
+              <h3 class="font-bold">ℹ️ Types d'événements</h3>
+              <ul class="text-sm list-disc list-inside mt-2">
+                <li><strong>En personne uniquement</strong> : Ne cochez pas "accessible en ligne"</li>
+                <li><strong>En ligne uniquement</strong> : Cochez "accessible en ligne" et ne renseignez pas de lieu physique</li>
+                <li><strong>Hybride</strong> : Cochez "accessible en ligne" ET renseignez un lieu physique</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- === TYPE D'ÉVÉNEMENT === -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-info text-info-content p-4">
+          <h2 class="card-title">🔄 Choisissez le type d'événement</h2>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div id="card-single" class="card border-2 border-primary bg-primary/10 scale-105 cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200" 
+              data-action="click->event-form#selectCard" data-type="single">
+              <div class="card-body items-center text-center p-6">
+                <div class="text-4xl mb-3">📅</div>
+                <h3 class="card-title text-lg font-bold mb-2">Événement unique</h3>
+                <p class="text-sm opacity-70 mb-4">Un ou plusieurs jours consécutifs.</p>
+                <div class="badge badge-primary badge-sm mt-3" data-event-form-target="badge">✓ Sélectionné</div>
+              </div>
+            </div>
+
+            <div id="card-recurring" class="card border-2 border-base-300 cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200" 
+              data-action="click->event-form#selectCard" data-type="recurring">
+              <div class="card-body items-center text-center p-6">
+                <div class="text-4xl mb-3">🔁</div>
+                <h3 class="card-title text-lg font-bold mb-2">Événement récurrent</h3>
+                <p class="text-sm opacity-70 mb-4">Pour les cours réguliers.</p>
+                <div class="badge badge-ghost badge-sm mt-3 hidden" data-event-form-target="badge">✓ Sélectionné</div>
+              </div>
+            </div>
+          </div>
+
+          <%= form.hidden_field :is_recurring, value: false %>
+        </div>
+      </div>
+
+      <!-- === OCCURRENCE UNIQUE === -->
+      <div id="single-occurrence-section" data-event-form-target="singleSection" class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-accent text-accent-content p-4">
+          <h2 class="card-title">📅 Détails de l'occurrence</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <%= fields_for 'occurrence' do |occurrence_form| %>
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Lieu *</span></label>
+              <%= occurrence_form.select :venue_id, options_from_collection_for_select(@venues, :id, :name),
+                  { prompt: "Choisir un lieu" },
+                  { class: "select select-bordered w-full", required: true, data: { event_form_target: "venueSelect", action: "change->event-form#onVenueSelect" } } %>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Date début *</span></label>
+                <%= occurrence_form.date_field :start_date, class: "input input-bordered", min: Date.current, required: true, data: { action: "change->event-form#updateEndDate" } %>
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-semibold">Date fin</span>
+                  <span class="label-text-alt text-xs">optionnel</span>
+                </label>
+                <%= occurrence_form.date_field :end_date, class: "input input-bordered", min: Date.current, data: { event_form_target: "endDate" } %>
+                <label class="label">
+                  <span class="label-text-alt text-xs">Si vide = même jour</span>
+                </label>
+              </div>
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Heure début *</span></label>
+                <%= occurrence_form.time_field :start_time, class: "input input-bordered", value: "20:00", required: true %>
+              </div>
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Heure fin *</span></label>
+                <%= occurrence_form.time_field :end_time, class: "input input-bordered", value: "23:00", required: true %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- === RÉCURRENCE === -->
+      <div id="recurrence-section" data-event-form-target="recurrenceSection" class="card bg-base-100 shadow-xl hidden">
+        <div class="card-header bg-secondary text-secondary-content p-4">
+          <h2 class="card-title">🔄 Configuration de la récurrence</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <%= fields_for 'occurrence' do |occurrence_form| %>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Lieu principal *</span></label>
+                <%= occurrence_form.select :venue_id, options_from_collection_for_select(@venues, :id, :name), { prompt: "Choisir un lieu" }, { class: "select select-bordered w-full" } %>
+              </div>
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Date de début *</span></label>
+                <%= occurrence_form.date_field :start_date, class: "input input-bordered", min: Date.current %>
+              </div>
+            </div>
+          <% end %>
+
+          <%= fields_for :recurrence do |recurrence_form| %>
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Fréquence *</span></label>
+              <%= recurrence_form.select :frequency,
+                  options_for_select([['Quotidien', 'daily'], ['Hebdomadaire', 'weekly'], ['Mensuel', 'monthly']]),
+                  { prompt: "Choisir une fréquence" },
+                  { class: "select select-bordered w-full", data: { action: "change->event-form#updateFrequencyOptions" } } %>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Intervalle *</span></label>
+                <div class="join">
+                  <%= recurrence_form.number_field :interval, min: 1, max: 52, value: 1, class: "input input-bordered join-item" %>
+                  <span class="btn join-item" data-event-form-target="intervalLabel">semaine(s)</span>
+                </div>
+              </div>
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Heure début *</span></label>
+                <%= recurrence_form.time_field :start_time, class: "input input-bordered", value: "20:00" %>
+              </div>
+              <div class="form-control">
+                <label class="label"><span class="label-text font-semibold">Heure fin *</span></label>
+                <%= recurrence_form.time_field :end_time, class: "input input-bordered", value: "23:00" %>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label class="label"><span class="label-text font-semibold">Date de fin *</span></label>
+              <%= recurrence_form.date_field :end_date, class: "input input-bordered", min: Date.current %>
+            </div>
+
+            <div class="divider">Prévisualisation</div>
+            <button type="button" data-action="click->event-form#previewRecurrence" class="btn btn-outline btn-info">👀 Prévisualiser les occurrences</button>
+
+            <div id="recurrence-preview" data-event-form-target="preview" class="hidden">
+              <div class="alert alert-info">
+                <h4 class="font-bold">Aperçu des occurrences à créer :</h4>
+                <div id="preview-content" data-event-form-target="previewContent"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <%= link_to "Annuler", events_path, class: "btn btn-ghost" %>
+        <%= form.submit "Créer l'événement", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+// Fonction pour normaliser les URLs
+function normalizeUrl(url) {
+  if (!url || url.trim() === '') return '';
+  url = url.trim();
+  if (url.match(/^https?:\/\//i)) return url;
+  return 'https://' + url;
+}
+
+document.addEventListener('turbo:load', () => {
+  // Normaliser les URLs avant soumission
+  const form = document.getElementById('event-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const urlFields = form.querySelectorAll('.url-field, [data-url-field]');
+      urlFields.forEach(field => {
+        if (field.value) {
+          field.value = normalizeUrl(field.value);
+        }
+      });
+    });
+  }
+  
+  // Ajouter option "nouveau lieu"
+  document.querySelectorAll('[data-event-form-target="venueSelect"]').forEach(select => {
+    if (!select.querySelector('option[value="new"]')) {
+      const opt = document.createElement('option');
+      opt.value = 'new';
+      opt.textContent = '➕ Créer un nouveau lieu';
+      select.appendChild(opt);
+    }
+  });
+});
+</script>

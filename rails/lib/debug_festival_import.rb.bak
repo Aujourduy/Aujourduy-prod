@@ -1,0 +1,96 @@
+# Script de debug pour analyser l'échec d'import de "FESTIVAL 2026"
+
+puts "🔍 Recherche de l'événement 'FESTIVAL 2026'..."
+
+# Chercher le ScrapedEvent avec ce titre
+scraped_event = ScrapedEvent.where("json_data->>'event' IS NOT NULL")
+  .find { |se| se.json_data.dig('event', 'title')&.include?('FESTIVAL') }
+
+if scraped_event
+  puts "\n✅ Événement trouvé : #{scraped_event.id}"
+  puts "   Titre : #{scraped_event.json_data.dig('event', 'title')}"
+  puts "   Statut : #{scraped_event.status}"
+  puts "   Validé par : #{scraped_event.validated_by_id}"
+
+  puts "\n📋 Données JSON complètes :"
+  puts JSON.pretty_generate(scraped_event.json_data)
+
+  puts "\n🧪 Test d'import..."
+  service = ScrapedEventImportService.new(scraped_event)
+  result = service.import!
+
+  puts "\n📊 Résultat :"
+  puts "   Succès : #{result}"
+
+  if service.errors.any?
+    puts "\n❌ ERREURS DÉTECTÉES :"
+    service.errors.each do |error|
+      puts "   - #{error}"
+    end
+  else
+    puts "\n✅ Aucune erreur !"
+  end
+
+  # Afficher aussi les erreurs de l'EventImportService
+  if service.import_service.errors.any?
+    puts "\n❌ Erreurs EventImportService :"
+    service.import_service.errors.each do |error|
+      puts "   - #{error}"
+    end
+  end
+
+  # Vérifier les données manquantes
+  puts "\n🔍 Vérification des champs requis :"
+  event_data = scraped_event.json_data['event']
+  required_fields = %w[title description practice source_url price_normal price_reduced currency start_date start_time end_time]
+
+  required_fields.each do |field|
+    value = event_data[field]
+    if value.present?
+      puts "   ✅ #{field} : #{value}"
+    else
+      puts "   ❌ #{field} : MANQUANT"
+    end
+  end
+
+  # Vérifier le teacher
+  puts "\n👨‍🏫 Vérification Teacher :"
+  teacher_data = scraped_event.json_data['teacher']
+  if teacher_data
+    puts "   Recherché : #{teacher_data['first_name']} #{teacher_data['last_name']}"
+    teacher = Teacher.find_by(
+      first_name: teacher_data['first_name'],
+      last_name: teacher_data['last_name']
+    )
+    if teacher
+      puts "   ✅ Trouvé : #{teacher.display_name}"
+    else
+      puts "   ❌ NON TROUVÉ dans la base"
+    end
+  else
+    puts "   ❌ Teacher data manquant"
+  end
+
+  # Vérifier la practice
+  puts "\n🧘 Vérification Practice :"
+  practice_name = event_data['practice']
+  if practice_name
+    puts "   Recherchée : #{practice_name}"
+    practice = Practice.where('LOWER(name) = ?', practice_name.downcase).first
+    if practice
+      puts "   ✅ Trouvée : #{practice.name}"
+    else
+      puts "   ❌ NON TROUVÉE dans la base"
+    end
+  else
+    puts "   ❌ Practice manquante"
+  end
+
+else
+  puts "\n❌ Aucun événement trouvé avec 'FESTIVAL' dans le titre"
+  puts "\n📋 Liste des événements validés :"
+  ScrapedEvent.validated.each do |se|
+    title = se.json_data.dig('event', 'title')
+    puts "   - #{title} (ID: #{se.id})"
+  end
+end

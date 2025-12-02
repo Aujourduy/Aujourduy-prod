@@ -1,0 +1,264 @@
+<div style="font-family: Arial, sans-serif; max-width: 1400px; margin: 0 auto; padding: 40px 20px; background: #fafafa;">
+  
+  <h1 style="text-align: center; color: #2f2f2f; font-size: 2.5rem; margin-bottom: 20px; font-weight: 700;">⚠️ Options Warning CLAIRES — Palette Connexion Authentique</h1>
+  <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 50px;">Versions pastels et douces</p>
+
+  <!-- Option 1 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2e05c; padding-left: 15px;">Option 1 — Jaune Citron Doux 🍋</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2e05c"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2e05c'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2e872"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2e872', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Option 2 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2d85e; padding-left: 15px;">Option 2 — Jaune Beurre 🧈</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2d85e"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2d85e'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2e075"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2e075', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Option 3 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2e88c; padding-left: 15px;">Option 3 — Jaune Paille 🌾</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2e88c"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2e88c'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2ec9c"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2ec9c', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Option 4 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2b8a8; padding-left: 15px;">Option 4 — Rose Poudré 🌸</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2b8a8"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2b8a8'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2c4b8"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2c4b8', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Option 5 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2c8a8; padding-left: 15px;">Option 5 — Pêche Velours 🍑</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2c8a8"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2c8a8'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2d4b8"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2d4b8', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Option 6 -->
+  <section style="margin-bottom: 50px; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h2 style="text-align: center; color: #2f2f2f; font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid #f2b095; padding-left: 15px;">Option 6 — Saumon Sorbet 🍨</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+      <!-- Light -->
+      <div style="background: #f9f9f9; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #333; font-size: 1.3rem; margin-bottom: 20px;">☀️ Light Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#9c8a6e"}, {name: "secondary", color: "#b8a895"}, {name: "accent", color: "#f28c28"},
+              {name: "neutral", color: "#3a3834"}, {name: "base-100", color: "#fdf8f3"}, {name: "info", color: "#7b98b8"},
+              {name: "success", color: "#8ca88c"}, {name: "warning", color: "#f2b095"}, {name: "error", color: "#a85e53"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#fdf8f3', '#b8a895', '#f2b095'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Dark -->
+      <div style="background: #2a2a2a; border-radius: 12px; padding: 20px;">
+        <h3 style="text-align: center; color: #fff; font-size: 1.3rem; margin-bottom: 20px;">🌙 Dark Theme</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <% [{name: "primary", color: "#b8a895"}, {name: "secondary", color: "#9c8a6e"}, {name: "accent", color: "#f29c48"},
+              {name: "neutral", color: "#f2ebe3"}, {name: "base-100", color: "#201e1b"}, {name: "info", color: "#95b4d4"},
+              {name: "success", color: "#a5c4a5"}, {name: "warning", color: "#f2c0a8"}, {name: "error", color: "#c97d6a"}].
+              each do |c| %>
+            <div style="height: 80px; background-color:<%= c[:color] %>; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center;
+                        color: <%= ['#f2ebe3', '#b8a895', '#f2c0a8', '#95b4d4', '#a5c4a5'].include?(c[:color]) ? '#2f2f2f' : '#fff' %>;">
+              <div style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase;"><%= c[:name] %></div>
+              <div style="font-size: 0.7rem; font-family: 'Courier New', monospace; margin-top: 3px;"><%= c[:color] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

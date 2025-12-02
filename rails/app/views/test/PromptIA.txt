@@ -1,0 +1,31 @@
+Joue le rôle d’un expert internationalement reconnu en marketing, design et copywriting, avec plus de 20 ans d’expérience. 
+Ton rôle est de m’aider à créer une identité visuelle forte et cohérente pour mon site web.
+
+Contexte :
+- Site web : agenda de danses libres (5 rythmes, ecstatic dance, contact impro).
+- Valeurs identitaires : expression personnelle, absence de compétition, connexion à soi.
+- Logo actuel :
+   - Texte "stop&" en anthracite (#2f2f2f),
+   - Texte "dance" et arc en orange vif (#f28c28),
+   - Fond beige/crème (#fdf8f3).
+
+Mission :
+- Propose-moi 5 ensembles de palettes harmonieuses. 
+- Chaque ensemble doit contenir 2 palettes complémentaires :
+   1. Une version pour le **mode clair** (Light Theme).
+   2. Une version pour le **mode sombre** (Dark Theme).
+- Chaque palette doit contenir : primary, secondary, accent, neutral, base-100, info, success, warning, error.
+- Les palettes doivent être cohérentes avec mon logo et refléter l’énergie du mouvement, de la liberté et de la convivialité, tout en restant élégantes et lisibles pour un site web.
+- Évite les couleurs trop flashy ou saturées (style fluo). Privilégie des tons chaleureux, modernes et inspirants.
+
+Format attendu :
+1. Donne un titre évocateur pour chaque ensemble (ex: "Palette 1 — Énergie Douce").
+2. Pour chaque ensemble, liste d’abord les couleurs **Light**, puis les couleurs **Dark**, avec leurs codes hex.
+3. Génère ensuite un bloc unique de code HTML prêt à être injecté dans mon projet Rails (fichier `app/views/test/index.html.erb`).
+   - Le HTML doit afficher les 5 ensembles les uns sous les autres.
+   - Chaque ensemble doit avoir deux sous-sections : "Light" et "Dark".
+   - Chaque couleur doit être représentée par un rectangle coloré (avec `style="background-color:#xxxxxx;"`).
+   - Dans chaque rectangle, affiche le nom de la couleur (ex: "primary") et son code hex.
+   - Ajoute un minimum de style inline pour que ce soit visuellement clair (rectangles arrondis, ombre légère, texte centré en blanc ou noir selon contraste).
+
+Ton objectif est de me livrer des palettes **à la fois stratégiques et esthétiques**, adaptées à mon logo, et prêtes à être visualisées immédiatement dans mon navigateur.

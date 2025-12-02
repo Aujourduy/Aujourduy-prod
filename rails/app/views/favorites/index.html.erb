@@ -1,0 +1,180 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">🎯 Pour moi</h1>
+      <%= link_to "⚙️ Configurer", profile_path, class: "btn btn-outline btn-sm" %>
+    </div>
+    
+    <% if @user.has_favorites? %>
+      <!-- Filtres actifs -->
+      <div class="card bg-base-200 shadow-lg mb-6">
+        <div class="card-body">
+          <h3 class="font-bold mb-3">Filtres actifs :</h3>
+          
+          <div class="space-y-2">
+            <% if @user.favorite_cities.any? %>
+              <div>
+                <span class="font-medium">📍 Villes :</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <% @user.favorite_cities.each do |city| %>
+                    <span class="badge badge-primary"><%= city %></span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            
+            <% if @user.favorite_countries.any? %>
+              <div>
+                <span class="font-medium">🌍 Pays :</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <% @user.favorite_countries.each do |country| %>
+                    <span class="badge badge-secondary"><%= country %></span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            
+            <% if @user.favorite_teacher_ids.any? %>
+              <div>
+                <span class="font-medium">👨‍🏫 Professeurs :</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <% Teacher.where(id: @user.favorite_teacher_ids).each do |teacher| %>
+                    <span class="badge badge-accent"><%= teacher.first_name %> <%= teacher.last_name %></span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            
+            <% if @user.search_keywords.present? %>
+              <div>
+                <span class="font-medium">🔍 Mots-clés :</span>
+                <span class="badge badge-info ml-2"><%= @user.search_keywords %></span>
+              </div>
+            <% end %>
+          </div>
+          
+          <!-- Toggle Union/Intersection -->
+          <div class="divider"></div>
+          
+          <%= form_with url: toggle_filter_mode_path, method: :patch, local: true do %>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="font-medium">Mode de filtrage :</span>
+                <span class="badge badge-lg <%= @user.filter_mode == 'union' ? 'badge-success' : 'badge-warning' %> ml-2">
+                  <%= @user.filter_mode == 'union' ? 'OU (Union)' : 'ET (Intersection)' %>
+                </span>
+              </div>
+              <%= button_tag type: 'submit', class: "btn btn-sm btn-outline" do %>
+                🔄 Basculer en <%= @user.filter_mode == 'union' ? 'ET' : 'OU' %>
+              <% end %>
+            </div>
+            
+            <p class="text-xs text-base-content/60 mt-2">
+              <% if @user.filter_mode == 'union' %>
+                ℹ️ Mode OU : affiche les événements qui correspondent à <strong>au moins un</strong> de vos critères
+              <% else %>
+                ℹ️ Mode ET : affiche les événements qui correspondent à <strong>tous</strong> vos critères
+              <% end %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Résultats -->
+      <% if @occurrences.any? %>
+        <div class="mb-4">
+          <p class="text-lg font-semibold">
+            📅 <%= @occurrences_count %> événement<%= 's' if @occurrences_count > 1 %> trouvé<%= 's' if @occurrences_count > 1 %>
+          </p>
+        </div>
+        
+        <div class="grid gap-4">
+          <% @occurrences.each do |occurrence| %>
+            <div class="card card-custom bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <%= occurrence.effective_title %>
+                </h2>
+                
+                <div class="space-y-2 text-sm">
+                  <% if occurrence.start_date %>
+                    <p>
+                      <span class="font-medium">📅</span>
+                      <%= occurrence.formatted_date %>
+                    </p>
+                  <% end %>
+                  
+                  <% if occurrence.start_time %>
+                    <p>
+                      <span class="font-medium">🕐</span>
+                      <%= occurrence.start_time.strftime('%H:%M') %> - <%= occurrence.end_time.strftime('%H:%M') %>
+                    </p>
+                  <% end %>
+                  
+                  <% if occurrence.venue %>
+                    <p>
+                      <span class="font-medium">📍</span>
+                      <%= occurrence.venue.name %>
+                      <% if occurrence.venue.city %>
+                        - <%= occurrence.venue.city %>
+                      <% end %>
+                    </p>
+                  <% end %>
+                  
+                  <% if occurrence.effective_teachers.any? %>
+                    <p>
+                      <span class="font-medium">👨‍🏫</span>
+                      <%= occurrence.teachers_names %>
+                    </p>
+                  <% end %>
+                  
+                  <% if occurrence.multi_day? %>
+                    <div class="badge badge-info badge-sm">
+                      <%= occurrence.duration_days %> jours
+                    </div>
+                  <% end %>
+                </div>
+                
+                <% if occurrence.effective_description.present? %>
+                  <p class="text-base-content/70 text-sm mt-2 line-clamp-2">
+                    <%= truncate(occurrence.effective_description, length: 150) %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        
+      <% else %>
+        <!-- Aucun résultat -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body text-center">
+            <h3 class="text-xl font-bold mb-4">😔 Aucun événement trouvé</h3>
+            <p class="text-base-content/70 mb-4">
+              Aucun événement ne correspond à vos critères actuels.
+            </p>
+            <div class="card-actions justify-center">
+              <%= link_to "Modifier mes critères", profile_path, class: "btn btn-primary" %>
+              <%= link_to "Voir tous les événements", events_path, class: "btn btn-outline" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      
+    <% else %>
+      <!-- Pas de favoris configurés -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body text-center">
+          <h2 class="text-2xl font-bold mb-4">👋 Bienvenue !</h2>
+          <p class="text-base-content/70 mb-6">
+            Vous n'avez pas encore configuré vos préférences.<br>
+            Commencez par sélectionner vos villes, pays, professeurs favoris ou ajouter des mots-clés.
+          </p>
+          <div class="card-actions justify-center">
+            <%= link_to "⚙️ Configurer mes préférences", profile_path, class: "btn btn-primary btn-lg" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

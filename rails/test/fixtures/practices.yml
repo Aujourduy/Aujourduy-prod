@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Yoga
+  description: Yoga practice
+  user: one
+
+two:
+  name: Dance
+  description: Dance practice
+  user: two

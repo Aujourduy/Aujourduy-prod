@@ -1,0 +1,30 @@
+<%= form_with model: practice, local: true, class: "space-y-4" do |f| %>
+  <% if practice.errors.any? %>
+    <div class="alert alert-error">
+      <h3 class="font-bold"><%= pluralize(practice.errors.count, "erreur") %> :</h3>
+      <ul class="list-disc list-inside">
+        <% practice.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Champ caché pour return_to -->
+  <%= hidden_field_tag :return_to, local_assigns[:return_to] %>
+
+  <div class="form-control">
+    <%= f.label :name, "Nom de la pratique", class: "label" %>
+    <%= f.text_field :name, class: "input input-bordered w-full", placeholder: "Ex: 5 Rythmes, Ecstatic Dance..." %>
+  </div>
+
+  <div class="form-control">
+    <%= f.label :description, "Description", class: "label" %>
+    <%= f.text_area :description, rows: 6, class: "textarea textarea-bordered w-full", placeholder: "Décrivez cette pratique de danse..." %>
+  </div>
+
+  <div class="flex space-x-2">
+    <%= f.submit class: "btn btn-accent" %>
+    <%= link_to "Annuler", practices_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

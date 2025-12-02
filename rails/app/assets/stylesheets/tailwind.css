@@ -1,0 +1,5 @@
+/* Tailwind CSS via CDN pour test rapide */
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+
+/* DaisyUI via CDN */
+@import url('https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css');

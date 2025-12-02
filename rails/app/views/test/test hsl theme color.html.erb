@@ -1,0 +1,18 @@
+<div class="p-10 space-y-6">
+  <h1 class="text-2xl font-bold">Test DaisyUI : static vs dynamic</h1>
+
+  <!-- Version Tailwind (compilée avec theme('colors.error')) -->
+  <div class="bg-error text-error-content p-4 rounded text-center">
+    Couleur via <code>theme('colors.error')</code> (fixe)
+  </div>
+
+  <!-- Version DaisyUI var(--er) -->
+  <div class="custom-error">
+    Couleur via <code>hsl(var(--er))</code> (dynamique, dépend du thème DaisyUI)
+  </div>
+
+  <!-- Bouton pour switcher entre light et dark -->
+  <%= button_tag "Changer le thème (light/dark)", 
+      class: "mt-6 px-4 py-2 rounded bg-primary text-primary-content",
+      onclick: "document.documentElement.dataset.theme = (document.documentElement.dataset.theme === 'light' ? 'dark' : 'light')" %>
+</div>

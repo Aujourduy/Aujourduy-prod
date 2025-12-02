@@ -1,0 +1,29 @@
+<div id="<%= dom_id teacher %>" class="card bg-base-100 shadow-md p-4 mb-4">
+  <h2 class="text-lg font-semibold">
+    <%= teacher.first_name %> <%= teacher.last_name %>
+  </h2>
+
+  <% if teacher.bio.present? %>
+    <p class="text-sm text-gray-600 mt-1"><%= teacher.bio %></p>
+  <% end %>
+
+  <% if teacher.contact_email.present? %>
+    <p class="text-sm text-gray-600 mt-1">📧 <%= teacher.contact_email %></p>
+  <% end %>
+
+  <% if teacher.phone.present? %>
+    <p class="text-sm text-gray-600 mt-1">📞 <%= teacher.phone %></p>
+  <% end %>
+
+  <% if teacher.photo_url.present? %>
+    <div class="mt-3 flex justify-center">
+      <%= image_tag teacher.photo_url, alt: "Photo de #{teacher.first_name}", class: "h-24 w-24 rounded-full object-cover" %>
+    </div>
+  <% end %>
+
+  <div class="mt-4 flex space-x-2">
+    <%= link_to "Voir", teacher, class: "btn btn-sm btn-primary" %>
+    <%= link_to "Modifier", edit_teacher_path(teacher), class: "btn btn-sm btn-secondary" %>
+    <%= link_to "Supprimer", teacher, data: { turbo_method: :delete, turbo_confirm: "Supprimer ce professeur ?" }, class: "btn btn-sm btn-error" %>
+  </div>
+</div>

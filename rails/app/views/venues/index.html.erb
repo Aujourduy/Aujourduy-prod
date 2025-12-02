@@ -1,0 +1,55 @@
+<div class="min-h-screen w-full flex flex-col items-center py-10 bg-gray-50">
+  <div class="w-full max-w-4xl bg-base-400 rounded-2xl shadow-lg p-8">
+    <% if notice %>
+      <div class="mb-4 p-3 rounded bg-green-100 text-green-800 text-sm">
+        <%= notice %>
+      </div>
+    <% end %>
+    
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Liste des lieux</h1>
+      <%= link_to "➕ Nouveau lieu", new_venue_path, class: "btn btn-success" %>
+    </div>
+    
+    <div id="venues" class="grid grid-cols-1 gap-4">
+      <% @venues.each do |venue| %>
+        <div class="card bg-base-100 shadow-md p-4">
+          <div class="flex items-start space-x-4">
+            <!-- Icône lieu -->
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <!-- Infos du lieu -->
+            <div class="flex-1">
+              <h2 class="text-lg font-semibold"><%= venue.name %></h2>
+              <% if venue.address_line1.present? %>
+                <p class="text-sm text-gray-600">📍 <%= venue.address_line1 %></p>
+              <% end %>
+              <% if venue.city.present? && venue.postal_code.present? %>
+                <p class="text-sm text-gray-600"><%= venue.postal_code %> <%= venue.city %></p>
+              <% end %>
+              <% if venue.country.present? %>
+                <p class="text-xs text-gray-500">🌍 <%= venue.country %></p>
+              <% end %>
+            </div>
+          </div>
+          
+          <div class="mt-3 flex space-x-2">
+            <%= link_to "Voir", venue, class: "btn btn-sm btn-primary" %>
+
+		  <% if venue.user == current_user %>
+		    <%= link_to "Modifier", edit_venue_path(venue), class: "btn btn-sm btn-secondary" %>
+		    <%= link_to "Supprimer", venue, 
+		               data: { turbo_method: :delete, turbo_confirm: "Supprimer ce lieu ?" }, 
+		               class: "btn btn-sm btn-error" %>
+		  <% end %>
+
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

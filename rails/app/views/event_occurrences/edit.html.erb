@@ -1,0 +1,334 @@
+<div class="container mx-auto p-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold">Modifier l'occurrence</h1>
+      <p class="text-sm text-base-500 mt-2">
+        <%= @occurrence.formatted_datetime %> • <%= @occurrence.venue.name %>
+      </p>
+      <% if @event.is_recurring? %>
+        <div class="badge badge-info mt-2">Événement récurrent</div>
+      <% else %>
+        <div class="badge badge-neutral mt-2">Événement unique</div>
+      <% end %>
+    </div>
+
+    <%= form_with model: @occurrence, url: event_occurrence_path(@occurrence), method: :patch, local: true, html: { id: "occurrence-form" }, class: "space-y-8", data: { turbo: false } do |form| %>
+      <% if @occurrence.errors.any? %>
+        <div class="alert alert-error">
+          <div>
+            <h3 class="font-bold">Erreurs détectées :</h3>
+            <ul class="list-disc list-inside">
+              <% @occurrence.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Informations générales -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-primary text-primary-content p-4">
+          <h2 class="card-title">Informations générales</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Titre</span>
+            </label>
+            <%= form.text_field :title, value: @occurrence.effective_title, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Description</span>
+            </label>
+            <%= form.text_area :description, value: @occurrence.effective_description, rows: 4, class: "textarea textarea-bordered w-full" %>
+          </div>
+
+          <!-- URL de source -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">URL de source</span>
+            </label>
+            <%= form.text_field :source_url, 
+                value: @occurrence.effective_source_url, 
+                class: "input input-bordered w-full url-field", 
+                placeholder: "exemple.com ou https://exemple.com",
+                data: { url_field: true } %>
+            <label class="label">
+              <span class="label-text-alt text-base-content/60">
+                💡 Lien vers la page officielle de cette occurrence
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarification -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-success text-success-content p-4">
+          <h2 class="card-title">Tarification</h2>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Prix normal</span>
+              </label>
+              <%= form.number_field :price_normal, value: @occurrence.effective_price_normal, step: 0.01, min: 0, class: "input input-bordered" %>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Prix réduit</span>
+              </label>
+              <%= form.number_field :price_reduced, value: @occurrence.effective_price_reduced, step: 0.01, min: 0, class: "input input-bordered" %>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Devise</span>
+              </label>
+              <%= form.select :currency,
+                  options_for_select([['Euro (€)', 'EUR'], ['Dollar US ($)', 'USD'], ['Dollar Canadien (CA$)', 'CAD'], ['Franc Suisse (CHF)', 'CHF']], @occurrence.effective_currency),
+                  {},
+                  { class: "select select-bordered w-full" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lieu, date et horaires -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-accent text-accent-content p-4">
+          <h2 class="card-title">Lieu, date et horaires</h2>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Lieu</span>
+            </label>
+            <%= form.select :venue_id,
+                options_from_collection_for_select(@venues, :id, :name, @occurrence.venue_id),
+                { prompt: "Sélectionner un lieu" },
+                { class: "select select-bordered w-full" } %>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Date début</span>
+              </label>
+              <%= form.date_field :start_date, value: @occurrence.start_date, class: "input input-bordered" %>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Date fin</span>
+                <span class="label-text-alt text-xs">optionnel</span>
+              </label>
+              <%= form.date_field :end_date, value: @occurrence.end_date, class: "input input-bordered" %>
+              <label class="label">
+                <span class="label-text-alt text-xs">Si vide = même jour</span>
+              </label>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Heure début</span>
+              </label>
+              <%= form.time_field :start_time, value: @occurrence.start_time&.strftime('%H:%M'), class: "input input-bordered" %>
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Heure fin</span>
+              </label>
+              <%= form.time_field :end_time, value: @occurrence.end_time&.strftime('%H:%M'), class: "input input-bordered" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professeurs -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-header bg-secondary text-secondary-content p-4">
+          <h2 class="card-title">Professeurs</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold">Professeurs pour cette occurrence</span>
+            </label>
+            
+            <!-- Champ caché pour gérer la désélection -->
+            <%= hidden_field_tag 'event_occurrence[teacher_ids][]', '' %>
+            
+            <div class="space-y-2 border border-base-300 rounded-lg p-4 max-h-60 overflow-y-auto">
+              <% selected_ids = @occurrence.teachers.pluck(:id) %>
+              <% @teachers.each do |teacher| %>
+                <div class="form-control">
+                  <label class="label cursor-pointer justify-start gap-3">
+                    <%= check_box_tag 'event_occurrence[teacher_ids][]', teacher.id, selected_ids.include?(teacher.id), class: "checkbox checkbox-primary" %>
+                    <span class="label-text"><%= teacher.full_name %></span>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Appliquer les modifications -->
+      <% if @event.is_recurring? %>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-header bg-warning text-warning-content p-4">
+            <h2 class="card-title">⚠️ Appliquer les modifications à :</h2>
+          </div>
+          <div class="card-body">
+            <div class="space-y-3">
+              <!-- Radio 1 -->
+              <div class="form-control">
+                <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                  <div class="flex items-start gap-3 flex-1">
+                    <%= form.radio_button :update_scope, 'this_only', class: "radio radio-primary", checked: true %>
+                    <div class="flex-1">
+                      <div class="font-semibold">Cette occurrence uniquement</div>
+                      <div class="text-sm opacity-70">Les autres occurrences restent inchangées</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Radio 2 -->
+              <div class="form-control">
+                <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                  <div class="flex items-start gap-3 flex-1">
+                    <%= form.radio_button :update_scope, 'this_and_following', class: "radio radio-primary" %>
+                    <div class="flex-1">
+                      <div class="font-semibold">Cette occurrence et les suivantes</div>
+                      <div class="text-sm opacity-70">Toutes les occurrences à partir de celle-ci</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Radio 3 -->
+              <div class="form-control">
+                <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                  <div class="flex items-start gap-3 flex-1">
+                    <%= form.radio_button :update_scope, 'all', class: "radio radio-primary" %>
+                    <div class="flex-1">
+                      <div class="font-semibold">Tous les événements</div>
+                      <div class="text-sm opacity-70">Toutes les occurrences (passées et futures)</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <%= form.hidden_field :update_scope, value: 'this_only' %>
+      <% end %>
+
+      <!-- Boutons d'action -->
+      <div class="flex flex-wrap justify-center items-center gap-3 mt-8">
+        <%= form.submit "💾 Enregistrer", class: "btn btn-primary px-6" %>
+        <%= button_tag type: 'button', class: "btn btn-error px-6", 
+            onclick: "document.getElementById('delete_modal').showModal()" do %>
+          🗑️ Supprimer
+        <% end %>
+        <%= link_to "Annuler", @event, class: "btn btn-ghost px-6" %>
+      </div>
+    <% end %>
+
+    <!-- Modal de suppression -->
+    <dialog id="delete_modal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg mb-4">⚠️ Supprimer l'occurrence</h3>
+        
+        <% if @event.is_recurring? %>
+          <%= form_with url: event_occurrence_path(@occurrence), method: :delete, local: true, data: { turbo: false } do |f| %>
+            <p class="mb-4">Choisissez l'étendue de la suppression :</p>
+            
+            <div class="space-y-3 mb-6">
+              <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                <div class="flex items-start gap-3 flex-1">
+                  <%= radio_button_tag 'delete_scope', 'this_only', true, class: "radio radio-error" %>
+                  <div class="flex-1">
+                    <div class="font-semibold">Cette occurrence uniquement</div>
+                    <div class="text-sm opacity-70">Les autres occurrences restent inchangées</div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                <div class="flex items-start gap-3 flex-1">
+                  <%= radio_button_tag 'delete_scope', 'this_and_following', false, class: "radio radio-error" %>
+                  <div class="flex-1">
+                    <div class="font-semibold">Cette occurrence et les suivantes</div>
+                    <div class="text-sm opacity-70">Toutes les occurrences à partir de celle-ci</div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="label cursor-pointer border border-base-300 rounded-lg p-4 hover:bg-base-200">
+                <div class="flex items-start gap-3 flex-1">
+                  <%= radio_button_tag 'delete_scope', 'all', false, class: "radio radio-error" %>
+                  <div class="flex-1">
+                    <div class="font-semibold">Toutes les occurrences</div>
+                    <div class="text-sm opacity-70">Supprime toutes les occurrences de cet événement</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <div class="modal-action">
+              <button type="button" class="btn btn-ghost" onclick="document.getElementById('delete_modal').close()">Annuler</button>
+              <%= f.submit "Confirmer la suppression", class: "btn btn-error" %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= form_with url: event_occurrence_path(@occurrence), method: :delete, local: true, data: { turbo: false } do |f| %>
+            <%= hidden_field_tag 'delete_scope', 'this_only' %>
+            <p class="mb-6">Êtes-vous sûr de vouloir supprimer cette occurrence ?</p>
+            <div class="modal-action">
+              <button type="button" class="btn btn-ghost" onclick="document.getElementById('delete_modal').close()">Annuler</button>
+              <%= f.submit "Confirmer la suppression", class: "btn btn-error" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </div>
+</div>
+
+<script>
+// Fonction pour normaliser les URLs
+function normalizeUrl(url) {
+  if (!url || url.trim() === '') return '';
+  url = url.trim();
+  if (url.match(/^https?:\/\//i)) return url;
+  return 'https://' + url;
+}
+
+document.addEventListener('turbo:load', () => {
+  // Normaliser les URLs avant soumission
+  const form = document.getElementById('occurrence-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const urlFields = form.querySelectorAll('.url-field, [data-url-field]');
+      urlFields.forEach(field => {
+        if (field.value) {
+          field.value = normalizeUrl(field.value);
+        }
+      });
+    });
+  }
+});
+</script>

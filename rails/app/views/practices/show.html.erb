@@ -1,0 +1,93 @@
+<div class="min-h-screen w-full flex flex-col items-center py-10">
+  <div class="w-full max-w-4xl rounded-2xl shadow-lg p-8">
+    <% if notice %>
+      <div class="mb-4 p-3 rounded bg-green-100 text-green-800 text-sm">
+        <%= notice %>
+      </div>
+    <% end %>
+    
+    <% if alert %>
+      <div class="mb-4 p-3 rounded bg-red-100 text-red-800 text-sm">
+        <%= alert %>
+      </div>
+    <% end %>
+    
+    <!-- En-tête -->
+    <div class="mb-6">
+      <div class="flex justify-between items-start mb-4">
+        <h1 class="text-3xl font-bold text-base-900 dark:text-base-900"><%= @practice.name %></h1>
+        <div class="flex space-x-2">
+          <%= link_to "← Retour", practices_path, class: "btn btn-sm btn-ghost" %>
+          <% if user_signed_in? && (current_user.admin? || @practice.user == current_user) %>
+            <%= link_to "Modifier", edit_practice_path(@practice), class: "btn btn-sm btn-secondary" %>
+            <%= link_to "Supprimer", @practice, data: { turbo_method: :delete, turbo_confirm: "Supprimer cette pratique ?" }, class: "btn btn-sm btn-error" %>
+          <% end %>
+        </div>
+      </div>
+      
+      <% if @practice.description.present? %>
+        <p class="text-base base-600"><%= @practice.description %></p>
+      <% end %>
+    </div>
+    
+    <!-- Professeurs -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-base-900 dark:text-base-900">
+        Professeurs enseignant cette pratique (<%= @teachers.count %>)
+      </h2>
+      
+      <% if @teachers.any? %>
+        <div class="grid grid-cols-1 gap-3">
+          <% @teachers.each do |teacher| %>
+            <div class="card-custom bg-base-100">
+              <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                  <% if teacher.photo_url %>
+                    <%= image_tag teacher.photo_url(:medium), alt: "Photo de #{teacher.first_name}", class: "w-full h-full object-cover" %>
+                  <% else %>
+                    <div class="w-full h-full flex items-center justify-center text-gray-400">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-base-900 dark:text-base-900"><%= teacher.full_name %></p>
+                </div>
+                <%= link_to "Voir", teacher, class: "btn btn-sm btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-base-500 italic">Aucun professeur pour cette pratique.</p>
+      <% end %>
+    </div>
+    
+    <!-- Événements -->
+    <div>
+      <h2 class="text-xl font-semibold mb-4 text-base-900 dark:text-base-900">
+        Événements de cette pratique (<%= @events.count %>)
+      </h2>
+      
+      <% if @events.any? %>
+        <div class="grid grid-cols-1 gap-3">
+          <% @events.each do |event| %>
+            <div class="card-custom bg-base-100">
+              <div class="flex-1">
+                <h3 class="font-semibold text-base-900 dark:text-base-900"><%= event.title %></h3>
+                <p class="text-sm base-500 mt-1">
+                  Par <%= event.principal_teacher_name %> • <%= event.formatted_price_normal %>
+                </p>
+              </div>
+              <%= link_to "Voir", event, class: "btn btn-sm btn-secondary mt-2" %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-base-500 italic">Aucun événement actif pour cette pratique.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

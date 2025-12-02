@@ -1,0 +1,49 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-base-400 rounded-2xl shadow-lg">
+  <h1 class="text-2xl font-bold text-center mb-6">Vérification du téléphone</h1>
+
+  <!-- Messages flash -->
+  <% if flash[:notice] %>
+    <div class="mb-4 p-3 rounded-lg bg-green-100 text-green-800">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="mb-4 p-3 rounded-lg bg-red-100 text-red-800">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <!-- Section envoi OTP -->
+  <div class="mb-6">
+    <p class="mb-2 text-gray-700">
+      Numéro enregistré : <span class="font-semibold"><%= current_user.phone %></span>
+    </p>
+
+    <div class="flex gap-2">
+      <%= button_to "Envoyer code par SMS",
+          phone_verification_path(channel: "sms"),
+          method: :post,
+          class: "flex-1 btn btn-primary" %>
+
+      <%= button_to "Appel vocal",
+          phone_verification_path(channel: "call"),
+          method: :post,
+          class: "flex-1 btn btn-secondary" %>
+    </div>
+  </div>
+
+  <!-- Section saisie OTP -->
+  <%= form_with url: verify_phone_verification_path, method: :post, local: true, class: "space-y-4" do |f| %>
+    <div>
+      <%= f.label :code, "Code reçu", class: "block mb-1 text-sm font-medium text-gray-700" %>
+      <%= f.text_field :code,
+            class: "w-full input input-bordered",
+            placeholder: "Entrez le code OTP",
+            required: true %>
+    </div>
+
+    <div class="text-center">
+      <%= f.submit "Vérifier le code", class: "btn btn-accent w-full" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,160 @@
+<%= form_with(model: venue, local: true, html: { class: "space-y-4" }) do |form| %>
+  <% if venue.errors.any? %>
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+      <h2 class="font-semibold mb-2">
+        <%= pluralize(venue.errors.count, "erreur") %> ont empêché l'enregistrement :
+      </h2>
+      <ul class="list-disc list-inside">
+        <% venue.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Nom du lieu", class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :name, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= form.label :address_line1, "Adresse ligne 1", class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :address_line1, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div>
+    <%= form.label :address_line2, "Adresse ligne 2 (optionnel)", class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :address_line2, class: "input input-bordered w-full mt-1" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :postal_code, "Code postal", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :postal_code, class: "input input-bordered w-full mt-1" %>
+    </div>
+    <div>
+      <%= form.label :city, "Ville", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :city, class: "input input-bordered w-full mt-1" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :department_code, "Code département", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :department_code, class: "input input-bordered w-full mt-1 bg-gray-50", readonly: true, placeholder: "Auto-déduit (France)" %>
+      <p class="text-xs text-gray-500 mt-1">Auto-déduit depuis le code postal (France uniquement)</p>
+    </div>
+    <div>
+      <%= form.label :department_name, "Nom département", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :department_name, class: "input input-bordered w-full mt-1 bg-gray-50", readonly: true, placeholder: "Auto-déduit (France)" %>
+      <p class="text-xs text-gray-500 mt-1">Auto-déduit depuis le code postal (France uniquement)</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :region, "Région", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :region, class: "input input-bordered w-full mt-1" %>
+    </div>
+    <div>
+      <%= form.label :country, "Pays", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :country, class: "input input-bordered w-full mt-1", value: venue.country.presence || "France" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= form.label :latitude, "Latitude", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.number_field :latitude, step: :any, class: "input input-bordered w-full mt-1", id: "venue_latitude" %>
+    </div>
+    <div>
+      <%= form.label :longitude, "Longitude", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.number_field :longitude, step: :any, class: "input input-bordered w-full mt-1", id: "venue_longitude" %>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <button type="button" class="btn btn-outline btn-sm" id="geocode-btn">
+      📍 Actualiser les coordonnées GPS
+    </button>
+    <span id="geocode-status" class="ml-2 text-sm"></span>
+  </div>
+
+  <%= form.submit (venue.persisted? ? "Modifier le lieu" : "Créer le lieu"),
+             class: "btn btn-success w-full" %>
+<% end %>
+
+
+
+
+<script>
+setTimeout(function() {
+  const geocodeBtn = document.getElementById('geocode-btn');
+  console.log('Script chargé, bouton:', geocodeBtn);
+  
+  if (geocodeBtn) {
+    geocodeBtn.addEventListener('click', async function() {
+      console.log('Bouton GPS cliqué !');
+      
+      const statusEl = document.getElementById('geocode-status');
+      statusEl.textContent = '🔄 Géolocalisation...';
+      statusEl.className = 'ml-2 text-sm text-info';
+      
+      const address = [
+        document.querySelector('[name="venue[address_line1]"]').value,
+        document.querySelector('[name="venue[address_line2]"]').value,
+        document.querySelector('[name="venue[postal_code]"]').value + ' ' + document.querySelector('[name="venue[city]"]').value,
+        document.querySelector('[name="venue[region]"]').value,
+        document.querySelector('[name="venue[country]"]').value
+      ].filter(Boolean).join(', ');
+
+      console.log('Adresse construite:', address);
+
+      if (!address.trim()) {
+        statusEl.textContent = '❌ Veuillez remplir au moins l\'adresse';
+        statusEl.className = 'ml-2 text-sm text-error';
+        return;
+      }
+
+      try {
+        console.log('Envoi vers /venues/geocode...');
+        
+        const response = await fetch('/venues/geocode', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('[name="authenticity_token"]').value
+          },
+          body: JSON.stringify({ address: address })
+        });
+        
+        const data = await response.json();
+        console.log('Réponse API:', data);
+        
+        if (data.success) {
+          const latField = document.getElementById('venue_latitude');
+          const lngField = document.getElementById('venue_longitude');
+          
+          latField.value = data.latitude;
+          lngField.value = data.longitude;
+          
+          statusEl.textContent = '✅ Coordonnées mises à jour';
+          statusEl.className = 'ml-2 text-sm text-success';
+        } else {
+          statusEl.textContent = '❌ ' + data.error;
+          statusEl.className = 'ml-2 text-sm text-error';
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        statusEl.textContent = '❌ Erreur réseau';
+        statusEl.className = 'ml-2 text-sm text-error';
+      }
+      
+      setTimeout(() => {
+        statusEl.textContent = '';
+        statusEl.className = 'ml-2 text-sm';
+      }, 4000);
+    });
+  }
+}, 100);
+</script>

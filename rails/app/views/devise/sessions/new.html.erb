@@ -1,0 +1,42 @@
+<div class="min-h-screen w-full flex items-center justify-center ">
+  <div class="w-full max-w-md bg-base-400 rounded-2xl shadow-lg p-8">
+    <div class="flex justify-center mb-6">
+      <%= link_to root_path do %>
+        <%= image_tag "logo.png", alt: "Stop & Dance", class: "h-12 w-auto" %>
+      <% end %>
+    </div>
+
+    <h2 class="text-2xl font-bold text-center mb-6">Connexion</h2>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+      <div>
+        <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, class: "input input-bordered w-full mt-1" %>
+      </div>
+
+      <div>
+        <%= f.label :password, "Mot de passe", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full mt-1" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center">
+          <%= f.check_box :remember_me, class: "checkbox checkbox-sm mr-2" %>
+          <%= f.label :remember_me, "Se souvenir de moi", class: "text-sm" %>
+        </div>
+      <% end %>
+
+      <%= f.submit "Se connecter", class: "btn btn-primary w-full" %>
+    <% end %>
+
+    <div class="divider">OU</div>
+
+    <%= link_to "Connexion avec Google", user_google_oauth2_omniauth_authorize_path, class: "btn w-full bg-red-500 text-white" %>
+
+    <div class="mt-6 text-center text-sm">
+      <%= link_to "Mot de passe oublié ?", new_password_path(resource_name), class: "link link-primary" %>
+      <span class="mx-2">|</span>
+      <%= link_to "Créer un compte", new_registration_path(resource_name), class: "link link-primary" %>
+    </div>
+  </div>
+</div>

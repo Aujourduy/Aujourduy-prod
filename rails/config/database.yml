@@ -1,0 +1,57 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("PG_HOST") { "pgbouncer" } %>
+  port: <%= ENV.fetch("PG_PORT") { 6432 } %>
+  username: <%= ENV["PG_ADMIN_USER"] %>
+  password: <%= ENV["PG_ADMIN_PASSWORD"] %>
+
+development:
+  primary: &primary_development
+    <<: *default
+    database: <%= ENV["PG_DB_DEV"] %>
+  queue:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    host: postgres
+    port: 5432
+    username: <%= ENV["PG_ADMIN_USER"] %>
+    password: <%= ENV["PG_ADMIN_PASSWORD"] %>
+    database: aujourduy_development_queue
+    migrations_paths: db/queue_migrate
+
+test:
+  primary: &primary_test
+    <<: *default
+    database: <%= ENV["PG_DB_TEST"] %>
+  queue:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    host: postgres
+    port: 5432
+    username: <%= ENV["PG_ADMIN_USER"] %>
+    password: <%= ENV["PG_ADMIN_PASSWORD"] %>
+    database: aujourduy_test_queue
+    migrations_paths: db/queue_migrate
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: <%= ENV["PG_DB_PROD"] %>
+    username: <%= ENV["APP_DATABASE_USER"] %>
+    password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: aujourduy_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: aujourduy_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: aujourduy_production_cable
+    migrations_paths: db/cable_migrate

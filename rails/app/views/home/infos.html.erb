@@ -1,0 +1,102 @@
+<div class="container mx-auto p-6 max-w-4xl">
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-4" style="color: #EF8C1A;">Stop & Dance</h1>
+    <h2 class="text-3xl font-bold mb-6">Informations</h2>
+  </div>
+
+  <div class="space-y-8">
+    <!-- Section À propos -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <h3 class="card-title text-2xl mb-4">À propos de Stop & Dance</h3>
+        <p class="text-base-content/80 mb-4">
+          Stop & Dance est votre plateforme dédiée à la découverte et à la pratique de la danse. 
+          Trouvez des cours, connectez-vous avec des professeurs passionnés et rejoignez notre communauté de danseurs.
+        </p>
+        <p class="text-base-content/80">
+          Que vous soyez débutant ou expérimenté, nous avons des cours adaptés à tous les niveaux et tous les styles de danse.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section Comment ça marche -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <h3 class="card-title text-2xl mb-4">Comment ça marche ?</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-4xl mb-2">1️⃣</div>
+            <h4 class="font-semibold mb-2">Explorez</h4>
+            <p class="text-sm text-base-content/70">Découvrez les cours et professeurs disponibles</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-2">2️⃣</div>
+            <h4 class="font-semibold mb-2">Réservez</h4>
+            <p class="text-sm text-base-content/70">Inscrivez-vous aux cours qui vous intéressent</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-2">3️⃣</div>
+            <h4 class="font-semibold mb-2">Dansez</h4>
+            <p class="text-sm text-base-content/70">Participez aux cours et progressez</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section FAQ -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <h3 class="card-title text-2xl mb-4">Questions fréquentes</h3>
+        <div class="space-y-4">
+          <div class="collapse collapse-plus border border-base-300">
+            <input type="checkbox" />
+            <div class="collapse-title text-lg font-medium">
+              Comment créer un compte ?
+            </div>
+            <div class="collapse-content">
+              <p>Cliquez sur "Se connecter" dans la barre de navigation, puis sur "Inscription". Vous pouvez également vous connecter avec votre compte Google.</p>
+            </div>
+          </div>
+          
+          <div class="collapse collapse-plus border border-base-300">
+            <input type="checkbox" />
+            <div class="collapse-title text-lg font-medium">
+              Comment réserver un cours ?
+            </div>
+            <div class="collapse-content">
+              <p>Une fois connecté, parcourez les événements disponibles et cliquez sur "Détails" pour voir les informations du cours et vous inscrire.</p>
+            </div>
+          </div>
+          
+          <div class="collapse collapse-plus border border-base-300">
+            <input type="checkbox" />
+            <div class="collapse-title text-lg font-medium">
+              Puis-je enseigner sur la plateforme ?
+            </div>
+            <div class="collapse-content">
+              <p>Oui ! Créez votre profil professeur et commencez à publier vos cours. Contactez-nous pour plus d'informations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Contact -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body text-center">
+        <h3 class="card-title text-2xl mb-4 justify-center">Une question ? Contactez-nous !</h3>
+        <p class="text-base-content/80 mb-6">
+          Notre équipe est là pour vous aider. N'hésitez pas à nous faire part de vos questions, suggestions ou commentaires.
+        </p>
+        <a href="https://tally.so/r/wLlB0O" target="_blank" class="btn btn-primary btn-lg">
+          📝 Formulaire de contact
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retour à l'accueil -->
+  <div class="text-center mt-8">
+    <%= link_to "← Retour à l'accueil", root_path, class: "btn btn-outline" %>
+  </div>
+</div>

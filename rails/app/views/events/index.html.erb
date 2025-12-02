@@ -1,0 +1,101 @@
+<div class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-4xl font-bold">
+      <% if user_signed_in? && params[:filter] == 'my' %>
+        Mon agenda de cours
+      <% elsif user_signed_in? %>
+        Agenda des cours
+      <% else %>
+        Cours de danse libre
+      <% end %>
+    </h1>
+    <% if user_signed_in? %>
+      <%= link_to "Nouvel événement", new_event_path, class: "btn btn-primary whitespace-nowrap" %>
+    <% end %>
+  </div>
+
+  <!-- Barre de recherche fixe -->
+  <div class="mb-6" data-controller="search">
+    <%= form_with url: events_path, method: :get, local: true, class: "w-full" do |f| %>
+      <%= f.hidden_field :filter, value: params[:filter] if params[:filter].present? %>
+      
+      <div class="relative flex items-center">
+        <%= f.text_field :search, 
+            value: params[:search],
+            placeholder: "Rechercher par titre, lieu, ville, prof, pratique...",
+            class: "input input-bordered w-full",
+            data: { 
+              search_target: "input",
+              action: "input->search#search keydown->search#handleKeydown"
+            },
+            autocomplete: "off"
+        %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Indicateur de recherche active -->
+  <% if params[:search].present? %>
+    <div class="alert alert-info mb-6 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>
+          Recherche : <strong><%= params[:search] %></strong>
+          <% if @all_occurrences.any? %>
+            (<%= @all_occurrences.count %> résultat<%= 's' if @all_occurrences.count > 1 %>)
+          <% end %>
+        </span>
+      </div>
+      <%= link_to "Effacer", events_path(filter: params[:filter]), class: "btn btn-ghost btn-sm" %>
+    </div>
+  <% end %>
+
+  <% if @all_occurrences.any? %>
+    <div class="space-y-4">
+      <% @all_occurrences.each do |occurrence| %>
+        <%= render 'event_occurrences/card', occurrence: occurrence %>
+      <% end %>
+    </div>
+
+    <!-- Filtres pour utilisateurs connectés -->
+    <% if user_signed_in? %>
+      <div class="mt-8 flex justify-center gap-4">
+        <%= link_to "Tous les cours", events_path(search: params[:search]), 
+            class: "btn btn-sm #{'btn-primary' if params[:filter] != 'my'} #{'btn-outline' if params[:filter] == 'my'}" %>
+        <%= link_to "Mes cours", events_path(filter: 'my', search: params[:search]), 
+            class: "btn btn-sm #{'btn-primary' if params[:filter] == 'my'} #{'btn-outline' if params[:filter] != 'my'}" %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="hero min-h-[50vh]">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h2 class="text-2xl font-bold mb-4">
+            <% if params[:search].present? %>
+              Aucun résultat trouvé
+            <% elsif user_signed_in? && params[:filter] == 'my' %>
+              Aucun cours programmé
+            <% else %>
+              Aucun cours disponible
+            <% end %>
+          </h2>
+          <p class="mb-6">
+            <% if params[:search].present? %>
+              Essayez avec d'autres mots-clés ou <%= link_to "effacez la recherche", events_path(filter: params[:filter]), class: "link link-primary" %>.
+            <% elsif user_signed_in? && params[:filter] == 'my' %>
+              Créez votre premier cours de danse !
+            <% else %>
+              Revenez bientôt pour découvrir nos cours.
+            <% end %>
+          </p>
+          <% if user_signed_in? && !params[:search].present? %>
+            <%= link_to "Créer mon premier cours", new_event_path, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,46 @@
+[
+  {
+    "eventId": "1286683",
+    "title": "LE CORPS DE LA DANSE",
+    "dates": "Tue 11/25Tue 12/02Tue 12/16",
+    "place": "Studio Variations sur le Corps, Square Dunois, 75013 Paris",
+    "image": "https://www.billetweb.fr/files/event/150/1286683.jpg?v=1751390085",
+    "description": "",
+    "tags": "5Rythmes,Danselibre,méditation",
+    "bookLink": "",
+    "price": ""
+  },
+  {
+    "eventId": "1291670",
+    "title": "WEDNESDAY WAVES",
+    "dates": "Wed Nov 26, 2025 to Wed Jun 24, 2026",
+    "place": "Studio Bleu Danse 12ème, Rue Erard, Paris, France",
+    "image": "https://www.billetweb.fr/files/event/150/1291670.jpg?v=1753983752",
+    "description": "",
+    "tags": "",
+    "bookLink": "",
+    "price": ""
+  },
+  {
+    "eventId": "1284832",
+    "title": "LA DANSE DES 5RYTHMES®",
+    "dates": "Sat Dec 13, 2025 to Sat Jun 13, 2026",
+    "place": "Alter Activ, Chemin des Prés, Thomery, France",
+    "image": "https://www.billetweb.fr/files/event/150/1284832.jpg?v=1753983844",
+    "description": "",
+    "tags": "",
+    "bookLink": "https://www.billetweb.fr/shop.php?event=la-danse-des-5rythmes&multi=u237930&margin=no_margin&color=635BFF&margin=no_margin&color=635BFF&from_multi=1",
+    "price": ""
+  },
+  {
+    "eventId": "1286720",
+    "title": "ENSEMBLE...",
+    "dates": "Fri Jan 02, 2026 at 07:00 PM to Sun Jan 04, 2026 at 05:00 PM",
+    "place": "Ecole de Théâtre et Cinéma Aberratio, Rue des Orteaux, Paris, France",
+    "image": "https://www.billetweb.fr/files/event/150/1286720.jpg?v=1754313689",
+    "description": "",
+    "tags": "5Rythmes,Feldenkrais,chant,méditation",
+    "bookLink": "",
+    "price": ""
+  }
+]

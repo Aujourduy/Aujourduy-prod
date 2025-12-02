@@ -1,0 +1,185 @@
+# CONTEXTE DU PROJET
+
+Je développe un site d'agenda de cours de danses libres (5 rythmes, ecstatic dance, contact impro).
+
+## STACK TECHNIQUE
+- **Backend** : Rails sous Docker Compose (dossier ~/Aujourduy/)
+- **Projet Rails** : ~/Aujourduy/rails/
+- **Base de données** : PostgreSQL + PGBouncer
+- **Frontend** : Tailwind CSS + DaisyUI (mobile-first PWA)
+- **Authentification** : Devise + Google OAuth
+- **Automation** : N8N (dans le même docker-compose)
+- **IA** : Alibaba Qwen API (région Singapour, 90 jours gratuit)
+
+## MODÈLES DE DONNÉES
+- **User** : authentification avec droits CRUD
+- **Teacher** : professeur(s) de cours
+- **Event** : événement de danse
+- **EventOccurrence** : occurrences des cours (uniques ou récurrents)
+- **Venue** : lieu
+
+## OBJECTIF ACTUEL
+Utiliser **N8N + Qwen API** pour extraire automatiquement les informations d'ateliers de danse depuis des pages HTML et créer les Events dans Rails.
+
+---
+
+# CE QUI A ÉTÉ VALIDÉ
+
+## 1. API QWEN FONCTIONNELLE ✅
+- **API Key** : Configurée et testée
+- **Modèle choisi** : `qwen-flash` (parfait pour notre usage)
+- **Endpoint** : https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions
+- **Coût** : ~$0.0013 par extraction (~3400 tokens)
+- **Quota gratuit** : 1 million tokens pendant 90 jours
+
+## 2. PROMPT QWEN OPTIMAL TESTÉ ✅
+
+```json
+{
+  "model": "qwen-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Expert extraction. Réponds en JSON pur sans markdown. RÈGLE: Pour événements récurrents avec plusieurs dates, crée UN événement SÉPARÉ pour CHAQUE date. Pour 'tous les vendredis', génère au moins les 4 premières occurrences."
+    },
+    {
+      "role": "user",
+      "content": "Extrait tous les ateliers/cours/stages de danse.\n\nCRÉE UN ÉVÉNEMENT DISTINCT PAR DATE pour les récurrents.\n\nChamps JSON:\n- titre\n- description\n- date_debut (YYYY-MM-DD)\n- date_fin (YYYY-MM-DD ou null si 1 jour)\n- horaire (ex: '19h30-21h30')\n- prix (nombre ou null) : prix plein\n- prix_reduit (nombre ou null) : si format '20€/17€' → prix:20, prix_reduit:17\n- pays\n- ville\n- adresse\n- nom_lieu\n- type ('5 rythmes', 'ecstatic dance', 'contact impro' ou 'autre')\n- professeur (nom du prof, 'Marc Silvestre' par défaut si non mentionné)\n\nRéponds: {\"events\": [...]}\n\n=== TEXTE À ANALYSER ===\n[INSÉRER HTML NETTOYÉ ICI]"
+    }
+  ]
+}
+```
+
+## 3. TEST RÉUSSI SUR SITE RÉEL ✅
+- **Site testé** : https://www.marcsilvestre.com/agenda-cours-stages-1
+- **Résultat** : 20 événements extraits correctement
+- **Points forts** :
+  - Un événement par date pour les récurrents (✅ VAGUES Paris : 4 vendredis séparés)
+  - Dates au format ISO (✅)
+  - Prix et prix_reduit extraits (✅)
+  - Lieux et adresses complets (✅)
+  - Stages multi-jours avec date_fin (✅)
+
+---
+
+# ARCHITECTURE N8N → RAILS
+
+```
+┌─────────────────────────────────────┐
+│  N8N WORKFLOW                       │
+│  1. Trigger (manuel/cron/webhook)  │
+│  2. HTTP: Fetch HTML page          │
+│  3. Code: Clean HTML (enlever CSS) │
+│  4. HTTP: Call Qwen API            │
+│  5. Code: Parse JSON response      │
+│  6. HTTP: POST to Rails API        │
+└─────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────┐
+│  RAILS API                          │
+│  POST /api/events/import            │
+│  - Auth avec API token              │
+│  - Validation données               │
+│  - Create Event/Teacher/Venue       │
+└─────────────────────────────────────┘
+```
+
+---
+
+# MES CONSIGNES DE TRAVAIL
+
+**PROCESSUS OBLIGATOIRE :**
+1. Tu me dis quels fichiers te montrer
+2. Tu me donnes la commande `cat` avec le chemin complet depuis ~/Aujourduy/
+3. Je te fais un `cat nom_du_fichier`
+4. Tu me donnes **UNE SEULE** commande qui combine `rm && cat > fichier << 'EOF'` pour remplacer
+
+**CONTRAINTES :**
+- Mon dossier courant : `~/Aujourduy/`
+- Tous les chemins relatifs depuis ~/Aujourduy/
+- Format obligatoire : `rm fichier && cat > fichier << 'EOF' (contenu) EOF`
+- Une seule manipulation par modification
+- Commandes Docker : `docker compose -f ~/Aujourduy/docker-compose.yml exec rails rails ...`
+
+**ALIAS DISPONIBLES :**
+- `drails` = docker compose rails exec
+- `lsr` = ls récursif
+- `catr` = cat récursif
+
+**DESIGN :**
+- DaisyUI avec thèmes clair/sombre
+- Utiliser `.card-custom` pour les cartes
+- Couleurs : `theme('colors.xxx')` pas `hsl()`
+
+---
+
+# PROCHAINES ÉTAPES
+
+## 1. WORKFLOW N8N COMPLET (À CODER)
+- [ ] Node 1 : Manual Trigger ou Cron
+- [ ] Node 2 : HTTP Request - Fetch HTML
+- [ ] Node 3 : Code - Clean HTML (retirer CSS/JS)
+- [ ] Node 4 : HTTP Request - Call Qwen API (avec prompt optimal)
+- [ ] Node 5 : Code - Parse response JSON
+- [ ] Node 6 : HTTP Request - POST vers Rails /api/events/import
+
+## 2. ENDPOINT API RAILS (À CRÉER)
+- [ ] Routes : `POST /api/events/import`
+- [ ] Controller : `Api::EventsController#import`
+- [ ] Authentification : API token
+- [ ] Service : parser JSON et créer Event/Teacher/Venue/EventOccurrence
+- [ ] Gestion des doublons (même event, même date)
+
+## 3. VOIR LES FICHIERS RAILS ACTUELS
+J'ai besoin de voir pour créer l'endpoint API :
+```bash
+cat ./rails/db/schema.rb
+cat ./rails/config/routes.rb
+find ./rails/app/models -name "*.rb" -exec echo "=== {} ===" \; -exec cat {} \;
+find ./rails/app/controllers -name "*.rb" -exec echo "=== {} ===" \; -exec cat {} \;
+```
+
+---
+
+# QUESTIONS À ME POSER
+
+1. **On commence par quoi ?**
+   - A) Le workflow N8N complet (JSON à importer)
+   - B) L'endpoint API Rails d'abord
+   - C) Voir les fichiers Rails existants avant tout
+
+2. **Authentification API** : Quel type préfères-tu ?
+   - Token Bearer dans header ?
+   - API key simple ?
+   - Basic auth ?
+
+3. **Gestion des doublons** : Si même event + même date existe déjà ?
+   - Skip silencieusement
+   - Update si différent
+   - Erreur
+
+---
+
+# COMMANDES UTILES
+
+```bash
+# Variables d'environnement
+API_KEY="sk-xxxxx"  # API Key Qwen
+
+# Test Qwen direct
+curl -X POST https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions \
+  -H "Authorization: Bearer ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"qwen-flash","messages":[...]}'
+
+# Rails console
+docker compose -f ~/Aujourduy/docker-compose.yml exec rails rails c
+
+# Logs Rails
+docker compose -f ~/Aujourduy/docker-compose.yml logs -f rails
+```
+
+---
+
+**JE SUIS PRÊT À CONTINUER ! Par quoi veux-tu qu'on commence ?** 🚀

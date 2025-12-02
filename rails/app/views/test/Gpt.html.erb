@@ -1,0 +1,41 @@
+<div style="font-family:sans-serif; padding:20px;">
+  <% palettes = {
+    "Palette 1 — Énergie Douce" => {
+      "Light" => {primary:"#f28c28", secondary:"#8b5e3c", accent:"#fdf8f3", neutral:"#2f2f2f", "base-100":"#ffffff", info:"#3abff8", success:"#36d399", warning:"#fbbf24", error:"#f87272"},
+      "Dark" => {primary:"#f28c28", secondary:"#d9a679", accent:"#3a3a3a", neutral:"#e5e5e5", "base-100":"#1a1a1a", info:"#60a5fa", success:"#4ade80", warning:"#facc15", error:"#ef4444"}
+    },
+    "Palette 2 — Horizon Libre" => {
+      "Light" => {primary:"#ff7f50", secondary:"#6d4c41", accent:"#fdf3e7", neutral:"#374151", "base-100":"#ffffff", info:"#38bdf8", success:"#22c55e", warning:"#f59e0b", error:"#dc2626"},
+      "Dark" => {primary:"#ff9966", secondary:"#b08968", accent:"#2c2c2c", neutral:"#d1d5db", "base-100":"#111827", info:"#0ea5e9", success:"#16a34a", warning:"#eab308", error:"#b91c1c"}
+    },
+    "Palette 3 — Terre & Mouvement" => {
+      "Light" => {primary:"#e07a5f", secondary:"#6a4e42", accent:"#faf3e0", neutral:"#3f3f46", "base-100":"#ffffff", info:"#3b82f6", success:"#10b981", warning:"#f59e0b", error:"#ef4444"},
+      "Dark" => {primary:"#f29c89", secondary:"#a68b79", accent:"#262626", neutral:"#e5e7eb", "base-100":"#18181b", info:"#60a5fa", success:"#34d399", warning:"#facc15", error:"#dc2626"}
+    },
+    "Palette 4 — Vitalité Sereine" => {
+      "Light" => {primary:"#f97316", secondary:"#92400e", accent:"#fef9f6", neutral:"#404040", "base-100":"#ffffff", info:"#2563eb", success:"#059669", warning:"#d97706", error:"#b91c1c"},
+      "Dark" => {primary:"#fb923c", secondary:"#c2410c", accent:"#1f1f1f", neutral:"#d4d4d8", "base-100":"#0f172a", info:"#3b82f6", success:"#10b981", warning:"#f59e0b", error:"#ef4444"}
+    },
+    "Palette 5 — Convivialité Moderne" => {
+      "Light" => {primary:"#ec7c26", secondary:"#7b4d2a", accent:"#fef6ec", neutral:"#2e2e2e", "base-100":"#ffffff", info:"#0284c7", success:"#16a34a", warning:"#ea580c", error:"#dc2626"},
+      "Dark" => {primary:"#f48c44", secondary:"#b36b3c", accent:"#262626", neutral:"#e5e5e5", "base-100":"#121212", info:"#0ea5e9", success:"#22c55e", warning:"#f97316", error:"#ef4444"}
+    }
+  } %>
+
+  <% palettes.each do |title, versions| %>
+    <div style="margin-bottom:40px;">
+      <h2 style="font-size:20px; margin-bottom:10px;"><%= title %></h2>
+      <% versions.each do |mode, colors| %>
+        <h3 style="font-size:16px; margin:10px 0;"><%= mode %></h3>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+          <% colors.each do |name, hex| %>
+            <div style="flex:1 0 120px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); padding:20px; text-align:center; background-color:<%= hex %>; color:<%= ['#fdf8f3','#ffffff','#faf3e0','#fef9f6','#fef6ec','#ffffff'].include?(hex.downcase) ? '#000' : '#fff' %>;">
+              <div style="font-weight:bold;"><%= name %></div>
+              <div><%= hex %></div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
